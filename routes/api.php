@@ -37,3 +37,4 @@ Route::prefix('v1/auth')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
     });
 });
+
