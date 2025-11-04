@@ -12,7 +12,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Enregistrer l'alias du middleware
+        $middleware->alias([
+            'role' => \App\Http\Middleware\CheckRole::class,
+            'otp.verify' => \App\Http\Middleware\EnsureOtpVerification::class,
+        ]);
+        
+        // Protéger les routes API avec sanctum par défaut
+        $middleware->statefulApi();
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

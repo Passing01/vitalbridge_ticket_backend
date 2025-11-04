@@ -39,20 +39,50 @@
                             <form method="POST" action="{{ route('register') }}" role="form">
                                 @csrf
                                 
-                                <!-- Name -->
+                                <!-- First Name -->
                                 <div class="mb-4">
-                                    <label class="mb-2 ml-1 font-bold text-xs text-slate-700">{{ __('Name') }}</label>
+                                    <label class="mb-2 ml-1 font-bold text-xs text-slate-700">{{ __('First Name') }}</label>
                                     <input
-                                        id="name"
-                                        name="name"
+                                        id="first_name"
+                                        name="first_name"
                                         type="text"
-                                        class="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:outline-none focus:transition-shadow @error('name') border-red-500 @enderror"
-                                        placeholder="{{ __('Your name') }}"
-                                        :value="old('name')"
+                                        class="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:outline-none focus:transition-shadow @error('first_name') border-red-500 @enderror"
+                                        placeholder="{{ __('Your first name') }}"
+                                        value="{{ old('first_name') }}"
                                         required
                                         autofocus
-                                        autocomplete="name" />
-                                    <x-input-error :messages="$errors->get('name')" class="mt-2 text-red-500 text-xs" />
+                                        autocomplete="given-name" />
+                                    <x-input-error :messages="$errors->get('first_name')" class="mt-2 text-red-500 text-xs" />
+                                </div>
+                                
+                                <!-- Last Name -->
+                                <div class="mb-4">
+                                    <label class="mb-2 ml-1 font-bold text-xs text-slate-700">{{ __('Last Name') }}</label>
+                                    <input
+                                        id="last_name"
+                                        name="last_name"
+                                        type="text"
+                                        class="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:outline-none focus:transition-shadow @error('last_name') border-red-500 @enderror"
+                                        placeholder="{{ __('Your last name') }}"
+                                        value="{{ old('last_name') }}"
+                                        required
+                                        autocomplete="family-name" />
+                                    <x-input-error :messages="$errors->get('last_name')" class="mt-2 text-red-500 text-xs" />
+                                </div>
+                                
+                                <!-- Phone -->
+                                <div class="mb-4">
+                                    <label class="mb-2 ml-1 font-bold text-xs text-slate-700">{{ __('Phone Number') }}</label>
+                                    <input
+                                        id="phone"
+                                        name="phone"
+                                        type="tel"
+                                        class="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:outline-none focus:transition-shadow @error('phone') border-red-500 @enderror"
+                                        placeholder="{{ __('Your phone number') }}"
+                                        value="{{ old('phone') }}"
+                                        required
+                                        autocomplete="tel" />
+                                    <x-input-error :messages="$errors->get('phone')" class="mt-2 text-red-500 text-xs" />
                                 </div>
                                 
                                 <!-- Email Address -->

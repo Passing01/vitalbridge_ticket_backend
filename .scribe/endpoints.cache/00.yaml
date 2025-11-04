@@ -6,15 +6,184 @@ endpoints:
   -
     custom: []
     httpMethods:
-      - GET
-    uri: api/user
+      - POST
+    uri: api/v1/auth/register
     metadata:
       custom: []
       groupName: Endpoints
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: 'Register a new patient and send OTP'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      first_name:
+        custom: []
+        name: first_name
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: vmqeopfuudtdsufvyvddq
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      last_name:
+        custom: []
+        name: last_name
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: amniihfqcoynlazghdtqt
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      phone:
+        custom: []
+        name: phone
+        description: 'Must match the regex /^(\+?[0-9]{8,15}. Must not be greater than 20 characters.'
+        required: true
+        example: qxbajwbpilpmufinl
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      language:
+        custom: []
+        name: language
+        description: ''
+        required: false
+        example: english
+        type: string
+        enumValues:
+          - fr
+          - moore
+          - dioula
+          - english
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      first_name: vmqeopfuudtdsufvyvddq
+      last_name: amniihfqcoynlazghdtqt
+      phone: qxbajwbpilpmufinl
+      language: english
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/auth/request-otp
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: "Send OTP to user's phone for login"
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      phone:
+        custom: []
+        name: phone
+        description: 'Must match the regex /^(\+?[0-9]{8,15}.'
+        required: true
+        example: (562771717728
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      phone: (562771717728
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/auth/verify-otp
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Verify OTP and authenticate user'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      otp:
+        custom: []
+        name: otp
+        description: 'Must be 6 characters.'
+        required: true
+        example: vmqeop
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      otp: vmqeop
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/auth/me
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get the authenticated user'
       description: ''
       authenticated: false
       deprecated: false
@@ -38,6 +207,37 @@ endpoints:
           content-type: application/json
           access-control-allow-origin: '*'
         description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/auth/logout
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Logout user (revoke token)'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
     responseFields: []
     auth: []
     controller: null

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\PersonalAccessToken;
 use Laravel\Sanctum\Sanctum;
 
 return [
@@ -48,6 +49,20 @@ return [
     */
 
     'expiration' => null,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Personal Access Token Model
+    |--------------------------------------------------------------------------
+    |
+    | This is the model used by Sanctum to create and manage personal access
+    | tokens. You can replace this with your own model if needed.
+    |
+    */
+
+    'personal_access_token' => [
+        'model' => PersonalAccessToken::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------

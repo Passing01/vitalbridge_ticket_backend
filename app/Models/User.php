@@ -6,22 +6,114 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
+    /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'id' => 'string',
+        'email_verified_at' => 'datetime',
+        'otp_verified_at' => 'datetime',
+        'otp_expires_at' => 'datetime',
+    ];
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->{$model->getKeyName()})) {
+                $model->{$model->getKeyName()} = (string) Str::uuid();
+            }
+        });
+    }
+
     protected $fillable = [
-        'name',
+        'id',
+        'first_name',
+        'last_name',
+        'phone',
         'email',
         'password',
+        'otp',
+        'otp_expires_at',
+        'otp_verified_at',
+        'role',
+        'language',
     ];
+
+    /**
+     * Get the user's full name.
+     */
+    public function getFullNameAttribute(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+     * Check if the user is a patient.
+     */
+    public function isPatient(): bool
+    {
+        return $this->role === 'patient';
+    }
+
+    /**
+     * Check if the user is a doctor.
+     */
+    public function isDoctor(): bool
+    {
+        return $this->role === 'doctor';
+    }
+
+    /**
+     * Check if the user is an admin.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Check if the user is a receptionist.
+     */
+    public function isReception(): bool
+    {
+        return $this->role === 'reception';
+    }
 
     /**
      * The attributes that should be hidden for serialization.
