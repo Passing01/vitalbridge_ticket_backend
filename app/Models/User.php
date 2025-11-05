@@ -3,6 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\DoctorProfile;
+use App\Models\DoctorSchedule;
+use App\Models\DoctorUnavailability;
+use App\Models\DoctorDelay;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -97,6 +101,38 @@ class User extends Authenticatable
     public function isDoctor(): bool
     {
         return $this->role === 'doctor';
+    }
+
+    /**
+     * Get the doctor's profile.
+     */
+    public function doctorProfile()
+    {
+        return $this->hasOne(DoctorProfile::class, 'user_id');
+    }
+
+    /**
+     * Get the doctor's schedules.
+     */
+    public function schedules()
+    {
+        return $this->hasMany(DoctorSchedule::class, 'doctor_id');
+    }
+
+    /**
+     * Get the doctor's unavailabilities.
+     */
+    public function unavailabilities()
+    {
+        return $this->hasMany(DoctorUnavailability::class, 'doctor_id');
+    }
+
+    /**
+     * Get the doctor's delays.
+     */
+    public function delays()
+    {
+        return $this->hasMany(DoctorDelay::class, 'doctor_id');
     }
 
     /**
