@@ -15,3 +15,8 @@
         </div>
     </div>
 </x-app-layout>
+
+
++22665936003  
+[2025-11-07 22:02:29] local.INFO: SMS sent to +22657963457  
+[2025-11-07 22:04:08] local.INFO: SMS sent to +22606407309 

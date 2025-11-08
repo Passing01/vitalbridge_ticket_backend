@@ -23,13 +23,51 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $first_name = fake()->firstName();
+        $last_name = fake()->lastName();
+        
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'name' => $first_name . ' ' . $last_name,
+            'email' => strtolower($first_name . '.' . $last_name . '@example.com'),
             'email_verified_at' => now(),
+            'phone' => fake()->phoneNumber(),
+            'address' => fake()->address(),
+            'city' => fake()->city(),
+            'country' => fake()->country(),
+            'postal_code' => fake()->postcode(),
+            'role' => 'doctor',
+            'is_active' => fake()->boolean(90), // 90% de chance d'être actif
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
+    }
+    
+    /**
+     * Configure the model factory to create a doctor with a profile.
+     */
+    public function doctor()
+    {
+        return $this->afterCreating(function (\App\Models\User $user) {
+            $user->assignRole('doctor');
+            
+            // Créer un profil médecin
+            $user->doctorProfile()->create([
+                'qualification' => $this->faker->randomElement([
+                    'Docteur en Médecine',
+                    'Spécialiste',
+                    'Professeur',
+                    'Chirurgien',
+                    'Médecin Généraliste'
+                ]),
+                'bio' => $this->faker->paragraph(),
+                'specialty_id' => null, // Sera défini lors de la création
+                'is_available' => $this->faker->boolean(80), // 80% de chance d'être disponible
+                'max_patients_per_day' => $this->faker->numberBetween(10, 30),
+                'average_consultation_time' => $this->faker->numberBetween(15, 45),
+            ]);
+        });
     }
 
     /**

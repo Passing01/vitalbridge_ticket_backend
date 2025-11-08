@@ -148,7 +148,39 @@ class AuthController extends Controller
      */
     public function me(Request $request): JsonResponse
     {
-        return response()->json($request->user());
+        $user = $request->user();
+        
+        // Charger les relations en fonction du rôle
+        if ($user->role === 'doctor') {
+            $user->load([
+                'doctorProfile.specialty.department',
+                'schedules' => function($query) {
+                    $query->where('is_active', true);
+                },
+                'unavailabilities' => function($query) {
+                    $query->where('end_datetime', '>', now())
+                          ->orderBy('start_datetime');
+                },
+                'doctorDelays' => function($query) {
+                    $query->where('is_active', true)
+                          ->orderBy('created_at', 'desc')
+                          ->first();
+                }
+            ]);
+
+            return response()->json([
+                'user' => $user->only(['id', 'first_name', 'last_name', 'email', 'phone', 'role']),
+                'profile' => $user->doctorProfile,
+                'schedules' => $user->schedules,
+                'current_unavailabilities' => $user->unavailabilities,
+                'current_delay' => $user->doctorDelays->first()
+            ]);
+        }
+
+        // Pour les patients, retourner seulement les informations de base
+        return response()->json([
+            'user' => $user->only(['id', 'first_name', 'last_name', 'phone', 'role'])
+        ]);
     }
 
     /**

@@ -1,0 +1,1218 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localhost"
+        }
+    ],
+    "info": {
+        "name": "Laravel API Documentation",
+        "_postman_id": "7b703d97-0546-41a2-839b-6069de17c793",
+        "description": "",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Endpoints",
+            "description": "",
+            "item": [
+                {
+                    "name": "Register a new patient and send OTP",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/register",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/register"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"first_name\":\"vmqeopfuudtdsufvyvddq\",\"last_name\":\"amniihfqcoynlazghdtqt\",\"phone\":\"qxbajwbpilpmufinl\",\"language\":\"dioula\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Send OTP to user's phone for login",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/request-otp",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/request-otp"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"phone\":\"(562771717728\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Verify OTP and authenticate user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/verify-otp",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/verify-otp"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"otp\":\"vmqeop\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get the authenticated user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/me",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/me"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Logout user (revoke token)",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "R\u00e9cup\u00e9rer le profil complet du m\u00e9decin",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/doctor\/profile",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/doctor\/profile"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Afficher la file d'attente du jour pour un m\u00e9decin",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/doctor\/:doctor_id\/queue",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/doctor\/:doctor_id\/queue",
+                            "variable": [
+                                {
+                                    "id": "doctor_id",
+                                    "key": "doctor_id",
+                                    "value": "4643d44f-2544-428e-a791-711e2bc0e30d",
+                                    "description": "The ID of the doctor."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Appeler le prochain patient",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/doctor\/:doctor_id\/queue\/next",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/doctor\/:doctor_id\/queue\/next",
+                            "variable": [
+                                {
+                                    "id": "doctor_id",
+                                    "key": "doctor_id",
+                                    "value": "4643d44f-2544-428e-a791-711e2bc0e30d",
+                                    "description": "The ID of the doctor."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Marquer un patient comme servi",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/doctor\/appointments\/:appointment_id\/serve",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/doctor\/appointments\/:appointment_id\/serve",
+                            "variable": [
+                                {
+                                    "id": "appointment_id",
+                                    "key": "appointment_id",
+                                    "value": "eddf11d6-e886-4682-9989-50b4f3f91702",
+                                    "description": "The ID of the appointment."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Marquer un patient comme absent",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/doctor\/appointments\/:appointment_id\/absent",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/doctor\/appointments\/:appointment_id\/absent",
+                            "variable": [
+                                {
+                                    "id": "appointment_id",
+                                    "key": "appointment_id",
+                                    "value": "eddf11d6-e886-4682-9989-50b4f3f91702",
+                                    "description": "The ID of the appointment."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "R\u00e9ins\u00e9rer un patient absent dans la file d'attente",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/doctor\/appointments\/:appointment_id\/requeue",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/doctor\/appointments\/:appointment_id\/requeue",
+                            "variable": [
+                                {
+                                    "id": "appointment_id",
+                                    "key": "appointment_id",
+                                    "value": "eddf11d6-e886-4682-9989-50b4f3f91702",
+                                    "description": "The ID of the appointment."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Marquer un rendez-vous comme urgent",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/doctor\/appointments\/:appointment_id\/urgent",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/doctor\/appointments\/:appointment_id\/urgent",
+                            "variable": [
+                                {
+                                    "id": "appointment_id",
+                                    "key": "appointment_id",
+                                    "value": "eddf11d6-e886-4682-9989-50b4f3f91702",
+                                    "description": "The ID of the appointment."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "D\u00e9clarer un retard",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/doctor\/delay",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/doctor\/delay"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"delay_minutes\":21,\"reason\":\"mqeopfuudtdsufvyvddqa\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Ajouter une indisponibilit\u00e9",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/doctor\/unavailability",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/doctor\/unavailability"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"start_datetime\":\"2106-12-08\",\"end_datetime\":\"2106-12-08\",\"reason\":\"mqeopfuudtdsufvyvddqa\",\"is_recurring\":true,\"recurrence_pattern\":\"weekly\",\"recurrence_end_date\":\"2106-12-08\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Supprimer une indisponibilit\u00e9",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/doctor\/unavailability\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/doctor\/unavailability\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "consequatur",
+                                    "description": "The ID of the unavailability."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Liste de tous les centres de sant\u00e9 (utilisateurs avec le r\u00f4le 'reception')",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/health-centers",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/health-centers"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"health_centers\":[{\"id\":\"167f5534-df2f-4377-9b18-2a455c101a68\",\"first_name\":\"CHU de Yalgado\",\"last_name\":\"Ouedraogo\",\"email\":\"contact@chuyo.bf\",\"phone\":\"+22625307060\",\"managed_departments_count\":5},{\"id\":\"412647c7-a273-4117-916d-759205b2f170\",\"first_name\":\"CHU P\\u00e9diatrique\",\"last_name\":\"Charles de Gaulle\",\"email\":\"contact@chupcdg.bf\",\"phone\":\"+22625363600\",\"managed_departments_count\":5},{\"id\":\"e281d28d-495a-4ad7-b1ab-9ce262ff591d\",\"first_name\":\"CMA\",\"last_name\":\"SAGA\",\"email\":\"contact@cmasaga.bf\",\"phone\":\"+22625361206\",\"managed_departments_count\":5},{\"id\":\"4d8d9d0a-ba11-4619-8417-7707f9336b82\",\"first_name\":\"Clinique\",\"last_name\":\"El Fateh Suka\",\"email\":\"contact@fatehsuka.bf\",\"phone\":\"+22625312789\",\"managed_departments_count\":5}]}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Afficher les d\u00e9tails d'un centre de sant\u00e9 avec ses d\u00e9partements",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/health-centers\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/health-centers\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "consequatur",
+                                    "description": "The ID of the health center."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 500,
+                            "body": "{\n    \"message\": \"Server Error\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Afficher les d\u00e9tails d'un d\u00e9partement avec ses sp\u00e9cialit\u00e9s",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/departments\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/departments\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the department."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"department\":{\"id\":1,\"name\":\"M\\u00e9decine G\\u00e9n\\u00e9rale\",\"description\":\"Service de M\\u00e9decine G\\u00e9n\\u00e9rale du centre \",\"reception_id\":\"167f5534-df2f-4377-9b18-2a455c101a68\",\"created_at\":\"2025-11-08T15:23:14.000000Z\",\"updated_at\":\"2025-11-08T15:23:14.000000Z\",\"specialties\":[{\"id\":1,\"name\":\"M\\u00e9decine de famille\",\"description\":\"Service de M\\u00e9decine de famille - M\\u00e9decine G\\u00e9n\\u00e9rale\",\"department_id\":1,\"doctors_count\":5},{\"id\":2,\"name\":\"M\\u00e9decine interne g\\u00e9n\\u00e9rale\",\"description\":\"Service de M\\u00e9decine interne g\\u00e9n\\u00e9rale - M\\u00e9decine G\\u00e9n\\u00e9rale\",\"department_id\":1,\"doctors_count\":5},{\"id\":3,\"name\":\"M\\u00e9decine d'urgence\",\"description\":\"Service de M\\u00e9decine d'urgence - M\\u00e9decine G\\u00e9n\\u00e9rale\",\"department_id\":1,\"doctors_count\":5},{\"id\":4,\"name\":\"M\\u00e9decine du travail\",\"description\":\"Service de M\\u00e9decine du travail - M\\u00e9decine G\\u00e9n\\u00e9rale\",\"department_id\":1,\"doctors_count\":5},{\"id\":5,\"name\":\"M\\u00e9decine pr\\u00e9ventive\",\"description\":\"Service de M\\u00e9decine pr\\u00e9ventive - M\\u00e9decine G\\u00e9n\\u00e9rale\",\"department_id\":1,\"doctors_count\":5}]},\"_debug\":{\"department_id\":1,\"department_name\":\"M\\u00e9decine G\\u00e9n\\u00e9rale\",\"specialties_count\":5,\"specialties_ids\":[1,2,3,4,5]}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Afficher les d\u00e9tails d'une sp\u00e9cialit\u00e9 avec ses m\u00e9decins",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/specialties\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/specialties\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "1",
+                                    "description": "The ID of the specialty."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"specialty\":{\"id\":1,\"name\":\"M\\u00e9decine de famille\",\"description\":\"Service de M\\u00e9decine de famille - M\\u00e9decine G\\u00e9n\\u00e9rale\",\"active_doctors_count\":5,\"doctors\":[{\"id\":\"021201e7-d996-4f87-ac6a-1e8ecb6c9a4a\",\"first_name\":\"Dr. Mohamed\",\"last_name\":\"Thomas\",\"email\":\"mthomas1@example.com\",\"phone\":\"+22551331942\",\"qualification\":\"Dr.\",\"bio\":\"M\\u00e9decin sp\\u00e9cialis\\u00e9 en M\\u00e9decine de famille avec une exp\\u00e9rience de 27 ans.\",\"max_patients_per_day\":17,\"average_consultation_time\":52,\"is_available\":false,\"delays\":[],\"unavailabilities\":[],\"schedules\":[{\"id\":5,\"doctor_id\":\"021201e7-d996-4f87-ac6a-1e8ecb6c9a4a\",\"day_of_week\":\"friday\",\"start_time\":\"08:00\",\"end_time\":\"17:00\"},{\"id\":1,\"doctor_id\":\"021201e7-d996-4f87-ac6a-1e8ecb6c9a4a\",\"day_of_week\":\"monday\",\"start_time\":\"08:00\",\"end_time\":\"17:00\"},{\"id\":4,\"doctor_id\":\"021201e7-d996-4f87-ac6a-1e8ecb6c9a4a\",\"day_of_week\":\"thursday\",\"start_time\":\"08:00\",\"end_time\":\"17:00\"},{\"id\":2,\"doctor_id\":\"021201e7-d996-4f87-ac6a-1e8ecb6c9a4a\",\"day_of_week\":\"tuesday\",\"start_time\":\"08:00\",\"end_time\":\"17:00\"},{\"id\":3,\"doctor_id\":\"021201e7-d996-4f87-ac6a-1e8ecb6c9a4a\",\"day_of_week\":\"wednesday\",\"start_time\":\"08:00\",\"end_time\":\"17:00\"}]},{\"id\":\"79447446-a10c-491b-af74-3f68a8bb5b18\",\"first_name\":\"Dr. Fatou\",\"last_name\":\"Michel\",\"email\":\"fmichel2@example.com\",\"phone\":\"+22533707909\",\"qualification\":\"Prof\",\"bio\":\"M\\u00e9decin sp\\u00e9cialis\\u00e9 en M\\u00e9decine de famille avec une exp\\u00e9rience de 13 ans.\",\"max_patients_per_day\":28,\"average_consultation_time\":49,\"is_available\":true,\"delays\":[],\"unavailabilities\":[],\"schedules\":[]},{\"id\":\"0656f389-02fd-4295-b21f-c3fd975d4339\",\"first_name\":\"Dr. David\",\"last_name\":\"Michel\",\"email\":\"dmichel3@example.com\",\"phone\":\"+22574878788\",\"qualification\":\"Dr.\",\"bio\":\"M\\u00e9decin sp\\u00e9cialis\\u00e9 en M\\u00e9decine de famille avec une exp\\u00e9rience de 24 ans.\",\"max_patients_per_day\":15,\"average_consultation_time\":54,\"is_available\":false,\"delays\":[],\"unavailabilities\":[],\"schedules\":[]},{\"id\":\"45a67167-4255-45f4-8857-847def42ea7d\",\"first_name\":\"Dr. Marie\",\"last_name\":\"Bernard\",\"email\":\"mbernard4@example.com\",\"phone\":\"+22528966337\",\"qualification\":\"Dr.\",\"bio\":\"M\\u00e9decin sp\\u00e9cialis\\u00e9 en M\\u00e9decine de famille avec une exp\\u00e9rience de 5 ans.\",\"max_patients_per_day\":27,\"average_consultation_time\":60,\"is_available\":false,\"delays\":[],\"unavailabilities\":[],\"schedules\":[]},{\"id\":\"0b0ac9c4-1667-4183-90b1-b7ca3645f1c4\",\"first_name\":\"Dr. Camille\",\"last_name\":\"Laurent\",\"email\":\"claurent5@example.com\",\"phone\":\"+22521102157\",\"qualification\":\"PhD\",\"bio\":\"M\\u00e9decin sp\\u00e9cialis\\u00e9 en M\\u00e9decine de famille avec une exp\\u00e9rience de 16 ans.\",\"max_patients_per_day\":13,\"average_consultation_time\":46,\"is_available\":false,\"delays\":[],\"unavailabilities\":[],\"schedules\":[]}]}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Afficher les d\u00e9tails complets d'un m\u00e9decin",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/doctors\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/doctors\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "consequatur",
+                                    "description": "The ID of the doctor."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 500,
+                            "body": "{\n    \"message\": \"Server Error\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/v1\/doctors\/{doctor_id}\/available-slots",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/doctors\/:doctor_id\/available-slots",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/doctors\/:doctor_id\/available-slots",
+                            "variable": [
+                                {
+                                    "id": "doctor_id",
+                                    "key": "doctor_id",
+                                    "value": "4643d44f-2544-428e-a791-711e2bc0e30d",
+                                    "description": "The ID of the doctor."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "POST api\/v1\/appointments",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/appointments",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/appointments"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"doctor_id\":\"consequatur\",\"appointment_date\":\"2106-12-08\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET api\/v1\/patient\/appointments",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/patient\/appointments",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/patient\/appointments"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/v1\/patient\/appointments\/{id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/patient\/appointments\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/patient\/appointments\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "eddf11d6-e886-4682-9989-50b4f3f91702",
+                                    "description": "The ID of the appointment."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "POST api\/v1\/appointments\/{id}\/cancel",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/appointments\/:id\/cancel",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/appointments\/:id\/cancel",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "eddf11d6-e886-4682-9989-50b4f3f91702",
+                                    "description": "The ID of the appointment."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET api\/v1\/doctor\/appointments",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/doctor\/appointments",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/doctor\/appointments"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/v1\/doctor\/appointments\/{id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/doctor\/appointments\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/doctor\/appointments\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "eddf11d6-e886-4682-9989-50b4f3f91702",
+                                    "description": "The ID of the appointment."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "POST api\/v1\/appointments\/{id}\/complete",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/appointments\/:id\/complete",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/appointments\/:id\/complete",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "eddf11d6-e886-4682-9989-50b4f3f91702",
+                                    "description": "The ID of the appointment."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "noauth"
+    }
+}
