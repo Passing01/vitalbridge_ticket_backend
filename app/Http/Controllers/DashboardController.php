@@ -74,6 +74,10 @@ class DashboardController extends Controller
             1   // Page courante
         );
 
+        $pending = \App\Models\Appointment::pending()->count();
+        $inConsultation = \App\Models\Appointment::where('is_being_served', true)->count();
+        $absent = \App\Models\Appointment::where('is_absent', true)->count();
+
         return view('dashboard', [
             'todayTickets' => $todayTickets,
             'ticketGrowth' => $ticketGrowth,
@@ -86,6 +90,25 @@ class DashboardController extends Controller
             'ticketTrends' => $ticketTrends,
             'statusDistribution' => $statusDistribution,
             'recentTickets' => $recentTickets,
+            'pending' => $pending,
+            'in_consultation' => $inConsultation,
+            'absent' => $absent,
+        ]);
+    }
+    
+    /**
+     * Retourne les métriques patients pour le dashboard backend
+     */
+    public function metrics()
+    {
+        $pending = \App\Models\Appointment::pending()->count();
+        $inConsultation = \App\Models\Appointment::where('is_being_served', true)->count();
+        $absent = \App\Models\Appointment::where('is_absent', true)->count();
+
+        return response()->json([
+            'pending' => $pending,
+            'in_consultation' => $inConsultation,
+            'absent' => $absent,
         ]);
     }
 }

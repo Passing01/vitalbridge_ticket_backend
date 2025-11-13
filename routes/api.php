@@ -82,6 +82,8 @@ Route::prefix('v1/doctor')->middleware(['auth:sanctum', 'role:doctor'])->group(f
 
 // Routes publiques pour la consultation des médecins et centres de santé
 Route::prefix('v1')->group(function () {
+    // Métriques du dashboard backend
+    Route::get('/dashboard/metrics', [\App\Http\Controllers\DashboardController::class, 'metrics']);
     // Centres de santé (reception)
     Route::get('/health-centers', [HealthCenterController::class, 'index']);
     Route::get('/health-centers/{id}', [HealthCenterController::class, 'show']);
