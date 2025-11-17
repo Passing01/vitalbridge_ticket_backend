@@ -1,11 +1,11 @@
  <aside
-      class="max-w-62.5 ease-nav-brand z-990 fixed inset-y-0 my-4 ml-4 block w-full -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 antialiased shadow-none transition-transform duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent">
+     class="max-w-62.5 ease-nav-brand z-990 fixed inset-y-0 my-4 ml-4 block w-full -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white dark:bg-slate-900 p-0 antialiased shadow-none transition-transform duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent">
       <div class="h-19.5">
         <i
-          class="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden"
+          class="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 dark:text-slate-200 xl:hidden"
           sidenav-close></i>
         <a
-          class="block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700"
+          class="block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700 dark:text-slate-100"
           href="javascript:;"
           target="_blank">
           
@@ -24,7 +24,7 @@
         <ul class="flex flex-col pl-0 mb-0">
           <li class="mt-0.5 w-full">
             <a
-              class="py-2.7 shadow-soft-xl text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold transition-colors {{ request()->routeIs('dashboard') ? 'bg-white text-slate-700' : 'text-slate-700' }}"
+              class="py-2.7 shadow-soft-xl text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold transition-colors {{ request()->routeIs('dashboard') ? 'bg-white text-slate-700 dark:bg-slate-800 dark:text-slate-100' : 'text-slate-700 dark:text-slate-200' }}"
               href="{{ route('dashboard') }}">
               <div
                 class="bg-gradient-to-tl from-purple-700 to-pink-500 shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
@@ -69,7 +69,7 @@
           @if(auth()->user()->role === 'doctor' || auth()->user()->role === 'reception')
           <li class="mt-0.5 w-full">
             <a
-              class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors {{ request()->routeIs('queues.*') ? 'bg-white text-slate-700 rounded-lg shadow-soft-xl' : 'text-slate-700' }}"
+              class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors {{ request()->routeIs('queues.*') ? 'bg-white text-slate-700 dark:bg-slate-800 dark:text-slate-100 rounded-lg shadow-soft-xl' : 'text-slate-700 dark:text-slate-200' }}"
               href="{{ route('queues.index') }}">
               <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
                 <i class="fas fa-users text-slate-700"></i>
@@ -81,9 +81,10 @@
           </li>
           @endif
           
+          @if(auth()->user()->role === 'reception')
           <li class="mt-0.5 w-full">
             <a
-              class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors {{ request()->routeIs('departments.*') ? 'bg-white text-slate-700 rounded-lg shadow-soft-xl' : 'text-slate-700' }}"
+              class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors {{ request()->routeIs('departments.*') ? 'bg-white text-slate-700 dark:bg-slate-800 dark:text-slate-100 rounded-lg shadow-soft-xl' : 'text-slate-700 dark:text-slate-200' }}"
               href="{{ route('departments.index') }}">
               <div
                 class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
@@ -127,7 +128,7 @@
 
           <li class="mt-0.5 w-full">
             <a
-              class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors {{ request()->routeIs('departments.*') ? 'bg-white text-slate-700 rounded-lg shadow-soft-xl' : 'text-slate-700' }}"
+              class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors {{ request()->routeIs('doctors.*') ? 'bg-white text-slate-700 dark:bg-slate-800 dark:text-slate-100 rounded-lg shadow-soft-xl' : 'text-slate-700 dark:text-slate-200' }}"
               href="{{ route('doctors.index') }}">
               <div
                 class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center fill-current stroke-0 text-center xl:p-2.5">
@@ -168,11 +169,13 @@
               >
             </a>
           </li>
+          @endif
 
+          @if(auth()->user()->role === 'reception')
           <li class="mt-0.5 w-full">
             <a
-              class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors {{ request()->routeIs('departments.*') ? 'bg-white text-slate-700 rounded-lg shadow-soft-xl' : 'text-slate-700' }}"
-              href="./pages/virtual-reality.html">
+              class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors {{ request()->routeIs('patients.*') ? 'bg-white text-slate-700 dark:bg-slate-800 dark:text-slate-100 rounded-lg shadow-soft-xl' : 'text-slate-700 dark:text-slate-200' }}"
+              href="{{ route('patients.index') }}">
               <div
                 class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
                 <svg
@@ -215,11 +218,13 @@
               >
             </a>
           </li>
+          @endif
 
+          @if(auth()->user()->role === 'admin')
           <li class="mt-0.5 w-full">
             <a
-              class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors {{ request()->routeIs('departments.*') ? 'bg-white text-slate-700 rounded-lg shadow-soft-xl' : 'text-slate-700' }}"
-              href="pages/rtl.html">
+              class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors {{ request()->routeIs('admin.health-centers.*') ? 'bg-white text-slate-700 dark:bg-slate-800 dark:text-slate-100 rounded-lg shadow-soft-xl' : 'text-slate-700 dark:text-slate-200' }}"
+              href="{{ route('admin.health-centers.index') }}">
               <div
                 class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
                 <svg
@@ -258,10 +263,11 @@
               </div>
               <span
                 class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft"
-                >Mes Tickets</span
+                >Centres de santé</span
               >
             </a>
           </li>
+          @endif
 
           <!-- <li class="w-full mt-4">
             <h6

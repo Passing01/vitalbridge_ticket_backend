@@ -47,15 +47,40 @@
         </div>
     @endif
 
+    <!-- Sélection de l'affiliation pour gérer les horaires -->
+    @if($doctor->doctorProfiles->count() > 1)
+    <div class="w-full max-w-full px-3 mt-6">
+        <div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
+            <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
+                <label for="schedule_profile_selector" class="block text-sm font-medium text-gray-700 mb-2">Affiliation :</label>
+                <select name="schedule_profile_id" id="schedule_profile_selector" 
+                    class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    @foreach($doctor->doctorProfiles as $profile)
+                        <option value="{{ $profile->id }}" {{ $selectedProfile && $selectedProfile->id == $profile->id ? 'selected' : '' }}>
+                            {{ $profile->specialty->name ?? 'Non spécifié' }} - {{ $profile->specialty->department->name ?? 'Non spécifié' }}
+                        </option>
+                    @endforeach
+                </select>
+                <p class="mt-2 text-xs text-gray-600">
+                    Sélectionnez l'affiliation pour laquelle vous voulez gérer les horaires.
+                </p>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    @if($selectedProfile)
     <div class="w-full max-w-full px-3 mt-6">
         <div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
             <form action="{{ route('doctors.schedule.update', $doctor) }}" method="POST">
                 @csrf
                 @method('PUT')
                 
+                <input type="hidden" name="doctor_profile_id" value="{{ $selectedProfile->id }}">
+                
                 <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
                     <h6 class="mb-0">Horaires de consultation</h6>
-                    <p class="text-sm text-slate-500">Définissez les horaires d'ouverture pour chaque jour de la semaine</p>
+                    <p class="text-sm text-slate-500">Définissez les horaires d'ouverture pour chaque jour de la semaine pour l'affiliation : <strong>{{ $selectedProfile->specialty->name ?? 'Non spécifié' }}</strong></p>
                 </div>
                 
                 <div class="flex-auto p-4">
@@ -134,8 +159,18 @@
             </form>
         </div>
     </div>
+    @else
+        <div class="w-full max-w-full px-3 mt-6">
+            <div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
+                <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
+                    <p class="text-sm text-red-500">Aucune affiliation disponible. Veuillez d'abord créer une affiliation pour ce médecin.</p>
+                </div>
+            </div>
+        </div>
+    @endif
 
     <!-- Formulaire d'indisponibilité -->
+    @if($selectedProfile)
     <div class="w-full max-w-full px-3 mt-6">
         <div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
             <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
@@ -145,23 +180,32 @@
             <div class="flex-auto p-4">
                 <form action="{{ route('doctors.unavailable', $doctor) }}" method="POST">
                     @csrf
+                    <input type="hidden" name="doctor_profile_id" value="{{ $selectedProfile->id }}">
                     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                         <div class="flex flex-col">
-                            <label for="start_date" class="mb-2 ml-1 text-xs font-semibold text-slate-700">Date de début</label>
-                            <input type="datetime-local" name="start_date" id="start_date" 
+                            <label for="unavailable_date" class="mb-2 ml-1 text-xs font-semibold text-slate-700">Date *</label>
+                            <input type="date" name="unavailable_date" id="unavailable_date" 
+                                   min="{{ now()->toDateString() }}"
                                    class="text-sm leading-4.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
                                    required>
                         </div>
                         <div class="flex flex-col">
-                            <label for="end_date" class="mb-2 ml-1 text-xs font-semibold text-slate-700">Date de fin</label>
-                            <input type="datetime-local" name="end_date" id="end_date" 
+                            <label for="start_time" class="mb-2 ml-1 text-xs font-semibold text-slate-700">Heure de début *</label>
+                            <input type="time" name="start_time" id="start_time" 
+                                   class="text-sm leading-4.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
+                                   required>
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="end_time" class="mb-2 ml-1 text-xs font-semibold text-slate-700">Heure de fin *</label>
+                            <input type="time" name="end_time" id="end_time" 
                                    class="text-sm leading-4.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
                                    required>
                         </div>
                         <div class="sm:col-span-2">
-                            <label for="reason" class="mb-2 ml-1 text-xs font-semibold text-slate-700">Raison (optionnel)</label>
+                            <label for="reason" class="mb-2 ml-1 text-xs font-semibold text-slate-700">Raison *</label>
                             <input type="text" name="reason" id="reason" 
-                                   class="text-sm leading-4.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow">
+                                   class="text-sm leading-4.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
+                                   required>
                         </div>
                     </div>
                     <div class="mt-6">
@@ -173,47 +217,68 @@
             </div>
         </div>
     </div>
+    @endif
 
     <!-- Section des retards -->
+    @if($selectedProfile)
     <div class="w-full max-w-full px-3 mt-6">
         <div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
             <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
                 <h6 class="mb-0">Déclarer un retard</h6>
-                <p class="text-sm text-slate-500">Signalez un retard exceptionnel du médecin</p>
+                <p class="text-sm text-slate-500">Signalez un retard exceptionnel du médecin pour l'affiliation : <strong>{{ $selectedProfile->specialty->name ?? 'Non spécifié' }}</strong></p>
             </div>
             <div class="flex-auto p-4">
                 <form action="{{ route('doctors.delay', $doctor) }}" method="POST">
                     @csrf
+                    <input type="hidden" name="doctor_profile_id" value="{{ $selectedProfile->id }}">
                     <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                         <div class="flex flex-col">
-                            <label for="date" class="mb-2 ml-1 text-xs font-semibold text-slate-700">Date</label>
-                            <input type="date" name="date" id="date" 
+                            <label for="delay_start" class="mb-2 ml-1 text-xs font-semibold text-slate-700">Date et heure *</label>
+                            <input type="datetime-local" name="delay_start" id="delay_start" 
                                    class="text-sm leading-4.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
                                    required>
                         </div>
                         <div class="flex flex-col">
-                            <label for="delay_minutes" class="mb-2 ml-1 text-xs font-semibold text-slate-700">Durée du retard (minutes)</label>
-                            <input type="number" name="delay_minutes" id="delay_minutes" min="1" 
+                            <label for="delay_duration" class="mb-2 ml-1 text-xs font-semibold text-slate-700">Durée du retard (minutes) *</label>
+                            <input type="number" name="delay_duration" id="delay_duration" min="1" 
                                    class="text-sm leading-4.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
                                    required>
                         </div>
-                        <div class="flex items-end">
-                            <button type="submit" class="inline-block px-6 py-3 font-bold text-center text-white uppercase align-middle transition-all border-0 rounded-lg cursor-pointer hover:scale-102 active:opacity-85 hover:shadow-soft-xs bg-gradient-to-tl from-orange-500 to-yellow-400 leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25">
-                                <i class="fas fa-clock mr-2"></i> Enregistrer le retard
-                            </button>
+                        <div class="flex flex-col">
+                            <label for="delay_reason" class="mb-2 ml-1 text-xs font-semibold text-slate-700">Raison *</label>
+                            <input type="text" name="reason" id="delay_reason" 
+                                   class="text-sm leading-4.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
+                                   required>
                         </div>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" class="inline-block px-6 py-3 font-bold text-center text-white uppercase align-middle transition-all border-0 rounded-lg cursor-pointer hover:scale-102 active:opacity-85 hover:shadow-soft-xs bg-gradient-to-tl from-orange-500 to-yellow-400 leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25">
+                            <i class="fas fa-clock mr-2"></i> Enregistrer le retard
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    @endif
 </div>
 
 @push('scripts')
 <script>
-    // Initialiser les valeurs par défaut pour la date et l'heure actuelles
+    // Gestion du sélecteur de profil pour les horaires
     document.addEventListener('DOMContentLoaded', function() {
-        // Définir la date et l'heure actuelles pour le formulaire d'indisponibilité
+        const scheduleProfileSelector = document.getElementById('schedule_profile_selector');
+        if (scheduleProfileSelector) {
+            scheduleProfileSelector.addEventListener('change', function() {
+                const profileId = this.value;
+                if (profileId) {
+                    // Rediriger vers la page avec le profil sélectionné
+                    window.location.href = '{{ route("doctors.schedule", $doctor) }}?profile=' + profileId;
+                }
+            });
+        }
+
+        // Initialiser les valeurs par défaut pour la date et l'heure actuelles
         const now = new Date();
         
         // Format YYYY-MM-DDTHH:MM pour les champs datetime-local
@@ -222,26 +287,32 @@
             return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
         };
         
-        // Définir les valeurs par défaut pour le formulaire d'indisponibilité
-        const startDateInput = document.getElementById('start_date');
-        const endDateInput = document.getElementById('end_date');
-        
-        if (startDateInput && !startDateInput.value) {
-            startDateInput.value = formatDateTimeLocal(now);
-        }
-        
-        if (endDateInput && !endDateInput.value) {
-            const endDate = new Date(now);
-            endDate.setHours(endDate.getHours() + 1); // Par défaut, 1 heure plus tard
-            endDateInput.value = formatDateTimeLocal(endDate);
-        }
-        
-        // Définir la date d'aujourd'hui par défaut pour le formulaire de retard
-        const dateInput = document.getElementById('date');
-        if (dateInput && !dateInput.value) {
+        // Définir la date d'aujourd'hui par défaut pour le formulaire d'indisponibilité
+        const unavailableDateInput = document.getElementById('unavailable_date');
+        if (unavailableDateInput && !unavailableDateInput.value) {
             const today = new Date();
             const formattedDate = today.toISOString().split('T')[0];
-            dateInput.value = formattedDate;
+            unavailableDateInput.value = formattedDate;
+        }
+        
+        // Définir l'heure actuelle par défaut pour le formulaire d'indisponibilité
+        const startTimeInput = document.getElementById('start_time');
+        const endTimeInput = document.getElementById('end_time');
+        if (startTimeInput && !startTimeInput.value) {
+            const pad = (num) => num.toString().padStart(2, '0');
+            startTimeInput.value = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+        }
+        if (endTimeInput && !endTimeInput.value) {
+            const pad = (num) => num.toString().padStart(2, '0');
+            const endTime = new Date(now);
+            endTime.setHours(endTime.getHours() + 1);
+            endTimeInput.value = `${pad(endTime.getHours())}:${pad(endTime.getMinutes())}`;
+        }
+        
+        // Définir la date et l'heure actuelles par défaut pour le formulaire de retard
+        const delayStartInput = document.getElementById('delay_start');
+        if (delayStartInput && !delayStartInput.value) {
+            delayStartInput.value = formatDateTimeLocal(now);
         }
 
         // Activer/désactiver les champs d'heure en fonction de la case à cocher

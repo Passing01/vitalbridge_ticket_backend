@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             'otp_expires_at' => now()->addHour(),
             'otp_verified_at' => now(),
             'language' => 'fr',
+            'is_active' => true,
         ]);
         
         // Exécution des seeders dans l'ordre
@@ -54,6 +55,7 @@ class DatabaseSeeder extends Seeder
             'otp_expires_at' => now()->addHour(),
             'otp_verified_at' => now(),
             'language' => 'fr',
+            'is_active' => true,
         ]);
     }
 }

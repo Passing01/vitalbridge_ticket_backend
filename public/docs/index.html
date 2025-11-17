@@ -86,8 +86,11 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-v1-auth-logout">
                                 <a href="#endpoints-POSTapi-v1-auth-logout">Logout user (revoke token)</a>
                             </li>
-                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-doctor-profile">
-                                <a href="#endpoints-GETapi-v1-doctor-profile">Récupérer le profil complet du médecin</a>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-doctor-affiliations">
+                                <a href="#endpoints-GETapi-v1-doctor-affiliations">Récupérer toutes les affiliations du médecin</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-doctor-profile--profileId-">
+                                <a href="#endpoints-GETapi-v1-doctor-profile--profileId-">Récupérer le profil complet d'une affiliation spécifique</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-doctor--doctor_id--queue">
                                 <a href="#endpoints-GETapi-v1-doctor--doctor_id--queue">Afficher la file d'attente du jour pour un médecin</a>
@@ -108,10 +111,10 @@
                                 <a href="#endpoints-POSTapi-v1-doctor-appointments--appointment_id--urgent">Marquer un rendez-vous comme urgent</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-v1-doctor-delay">
-                                <a href="#endpoints-POSTapi-v1-doctor-delay">Déclarer un retard</a>
+                                <a href="#endpoints-POSTapi-v1-doctor-delay">Déclarer un retard pour une affiliation spécifique</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-v1-doctor-unavailability">
-                                <a href="#endpoints-POSTapi-v1-doctor-unavailability">Ajouter une indisponibilité</a>
+                                <a href="#endpoints-POSTapi-v1-doctor-unavailability">Ajouter une indisponibilité pour une affiliation spécifique</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-v1-doctor-unavailability--id-">
                                 <a href="#endpoints-DELETEapi-v1-doctor-unavailability--id-">Supprimer une indisponibilité</a>
@@ -166,7 +169,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: November 8, 2025</li>
+        <li>Last updated: November 12, 2025</li>
     </ul>
 </div>
 
@@ -206,10 +209,10 @@ You can switch the language used with the tabs at the top right (or from the nav
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"first_name\": \"vmqeopfuudtdsufvyvddq\",
-    \"last_name\": \"amniihfqcoynlazghdtqt\",
-    \"phone\": \"qxbajwbpilpmufinl\",
-    \"language\": \"dioula\"
+    \"first_name\": \"b\",
+    \"last_name\": \"n\",
+    \"phone\": \"gzmiyvdljnikhway\",
+    \"language\": \"moore\"
 }"
 </code></pre></div>
 
@@ -225,10 +228,10 @@ const headers = {
 };
 
 let body = {
-    "first_name": "vmqeopfuudtdsufvyvddq",
-    "last_name": "amniihfqcoynlazghdtqt",
-    "phone": "qxbajwbpilpmufinl",
-    "language": "dioula"
+    "first_name": "b",
+    "last_name": "n",
+    "phone": "gzmiyvdljnikhway",
+    "language": "moore"
 };
 
 fetch(url, {
@@ -320,10 +323,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="first_name"                data-endpoint="POSTapi-v1-auth-register"
-               value="vmqeopfuudtdsufvyvddq"
+               value="b"
                data-component="body">
     <br>
-<p>Must not be greater than 255 characters. Example: <code>vmqeopfuudtdsufvyvddq</code></p>
+<p>Must not be greater than 255 characters. Example: <code>b</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>last_name</code></b>&nbsp;&nbsp;
@@ -332,10 +335,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="last_name"                data-endpoint="POSTapi-v1-auth-register"
-               value="amniihfqcoynlazghdtqt"
+               value="n"
                data-component="body">
     <br>
-<p>Must not be greater than 255 characters. Example: <code>amniihfqcoynlazghdtqt</code></p>
+<p>Must not be greater than 255 characters. Example: <code>n</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>phone</code></b>&nbsp;&nbsp;
@@ -344,10 +347,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="phone"                data-endpoint="POSTapi-v1-auth-register"
-               value="qxbajwbpilpmufinl"
+               value="gzmiyvdljnikhway"
                data-component="body">
     <br>
-<p>Must match the regex /^(+?[0-9]{8,15}. Must not be greater than 20 characters. Example: <code>qxbajwbpilpmufinl</code></p>
+<p>Must match the regex /^(+?[0-9]{8,15}. Must not be greater than 20 characters. Example: <code>gzmiyvdljnikhway</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>language</code></b>&nbsp;&nbsp;
@@ -356,10 +359,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="language"                data-endpoint="POSTapi-v1-auth-register"
-               value="dioula"
+               value="moore"
                data-component="body">
     <br>
-<p>Example: <code>dioula</code></p>
+<p>Example: <code>moore</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>fr</code></li> <li><code>moore</code></li> <li><code>dioula</code></li> <li><code>english</code></li></ul>
         </div>
@@ -382,7 +385,7 @@ Must be one of:
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"phone\": \"(562771717728\"
+    \"phone\": \"(+64255931423268\"
 }"
 </code></pre></div>
 
@@ -398,7 +401,7 @@ const headers = {
 };
 
 let body = {
-    "phone": "(562771717728"
+    "phone": "(+64255931423268"
 };
 
 fetch(url, {
@@ -490,10 +493,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="phone"                data-endpoint="POSTapi-v1-auth-request-otp"
-               value="(562771717728"
+               value="(+64255931423268"
                data-component="body">
     <br>
-<p>Must match the regex /^(+?[0-9]{8,15}. Example: <code>(562771717728</code></p>
+<p>Must match the regex /^(+?[0-9]{8,15}. Example: <code>(+64255931423268</code></p>
         </div>
         </form>
 
@@ -514,7 +517,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"otp\": \"vmqeop\"
+    \"otp\": \"bngzmi\"
 }"
 </code></pre></div>
 
@@ -530,7 +533,7 @@ const headers = {
 };
 
 let body = {
-    "otp": "vmqeop"
+    "otp": "bngzmi"
 };
 
 fetch(url, {
@@ -622,10 +625,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="otp"                data-endpoint="POSTapi-v1-auth-verify-otp"
-               value="vmqeop"
+               value="bngzmi"
                data-component="body">
     <br>
-<p>Must be 6 characters. Example: <code>vmqeop</code></p>
+<p>Must be 6 characters. Example: <code>bngzmi</code></p>
         </div>
         </form>
 
@@ -865,27 +868,27 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
-                    <h2 id="endpoints-GETapi-v1-doctor-profile">Récupérer le profil complet du médecin</h2>
+                    <h2 id="endpoints-GETapi-v1-doctor-affiliations">Récupérer toutes les affiliations du médecin</h2>
 
 <p>
 </p>
 
 
 
-<span id="example-requests-GETapi-v1-doctor-profile">
+<span id="example-requests-GETapi-v1-doctor-affiliations">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/v1/doctor/profile" \
+    --get "http://localhost/api/v1/doctor/affiliations" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/doctor/profile"
+    "http://localhost/api/v1/doctor/affiliations"
 );
 
 const headers = {
@@ -900,7 +903,7 @@ fetch(url, {
 
 </span>
 
-<span id="example-responses-GETapi-v1-doctor-profile">
+<span id="example-responses-GETapi-v1-doctor-affiliations">
             <blockquote>
             <p>Example response (401):</p>
         </blockquote>
@@ -918,43 +921,43 @@ access-control-allow-origin: *
 }</code>
  </pre>
     </span>
-<span id="execution-results-GETapi-v1-doctor-profile" hidden>
+<span id="execution-results-GETapi-v1-doctor-affiliations" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETapi-v1-doctor-profile"></span>:
+                id="execution-response-status-GETapi-v1-doctor-affiliations"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-v1-doctor-profile"
+    <pre class="json"><code id="execution-response-content-GETapi-v1-doctor-affiliations"
       data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
 </span>
-<span id="execution-error-GETapi-v1-doctor-profile" hidden>
+<span id="execution-error-GETapi-v1-doctor-affiliations" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-v1-doctor-profile">
+    <pre><code id="execution-error-message-GETapi-v1-doctor-affiliations">
 
 Tip: Check that you&#039;re properly connected to the network.
 If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
 You can check the Dev Tools console for debugging information.</code></pre>
 </span>
-<form id="form-GETapi-v1-doctor-profile" data-method="GET"
-      data-path="api/v1/doctor/profile"
+<form id="form-GETapi-v1-doctor-affiliations" data-method="GET"
+      data-path="api/v1/doctor/affiliations"
       data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-doctor-profile', this);">
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-doctor-affiliations', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-v1-doctor-profile"
-                    onclick="tryItOut('GETapi-v1-doctor-profile');">Try it out ⚡
+                    id="btn-tryout-GETapi-v1-doctor-affiliations"
+                    onclick="tryItOut('GETapi-v1-doctor-affiliations');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-v1-doctor-profile"
-                    onclick="cancelTryOut('GETapi-v1-doctor-profile');" hidden>Cancel 🛑
+                    id="btn-canceltryout-GETapi-v1-doctor-affiliations"
+                    onclick="cancelTryOut('GETapi-v1-doctor-affiliations');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-v1-doctor-profile"
+                    id="btn-executetryout-GETapi-v1-doctor-affiliations"
                     data-initial-text="Send Request 💥"
                     data-loading-text="⏱ Sending..."
                     hidden>Send Request 💥
@@ -962,7 +965,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </h3>
             <p>
             <small class="badge badge-green">GET</small>
-            <b><code>api/v1/doctor/profile</code></b>
+            <b><code>api/v1/doctor/affiliations</code></b>
         </p>
                 <h4 class="fancy-heading-panel"><b>Headers</b></h4>
                                 <div style="padding-left: 28px; clear: unset;">
@@ -971,7 +974,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Content-Type"                data-endpoint="GETapi-v1-doctor-profile"
+                              name="Content-Type"                data-endpoint="GETapi-v1-doctor-affiliations"
                value="application/json"
                data-component="header">
     <br>
@@ -983,13 +986,152 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="Accept"                data-endpoint="GETapi-v1-doctor-profile"
+                              name="Accept"                data-endpoint="GETapi-v1-doctor-affiliations"
                value="application/json"
                data-component="header">
     <br>
 <p>Example: <code>application/json</code></p>
             </div>
                         </form>
+
+                    <h2 id="endpoints-GETapi-v1-doctor-profile--profileId-">Récupérer le profil complet d&#039;une affiliation spécifique</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-doctor-profile--profileId-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/v1/doctor/profile/architecto" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/doctor/profile/architecto"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-doctor-profile--profileId-">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-doctor-profile--profileId-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-doctor-profile--profileId-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-doctor-profile--profileId-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-doctor-profile--profileId-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-doctor-profile--profileId-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-doctor-profile--profileId-" data-method="GET"
+      data-path="api/v1/doctor/profile/{profileId}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-doctor-profile--profileId-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-doctor-profile--profileId-"
+                    onclick="tryItOut('GETapi-v1-doctor-profile--profileId-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-doctor-profile--profileId-"
+                    onclick="cancelTryOut('GETapi-v1-doctor-profile--profileId-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-doctor-profile--profileId-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/doctor/profile/{profileId}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-doctor-profile--profileId-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-doctor-profile--profileId-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>profileId</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="profileId"                data-endpoint="GETapi-v1-doctor-profile--profileId-"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>Example: <code>architecto</code></p>
+            </div>
+                    </form>
 
                     <h2 id="endpoints-GETapi-v1-doctor--doctor_id--queue">Afficher la file d&#039;attente du jour pour un médecin</h2>
 
@@ -1004,14 +1146,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/v1/doctor/4643d44f-2544-428e-a791-711e2bc0e30d/queue" \
+    --get "http://localhost/api/v1/doctor/005725a0-af91-4440-995a-a98d6ec99326/queue" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/doctor/4643d44f-2544-428e-a791-711e2bc0e30d/queue"
+    "http://localhost/api/v1/doctor/005725a0-af91-4440-995a-a98d6ec99326/queue"
 );
 
 const headers = {
@@ -1123,10 +1265,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="doctor_id"                data-endpoint="GETapi-v1-doctor--doctor_id--queue"
-               value="4643d44f-2544-428e-a791-711e2bc0e30d"
+               value="005725a0-af91-4440-995a-a98d6ec99326"
                data-component="url">
     <br>
-<p>The ID of the doctor. Example: <code>4643d44f-2544-428e-a791-711e2bc0e30d</code></p>
+<p>The ID of the doctor. Example: <code>005725a0-af91-4440-995a-a98d6ec99326</code></p>
             </div>
                     </form>
 
@@ -1143,14 +1285,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/v1/doctor/4643d44f-2544-428e-a791-711e2bc0e30d/queue/next" \
+    "http://localhost/api/v1/doctor/005725a0-af91-4440-995a-a98d6ec99326/queue/next" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/doctor/4643d44f-2544-428e-a791-711e2bc0e30d/queue/next"
+    "http://localhost/api/v1/doctor/005725a0-af91-4440-995a-a98d6ec99326/queue/next"
 );
 
 const headers = {
@@ -1246,10 +1388,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="doctor_id"                data-endpoint="POSTapi-v1-doctor--doctor_id--queue-next"
-               value="4643d44f-2544-428e-a791-711e2bc0e30d"
+               value="005725a0-af91-4440-995a-a98d6ec99326"
                data-component="url">
     <br>
-<p>The ID of the doctor. Example: <code>4643d44f-2544-428e-a791-711e2bc0e30d</code></p>
+<p>The ID of the doctor. Example: <code>005725a0-af91-4440-995a-a98d6ec99326</code></p>
             </div>
                     </form>
 
@@ -1266,14 +1408,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/v1/doctor/appointments/eddf11d6-e886-4682-9989-50b4f3f91702/serve" \
+    "http://localhost/api/v1/doctor/appointments/architecto/serve" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/doctor/appointments/eddf11d6-e886-4682-9989-50b4f3f91702/serve"
+    "http://localhost/api/v1/doctor/appointments/architecto/serve"
 );
 
 const headers = {
@@ -1369,10 +1511,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="appointment_id"                data-endpoint="POSTapi-v1-doctor-appointments--appointment_id--serve"
-               value="eddf11d6-e886-4682-9989-50b4f3f91702"
+               value="architecto"
                data-component="url">
     <br>
-<p>The ID of the appointment. Example: <code>eddf11d6-e886-4682-9989-50b4f3f91702</code></p>
+<p>The ID of the appointment. Example: <code>architecto</code></p>
             </div>
                     </form>
 
@@ -1389,14 +1531,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/v1/doctor/appointments/eddf11d6-e886-4682-9989-50b4f3f91702/absent" \
+    "http://localhost/api/v1/doctor/appointments/architecto/absent" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/doctor/appointments/eddf11d6-e886-4682-9989-50b4f3f91702/absent"
+    "http://localhost/api/v1/doctor/appointments/architecto/absent"
 );
 
 const headers = {
@@ -1492,10 +1634,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="appointment_id"                data-endpoint="POSTapi-v1-doctor-appointments--appointment_id--absent"
-               value="eddf11d6-e886-4682-9989-50b4f3f91702"
+               value="architecto"
                data-component="url">
     <br>
-<p>The ID of the appointment. Example: <code>eddf11d6-e886-4682-9989-50b4f3f91702</code></p>
+<p>The ID of the appointment. Example: <code>architecto</code></p>
             </div>
                     </form>
 
@@ -1512,14 +1654,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/v1/doctor/appointments/eddf11d6-e886-4682-9989-50b4f3f91702/requeue" \
+    "http://localhost/api/v1/doctor/appointments/architecto/requeue" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/doctor/appointments/eddf11d6-e886-4682-9989-50b4f3f91702/requeue"
+    "http://localhost/api/v1/doctor/appointments/architecto/requeue"
 );
 
 const headers = {
@@ -1615,10 +1757,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="appointment_id"                data-endpoint="POSTapi-v1-doctor-appointments--appointment_id--requeue"
-               value="eddf11d6-e886-4682-9989-50b4f3f91702"
+               value="architecto"
                data-component="url">
     <br>
-<p>The ID of the appointment. Example: <code>eddf11d6-e886-4682-9989-50b4f3f91702</code></p>
+<p>The ID of the appointment. Example: <code>architecto</code></p>
             </div>
                     </form>
 
@@ -1635,14 +1777,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/v1/doctor/appointments/eddf11d6-e886-4682-9989-50b4f3f91702/urgent" \
+    "http://localhost/api/v1/doctor/appointments/architecto/urgent" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/doctor/appointments/eddf11d6-e886-4682-9989-50b4f3f91702/urgent"
+    "http://localhost/api/v1/doctor/appointments/architecto/urgent"
 );
 
 const headers = {
@@ -1738,14 +1880,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="appointment_id"                data-endpoint="POSTapi-v1-doctor-appointments--appointment_id--urgent"
-               value="eddf11d6-e886-4682-9989-50b4f3f91702"
+               value="architecto"
                data-component="url">
     <br>
-<p>The ID of the appointment. Example: <code>eddf11d6-e886-4682-9989-50b4f3f91702</code></p>
+<p>The ID of the appointment. Example: <code>architecto</code></p>
             </div>
                     </form>
 
-                    <h2 id="endpoints-POSTapi-v1-doctor-delay">Déclarer un retard</h2>
+                    <h2 id="endpoints-POSTapi-v1-doctor-delay">Déclarer un retard pour une affiliation spécifique</h2>
 
 <p>
 </p>
@@ -1762,8 +1904,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"delay_minutes\": 21,
-    \"reason\": \"mqeopfuudtdsufvyvddqa\"
+    \"doctor_profile_id\": \"architecto\",
+    \"delay_duration\": 22,
+    \"reason\": \"g\"
 }"
 </code></pre></div>
 
@@ -1779,8 +1922,9 @@ const headers = {
 };
 
 let body = {
-    "delay_minutes": 21,
-    "reason": "mqeopfuudtdsufvyvddqa"
+    "doctor_profile_id": "architecto",
+    "delay_duration": 22,
+    "reason": "g"
 };
 
 fetch(url, {
@@ -1866,16 +2010,28 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                                 <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>delay_minutes</code></b>&nbsp;&nbsp;
+            <b style="line-height: 2;"><code>doctor_profile_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="doctor_profile_id"                data-endpoint="POSTapi-v1-doctor-delay"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>The <code>id</code> of an existing record in the doctor_profiles table. Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>delay_duration</code></b>&nbsp;&nbsp;
 <small>integer</small>&nbsp;
  &nbsp;
  &nbsp;
                 <input type="number" style="display: none"
-               step="any"               name="delay_minutes"                data-endpoint="POSTapi-v1-doctor-delay"
-               value="21"
+               step="any"               name="delay_duration"                data-endpoint="POSTapi-v1-doctor-delay"
+               value="22"
                data-component="body">
     <br>
-<p>Must be at least 1. Must not be greater than 240. Example: <code>21</code></p>
+<p>Must be at least 1. Must not be greater than 240. Example: <code>22</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>reason</code></b>&nbsp;&nbsp;
@@ -1884,14 +2040,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="reason"                data-endpoint="POSTapi-v1-doctor-delay"
-               value="mqeopfuudtdsufvyvddqa"
+               value="g"
                data-component="body">
     <br>
-<p>max 4 heures. Must not be greater than 500 characters. Example: <code>mqeopfuudtdsufvyvddqa</code></p>
+<p>max 4 heures en minutes. Must not be greater than 500 characters. Example: <code>g</code></p>
         </div>
         </form>
 
-                    <h2 id="endpoints-POSTapi-v1-doctor-unavailability">Ajouter une indisponibilité</h2>
+                    <h2 id="endpoints-POSTapi-v1-doctor-unavailability">Ajouter une indisponibilité pour une affiliation spécifique</h2>
 
 <p>
 </p>
@@ -1908,12 +2064,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"start_datetime\": \"2106-12-08\",
-    \"end_datetime\": \"2106-12-08\",
-    \"reason\": \"mqeopfuudtdsufvyvddqa\",
-    \"is_recurring\": true,
-    \"recurrence_pattern\": \"weekly\",
-    \"recurrence_end_date\": \"2106-12-08\"
+    \"doctor_profile_id\": \"architecto\",
+    \"unavailable_date\": \"2051-12-06\",
+    \"start_time\": \"16:41\",
+    \"end_time\": \"2051-12-06\",
+    \"reason\": \"n\"
 }"
 </code></pre></div>
 
@@ -1929,12 +2084,11 @@ const headers = {
 };
 
 let body = {
-    "start_datetime": "2106-12-08",
-    "end_datetime": "2106-12-08",
-    "reason": "mqeopfuudtdsufvyvddqa",
-    "is_recurring": true,
-    "recurrence_pattern": "weekly",
-    "recurrence_end_date": "2106-12-08"
+    "doctor_profile_id": "architecto",
+    "unavailable_date": "2051-12-06",
+    "start_time": "16:41",
+    "end_time": "2051-12-06",
+    "reason": "n"
 };
 
 fetch(url, {
@@ -2020,28 +2174,52 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                                 <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>start_datetime</code></b>&nbsp;&nbsp;
+            <b style="line-height: 2;"><code>doctor_profile_id</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="start_datetime"                data-endpoint="POSTapi-v1-doctor-unavailability"
-               value="2106-12-08"
+                              name="doctor_profile_id"                data-endpoint="POSTapi-v1-doctor-unavailability"
+               value="architecto"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after <code>now</code>. Example: <code>2106-12-08</code></p>
+<p>The <code>id</code> of an existing record in the doctor_profiles table. Example: <code>architecto</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>end_datetime</code></b>&nbsp;&nbsp;
+            <b style="line-height: 2;"><code>unavailable_date</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
-                              name="end_datetime"                data-endpoint="POSTapi-v1-doctor-unavailability"
-               value="2106-12-08"
+                              name="unavailable_date"                data-endpoint="POSTapi-v1-doctor-unavailability"
+               value="2051-12-06"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after <code>start_datetime</code>. Example: <code>2106-12-08</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>today</code>. Example: <code>2051-12-06</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>start_time</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="start_time"                data-endpoint="POSTapi-v1-doctor-unavailability"
+               value="16:41"
+               data-component="body">
+    <br>
+<p>Must be a valid date in the format <code>H:i</code>. Example: <code>16:41</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>end_time</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="end_time"                data-endpoint="POSTapi-v1-doctor-unavailability"
+               value="2051-12-06"
+               data-component="body">
+    <br>
+<p>Must be a valid date in the format <code>H:i</code>. Must be a date after <code>start_time</code>. Example: <code>2051-12-06</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>reason</code></b>&nbsp;&nbsp;
@@ -2050,58 +2228,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="reason"                data-endpoint="POSTapi-v1-doctor-unavailability"
-               value="mqeopfuudtdsufvyvddqa"
+               value="n"
                data-component="body">
     <br>
-<p>Must not be greater than 500 characters. Example: <code>mqeopfuudtdsufvyvddqa</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>is_recurring</code></b>&nbsp;&nbsp;
-<small>boolean</small>&nbsp;
-<i>optional</i> &nbsp;
- &nbsp;
-                <label data-endpoint="POSTapi-v1-doctor-unavailability" style="display: none">
-            <input type="radio" name="is_recurring"
-                   value="true"
-                   data-endpoint="POSTapi-v1-doctor-unavailability"
-                   data-component="body"             >
-            <code>true</code>
-        </label>
-        <label data-endpoint="POSTapi-v1-doctor-unavailability" style="display: none">
-            <input type="radio" name="is_recurring"
-                   value="false"
-                   data-endpoint="POSTapi-v1-doctor-unavailability"
-                   data-component="body"             >
-            <code>false</code>
-        </label>
-    <br>
-<p>Example: <code>true</code></p>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>recurrence_pattern</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
-<i>optional</i> &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="recurrence_pattern"                data-endpoint="POSTapi-v1-doctor-unavailability"
-               value="weekly"
-               data-component="body">
-    <br>
-<p>This field is required when <code>is_recurring</code> is <code>true</code>. Example: <code>weekly</code></p>
-Must be one of:
-<ul style="list-style-type: square;"><li><code>daily</code></li> <li><code>weekly</code></li> <li><code>monthly</code></li></ul>
-        </div>
-                <div style=" padding-left: 28px;  clear: unset;">
-            <b style="line-height: 2;"><code>recurrence_end_date</code></b>&nbsp;&nbsp;
-<small>string</small>&nbsp;
-<i>optional</i> &nbsp;
- &nbsp;
-                <input type="text" style="display: none"
-                              name="recurrence_end_date"                data-endpoint="POSTapi-v1-doctor-unavailability"
-               value="2106-12-08"
-               data-component="body">
-    <br>
-<p>This field is required when <code>is_recurring</code> is <code>true</code>. Must be a valid date. Must be a date after <code>end_datetime</code>. Example: <code>2106-12-08</code></p>
+<p>Must not be greater than 500 characters. Example: <code>n</code></p>
         </div>
         </form>
 
@@ -2118,14 +2248,14 @@ Must be one of:
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost/api/v1/doctor/unavailability/consequatur" \
+    "http://localhost/api/v1/doctor/unavailability/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/doctor/unavailability/consequatur"
+    "http://localhost/api/v1/doctor/unavailability/architecto"
 );
 
 const headers = {
@@ -2221,10 +2351,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="DELETEapi-v1-doctor-unavailability--id-"
-               value="consequatur"
+               value="architecto"
                data-component="url">
     <br>
-<p>The ID of the unavailability. Example: <code>consequatur</code></p>
+<p>The ID of the unavailability. Example: <code>architecto</code></p>
             </div>
                     </form>
 
@@ -2279,7 +2409,7 @@ access-control-allow-origin: *
 <code class="language-json" style="max-height: 300px;">{
     &quot;health_centers&quot;: [
         {
-            &quot;id&quot;: &quot;167f5534-df2f-4377-9b18-2a455c101a68&quot;,
+            &quot;id&quot;: &quot;694ca84f-4bb7-4fbf-8cc7-973239ed51f4&quot;,
             &quot;first_name&quot;: &quot;CHU de Yalgado&quot;,
             &quot;last_name&quot;: &quot;Ouedraogo&quot;,
             &quot;email&quot;: &quot;contact@chuyo.bf&quot;,
@@ -2287,7 +2417,7 @@ access-control-allow-origin: *
             &quot;managed_departments_count&quot;: 5
         },
         {
-            &quot;id&quot;: &quot;412647c7-a273-4117-916d-759205b2f170&quot;,
+            &quot;id&quot;: &quot;dea6e0dd-f698-4aab-aa1f-88e2ed2ea83e&quot;,
             &quot;first_name&quot;: &quot;CHU P&eacute;diatrique&quot;,
             &quot;last_name&quot;: &quot;Charles de Gaulle&quot;,
             &quot;email&quot;: &quot;contact@chupcdg.bf&quot;,
@@ -2295,7 +2425,7 @@ access-control-allow-origin: *
             &quot;managed_departments_count&quot;: 5
         },
         {
-            &quot;id&quot;: &quot;e281d28d-495a-4ad7-b1ab-9ce262ff591d&quot;,
+            &quot;id&quot;: &quot;eba71d76-46ae-4b12-b1fa-257200384332&quot;,
             &quot;first_name&quot;: &quot;CMA&quot;,
             &quot;last_name&quot;: &quot;SAGA&quot;,
             &quot;email&quot;: &quot;contact@cmasaga.bf&quot;,
@@ -2303,7 +2433,7 @@ access-control-allow-origin: *
             &quot;managed_departments_count&quot;: 5
         },
         {
-            &quot;id&quot;: &quot;4d8d9d0a-ba11-4619-8417-7707f9336b82&quot;,
+            &quot;id&quot;: &quot;f2a1b1ce-55f8-4554-ba26-c8e0acc2d65b&quot;,
             &quot;first_name&quot;: &quot;Clinique&quot;,
             &quot;last_name&quot;: &quot;El Fateh Suka&quot;,
             &quot;email&quot;: &quot;contact@fatehsuka.bf&quot;,
@@ -2400,14 +2530,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/v1/health-centers/consequatur" \
+    --get "http://localhost/api/v1/health-centers/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/health-centers/consequatur"
+    "http://localhost/api/v1/health-centers/architecto"
 );
 
 const headers = {
@@ -2424,7 +2554,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-v1-health-centers--id-">
             <blockquote>
-            <p>Example response (500):</p>
+            <p>Example response (404):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -2436,7 +2566,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Server Error&quot;
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\User].&quot;
 }</code>
  </pre>
     </span>
@@ -2519,10 +2649,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-v1-health-centers--id-"
-               value="consequatur"
+               value="architecto"
                data-component="url">
     <br>
-<p>The ID of the health center. Example: <code>consequatur</code></p>
+<p>The ID of the health center. Example: <code>architecto</code></p>
             </div>
                     </form>
 
@@ -2579,9 +2709,9 @@ access-control-allow-origin: *
         &quot;id&quot;: 1,
         &quot;name&quot;: &quot;M&eacute;decine G&eacute;n&eacute;rale&quot;,
         &quot;description&quot;: &quot;Service de M&eacute;decine G&eacute;n&eacute;rale du centre &quot;,
-        &quot;reception_id&quot;: &quot;167f5534-df2f-4377-9b18-2a455c101a68&quot;,
-        &quot;created_at&quot;: &quot;2025-11-08T15:23:14.000000Z&quot;,
-        &quot;updated_at&quot;: &quot;2025-11-08T15:23:14.000000Z&quot;,
+        &quot;reception_id&quot;: &quot;694ca84f-4bb7-4fbf-8cc7-973239ed51f4&quot;,
+        &quot;created_at&quot;: &quot;2025-11-12T13:57:57.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2025-11-12T13:57:57.000000Z&quot;,
         &quot;specialties&quot;: [
             {
                 &quot;id&quot;: 1,
@@ -2777,111 +2907,75 @@ access-control-allow-origin: *
         &quot;active_doctors_count&quot;: 5,
         &quot;doctors&quot;: [
             {
-                &quot;id&quot;: &quot;021201e7-d996-4f87-ac6a-1e8ecb6c9a4a&quot;,
+                &quot;id&quot;: &quot;83d5564b-ff92-414b-8c19-bf3d5f4bf320&quot;,
                 &quot;first_name&quot;: &quot;Dr. Mohamed&quot;,
-                &quot;last_name&quot;: &quot;Thomas&quot;,
-                &quot;email&quot;: &quot;mthomas1@example.com&quot;,
-                &quot;phone&quot;: &quot;+22551331942&quot;,
-                &quot;qualification&quot;: &quot;Dr.&quot;,
-                &quot;bio&quot;: &quot;M&eacute;decin sp&eacute;cialis&eacute; en M&eacute;decine de famille avec une exp&eacute;rience de 27 ans.&quot;,
-                &quot;max_patients_per_day&quot;: 17,
-                &quot;average_consultation_time&quot;: 52,
-                &quot;is_available&quot;: false,
-                &quot;delays&quot;: [],
-                &quot;unavailabilities&quot;: [],
-                &quot;schedules&quot;: [
-                    {
-                        &quot;id&quot;: 5,
-                        &quot;doctor_id&quot;: &quot;021201e7-d996-4f87-ac6a-1e8ecb6c9a4a&quot;,
-                        &quot;day_of_week&quot;: &quot;friday&quot;,
-                        &quot;start_time&quot;: &quot;08:00&quot;,
-                        &quot;end_time&quot;: &quot;17:00&quot;
-                    },
-                    {
-                        &quot;id&quot;: 1,
-                        &quot;doctor_id&quot;: &quot;021201e7-d996-4f87-ac6a-1e8ecb6c9a4a&quot;,
-                        &quot;day_of_week&quot;: &quot;monday&quot;,
-                        &quot;start_time&quot;: &quot;08:00&quot;,
-                        &quot;end_time&quot;: &quot;17:00&quot;
-                    },
-                    {
-                        &quot;id&quot;: 4,
-                        &quot;doctor_id&quot;: &quot;021201e7-d996-4f87-ac6a-1e8ecb6c9a4a&quot;,
-                        &quot;day_of_week&quot;: &quot;thursday&quot;,
-                        &quot;start_time&quot;: &quot;08:00&quot;,
-                        &quot;end_time&quot;: &quot;17:00&quot;
-                    },
-                    {
-                        &quot;id&quot;: 2,
-                        &quot;doctor_id&quot;: &quot;021201e7-d996-4f87-ac6a-1e8ecb6c9a4a&quot;,
-                        &quot;day_of_week&quot;: &quot;tuesday&quot;,
-                        &quot;start_time&quot;: &quot;08:00&quot;,
-                        &quot;end_time&quot;: &quot;17:00&quot;
-                    },
-                    {
-                        &quot;id&quot;: 3,
-                        &quot;doctor_id&quot;: &quot;021201e7-d996-4f87-ac6a-1e8ecb6c9a4a&quot;,
-                        &quot;day_of_week&quot;: &quot;wednesday&quot;,
-                        &quot;start_time&quot;: &quot;08:00&quot;,
-                        &quot;end_time&quot;: &quot;17:00&quot;
-                    }
-                ]
-            },
-            {
-                &quot;id&quot;: &quot;79447446-a10c-491b-af74-3f68a8bb5b18&quot;,
-                &quot;first_name&quot;: &quot;Dr. Fatou&quot;,
-                &quot;last_name&quot;: &quot;Michel&quot;,
-                &quot;email&quot;: &quot;fmichel2@example.com&quot;,
-                &quot;phone&quot;: &quot;+22533707909&quot;,
-                &quot;qualification&quot;: &quot;Prof&quot;,
-                &quot;bio&quot;: &quot;M&eacute;decin sp&eacute;cialis&eacute; en M&eacute;decine de famille avec une exp&eacute;rience de 13 ans.&quot;,
-                &quot;max_patients_per_day&quot;: 28,
-                &quot;average_consultation_time&quot;: 49,
+                &quot;last_name&quot;: &quot;David&quot;,
+                &quot;email&quot;: &quot;mdavid1@example.com&quot;,
+                &quot;phone&quot;: &quot;+22599845819&quot;,
+                &quot;qualification&quot;: &quot;PhD&quot;,
+                &quot;bio&quot;: &quot;M&eacute;decin sp&eacute;cialis&eacute; en M&eacute;decine de famille avec une exp&eacute;rience de 21 ans.&quot;,
+                &quot;max_patients_per_day&quot;: 18,
+                &quot;average_consultation_time&quot;: 26,
                 &quot;is_available&quot;: true,
                 &quot;delays&quot;: [],
                 &quot;unavailabilities&quot;: [],
                 &quot;schedules&quot;: []
             },
             {
-                &quot;id&quot;: &quot;0656f389-02fd-4295-b21f-c3fd975d4339&quot;,
-                &quot;first_name&quot;: &quot;Dr. David&quot;,
-                &quot;last_name&quot;: &quot;Michel&quot;,
-                &quot;email&quot;: &quot;dmichel3@example.com&quot;,
-                &quot;phone&quot;: &quot;+22574878788&quot;,
-                &quot;qualification&quot;: &quot;Dr.&quot;,
-                &quot;bio&quot;: &quot;M&eacute;decin sp&eacute;cialis&eacute; en M&eacute;decine de famille avec une exp&eacute;rience de 24 ans.&quot;,
-                &quot;max_patients_per_day&quot;: 15,
+                &quot;id&quot;: &quot;5b041a62-1b33-4ef9-9732-4ea5b9349832&quot;,
+                &quot;first_name&quot;: &quot;Dr. Sophie&quot;,
+                &quot;last_name&quot;: &quot;Robert&quot;,
+                &quot;email&quot;: &quot;srobert2@example.com&quot;,
+                &quot;phone&quot;: &quot;+22530830498&quot;,
+                &quot;qualification&quot;: &quot;Dr&quot;,
+                &quot;bio&quot;: &quot;M&eacute;decin sp&eacute;cialis&eacute; en M&eacute;decine de famille avec une exp&eacute;rience de 27 ans.&quot;,
+                &quot;max_patients_per_day&quot;: 21,
+                &quot;average_consultation_time&quot;: 42,
+                &quot;is_available&quot;: true,
+                &quot;delays&quot;: [],
+                &quot;unavailabilities&quot;: [],
+                &quot;schedules&quot;: []
+            },
+            {
+                &quot;id&quot;: &quot;21ae9f56-c38e-406b-8c5d-970ebd7cf1da&quot;,
+                &quot;first_name&quot;: &quot;Dr. Aminata&quot;,
+                &quot;last_name&quot;: &quot;Thomas&quot;,
+                &quot;email&quot;: &quot;athomas3@example.com&quot;,
+                &quot;phone&quot;: &quot;+22529783244&quot;,
+                &quot;qualification&quot;: &quot;Prof&quot;,
+                &quot;bio&quot;: &quot;M&eacute;decin sp&eacute;cialis&eacute; en M&eacute;decine de famille avec une exp&eacute;rience de 23 ans.&quot;,
+                &quot;max_patients_per_day&quot;: 19,
+                &quot;average_consultation_time&quot;: 50,
+                &quot;is_available&quot;: true,
+                &quot;delays&quot;: [],
+                &quot;unavailabilities&quot;: [],
+                &quot;schedules&quot;: []
+            },
+            {
+                &quot;id&quot;: &quot;409a2e13-51e8-4e14-91b4-44758c7f7b08&quot;,
+                &quot;first_name&quot;: &quot;Dr. Chlo&eacute;&quot;,
+                &quot;last_name&quot;: &quot;Simon&quot;,
+                &quot;email&quot;: &quot;csimon4@example.com&quot;,
+                &quot;phone&quot;: &quot;+22553895885&quot;,
+                &quot;qualification&quot;: &quot;Dr&quot;,
+                &quot;bio&quot;: &quot;M&eacute;decin sp&eacute;cialis&eacute; en M&eacute;decine de famille avec une exp&eacute;rience de 22 ans.&quot;,
+                &quot;max_patients_per_day&quot;: 14,
+                &quot;average_consultation_time&quot;: 51,
+                &quot;is_available&quot;: true,
+                &quot;delays&quot;: [],
+                &quot;unavailabilities&quot;: [],
+                &quot;schedules&quot;: []
+            },
+            {
+                &quot;id&quot;: &quot;9d2517f0-e4b7-430e-84ed-9a379c2f2d88&quot;,
+                &quot;first_name&quot;: &quot;Dr. Jean&quot;,
+                &quot;last_name&quot;: &quot;Moreau&quot;,
+                &quot;email&quot;: &quot;jmoreau5@example.com&quot;,
+                &quot;phone&quot;: &quot;+22572865399&quot;,
+                &quot;qualification&quot;: &quot;Pr&quot;,
+                &quot;bio&quot;: &quot;M&eacute;decin sp&eacute;cialis&eacute; en M&eacute;decine de famille avec une exp&eacute;rience de 14 ans.&quot;,
+                &quot;max_patients_per_day&quot;: 23,
                 &quot;average_consultation_time&quot;: 54,
-                &quot;is_available&quot;: false,
-                &quot;delays&quot;: [],
-                &quot;unavailabilities&quot;: [],
-                &quot;schedules&quot;: []
-            },
-            {
-                &quot;id&quot;: &quot;45a67167-4255-45f4-8857-847def42ea7d&quot;,
-                &quot;first_name&quot;: &quot;Dr. Marie&quot;,
-                &quot;last_name&quot;: &quot;Bernard&quot;,
-                &quot;email&quot;: &quot;mbernard4@example.com&quot;,
-                &quot;phone&quot;: &quot;+22528966337&quot;,
-                &quot;qualification&quot;: &quot;Dr.&quot;,
-                &quot;bio&quot;: &quot;M&eacute;decin sp&eacute;cialis&eacute; en M&eacute;decine de famille avec une exp&eacute;rience de 5 ans.&quot;,
-                &quot;max_patients_per_day&quot;: 27,
-                &quot;average_consultation_time&quot;: 60,
-                &quot;is_available&quot;: false,
-                &quot;delays&quot;: [],
-                &quot;unavailabilities&quot;: [],
-                &quot;schedules&quot;: []
-            },
-            {
-                &quot;id&quot;: &quot;0b0ac9c4-1667-4183-90b1-b7ca3645f1c4&quot;,
-                &quot;first_name&quot;: &quot;Dr. Camille&quot;,
-                &quot;last_name&quot;: &quot;Laurent&quot;,
-                &quot;email&quot;: &quot;claurent5@example.com&quot;,
-                &quot;phone&quot;: &quot;+22521102157&quot;,
-                &quot;qualification&quot;: &quot;PhD&quot;,
-                &quot;bio&quot;: &quot;M&eacute;decin sp&eacute;cialis&eacute; en M&eacute;decine de famille avec une exp&eacute;rience de 16 ans.&quot;,
-                &quot;max_patients_per_day&quot;: 13,
-                &quot;average_consultation_time&quot;: 46,
                 &quot;is_available&quot;: false,
                 &quot;delays&quot;: [],
                 &quot;unavailabilities&quot;: [],
@@ -2991,14 +3085,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/v1/doctors/consequatur" \
+    --get "http://localhost/api/v1/doctors/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/doctors/consequatur"
+    "http://localhost/api/v1/doctors/architecto"
 );
 
 const headers = {
@@ -3015,7 +3109,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-v1-doctors--id-">
             <blockquote>
-            <p>Example response (500):</p>
+            <p>Example response (404):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -3027,7 +3121,7 @@ access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Server Error&quot;
+    &quot;message&quot;: &quot;No query results for model [App\\Models\\User] architecto&quot;
 }</code>
  </pre>
     </span>
@@ -3110,10 +3204,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-v1-doctors--id-"
-               value="consequatur"
+               value="architecto"
                data-component="url">
     <br>
-<p>The ID of the doctor. Example: <code>consequatur</code></p>
+<p>The ID of the doctor. Example: <code>architecto</code></p>
             </div>
                     </form>
 
@@ -3130,14 +3224,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/v1/doctors/4643d44f-2544-428e-a791-711e2bc0e30d/available-slots" \
+    --get "http://localhost/api/v1/doctors/005725a0-af91-4440-995a-a98d6ec99326/available-slots" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/doctors/4643d44f-2544-428e-a791-711e2bc0e30d/available-slots"
+    "http://localhost/api/v1/doctors/005725a0-af91-4440-995a-a98d6ec99326/available-slots"
 );
 
 const headers = {
@@ -3249,10 +3343,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="doctor_id"                data-endpoint="GETapi-v1-doctors--doctor_id--available-slots"
-               value="4643d44f-2544-428e-a791-711e2bc0e30d"
+               value="005725a0-af91-4440-995a-a98d6ec99326"
                data-component="url">
     <br>
-<p>The ID of the doctor. Example: <code>4643d44f-2544-428e-a791-711e2bc0e30d</code></p>
+<p>The ID of the doctor. Example: <code>005725a0-af91-4440-995a-a98d6ec99326</code></p>
             </div>
                     </form>
 
@@ -3273,8 +3367,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"doctor_id\": \"consequatur\",
-    \"appointment_date\": \"2106-12-08\"
+    \"doctor_id\": \"architecto\",
+    \"appointment_date\": \"2051-12-05\",
+    \"is_urgent\": false
 }"
 </code></pre></div>
 
@@ -3290,8 +3385,9 @@ const headers = {
 };
 
 let body = {
-    "doctor_id": "consequatur",
-    "appointment_date": "2106-12-08"
+    "doctor_id": "architecto",
+    "appointment_date": "2051-12-05",
+    "is_urgent": false
 };
 
 fetch(url, {
@@ -3383,10 +3479,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="doctor_id"                data-endpoint="POSTapi-v1-appointments"
-               value="consequatur"
+               value="architecto"
                data-component="body">
     <br>
-<p>The <code>id</code> of an existing record in the users table. Example: <code>consequatur</code></p>
+<p>The <code>id</code> of an existing record in the users table. Example: <code>architecto</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>appointment_date</code></b>&nbsp;&nbsp;
@@ -3395,10 +3491,32 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="appointment_date"                data-endpoint="POSTapi-v1-appointments"
-               value="2106-12-08"
+               value="2051-12-05"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after <code>now</code>. Example: <code>2106-12-08</code></p>
+<p>Must be a valid date. Must be a date after <code>yesterday</code>. Example: <code>2051-12-05</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>is_urgent</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <label data-endpoint="POSTapi-v1-appointments" style="display: none">
+            <input type="radio" name="is_urgent"
+                   value="true"
+                   data-endpoint="POSTapi-v1-appointments"
+                   data-component="body"             >
+            <code>true</code>
+        </label>
+        <label data-endpoint="POSTapi-v1-appointments" style="display: none">
+            <input type="radio" name="is_urgent"
+                   value="false"
+                   data-endpoint="POSTapi-v1-appointments"
+                   data-component="body"             >
+            <code>false</code>
+        </label>
+    <br>
+<p>Example: <code>false</code></p>
         </div>
         </form>
 
@@ -3541,14 +3659,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/v1/patient/appointments/eddf11d6-e886-4682-9989-50b4f3f91702" \
+    --get "http://localhost/api/v1/patient/appointments/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/patient/appointments/eddf11d6-e886-4682-9989-50b4f3f91702"
+    "http://localhost/api/v1/patient/appointments/architecto"
 );
 
 const headers = {
@@ -3660,10 +3778,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-v1-patient-appointments--id-"
-               value="eddf11d6-e886-4682-9989-50b4f3f91702"
+               value="architecto"
                data-component="url">
     <br>
-<p>The ID of the appointment. Example: <code>eddf11d6-e886-4682-9989-50b4f3f91702</code></p>
+<p>The ID of the appointment. Example: <code>architecto</code></p>
             </div>
                     </form>
 
@@ -3680,14 +3798,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/v1/appointments/eddf11d6-e886-4682-9989-50b4f3f91702/cancel" \
+    "http://localhost/api/v1/appointments/architecto/cancel" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/appointments/eddf11d6-e886-4682-9989-50b4f3f91702/cancel"
+    "http://localhost/api/v1/appointments/architecto/cancel"
 );
 
 const headers = {
@@ -3783,10 +3901,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="POSTapi-v1-appointments--id--cancel"
-               value="eddf11d6-e886-4682-9989-50b4f3f91702"
+               value="architecto"
                data-component="url">
     <br>
-<p>The ID of the appointment. Example: <code>eddf11d6-e886-4682-9989-50b4f3f91702</code></p>
+<p>The ID of the appointment. Example: <code>architecto</code></p>
             </div>
                     </form>
 
@@ -3929,14 +4047,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/v1/doctor/appointments/eddf11d6-e886-4682-9989-50b4f3f91702" \
+    --get "http://localhost/api/v1/doctor/appointments/architecto" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/doctor/appointments/eddf11d6-e886-4682-9989-50b4f3f91702"
+    "http://localhost/api/v1/doctor/appointments/architecto"
 );
 
 const headers = {
@@ -4048,10 +4166,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="GETapi-v1-doctor-appointments--id-"
-               value="eddf11d6-e886-4682-9989-50b4f3f91702"
+               value="architecto"
                data-component="url">
     <br>
-<p>The ID of the appointment. Example: <code>eddf11d6-e886-4682-9989-50b4f3f91702</code></p>
+<p>The ID of the appointment. Example: <code>architecto</code></p>
             </div>
                     </form>
 
@@ -4068,14 +4186,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost/api/v1/appointments/eddf11d6-e886-4682-9989-50b4f3f91702/complete" \
+    "http://localhost/api/v1/appointments/architecto/complete" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/v1/appointments/eddf11d6-e886-4682-9989-50b4f3f91702/complete"
+    "http://localhost/api/v1/appointments/architecto/complete"
 );
 
 const headers = {
@@ -4171,10 +4289,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="id"                data-endpoint="POSTapi-v1-appointments--id--complete"
-               value="eddf11d6-e886-4682-9989-50b4f3f91702"
+               value="architecto"
                data-component="url">
     <br>
-<p>The ID of the appointment. Example: <code>eddf11d6-e886-4682-9989-50b4f3f91702</code></p>
+<p>The ID of the appointment. Example: <code>architecto</code></p>
             </div>
                     </form>
 

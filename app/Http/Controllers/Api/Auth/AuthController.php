@@ -152,28 +152,54 @@ class AuthController extends Controller
         
         // Charger les relations en fonction du rôle
         if ($user->role === 'doctor') {
+            // Charger toutes les affiliations (profils) du médecin
             $user->load([
-                'doctorProfile.specialty.department',
-                'schedules' => function($query) {
-                    $query->where('is_active', true);
+                'doctorProfiles.specialty.department',
+                'doctorProfiles.schedules',
+                'doctorProfiles.unavailabilities' => function($query) {
+                    $query->where('unavailable_date', '>=', now()->toDateString())
+                          ->orderBy('unavailable_date')
+                          ->orderBy('start_time');
                 },
-                'unavailabilities' => function($query) {
-                    $query->where('end_datetime', '>', now())
-                          ->orderBy('start_datetime');
-                },
-                'doctorDelays' => function($query) {
+                'doctorProfiles.delays' => function($query) {
                     $query->where('is_active', true)
-                          ->orderBy('created_at', 'desc')
-                          ->first();
+                          ->where('delay_start', '>=', now())
+                          ->orderBy('delay_start', 'desc');
                 }
             ]);
 
+            // Préparer les données des affiliations
+            $affiliations = $user->doctorProfiles->map(function($profile) {
+                return [
+                    'id' => $profile->id,
+                    'specialty' => $profile->specialty ? [
+                        'id' => $profile->specialty->id,
+                        'name' => $profile->specialty->name,
+                        'department' => $profile->specialty->department ? [
+                            'id' => $profile->specialty->department->id,
+                            'name' => $profile->specialty->department->name,
+                            'health_center_id' => $profile->specialty->department->reception_id,
+                        ] : null,
+                    ] : null,
+                    'qualification' => $profile->qualification,
+                    'bio' => $profile->bio,
+                    'max_patients_per_day' => $profile->max_patients_per_day,
+                    'average_consultation_time' => $profile->average_consultation_time,
+                    'is_available' => $profile->is_available,
+                    'schedules' => $profile->schedules,
+                    'current_unavailabilities' => $profile->unavailabilities,
+                    'current_delay' => $profile->delays->first(),
+                ];
+            });
+
             return response()->json([
                 'user' => $user->only(['id', 'first_name', 'last_name', 'email', 'phone', 'role']),
-                'profile' => $user->doctorProfile,
-                'schedules' => $user->schedules,
-                'current_unavailabilities' => $user->unavailabilities,
-                'current_delay' => $user->doctorDelays->first()
+                'affiliations' => $affiliations,
+                // Pour compatibilité avec l'ancien code, retourner aussi le premier profil
+                'profile' => $user->doctorProfiles->first(),
+                'schedules' => $user->doctorProfiles->first() ? $user->doctorProfiles->first()->schedules : [],
+                'current_unavailabilities' => $user->doctorProfiles->first() ? $user->doctorProfiles->first()->unavailabilities : [],
+                'current_delay' => $user->doctorProfiles->first() ? $user->doctorProfiles->first()->delays->first() : null,
             ]);
         }
 

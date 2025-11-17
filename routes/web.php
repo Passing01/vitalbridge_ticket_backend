@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\SpecialtyController;
+use App\Http\Controllers\PatientController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,6 +17,10 @@ Route::get('/dashboard', function () {
 
 // Routes protégées par authentification
 Route::middleware('auth')->group(function () {
+    // Mes patients (réception / admin)
+    Route::get('patients', [PatientController::class, 'index'])
+        ->name('patients.index')
+        ->middleware('role:reception,admin');
     // Profil utilisateur
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -51,6 +56,9 @@ Route::middleware('auth')->group(function () {
             // Créer un nouveau rendez-vous
             Route::get('/create', [\App\Http\Controllers\AppointmentController::class, 'create'])
                 ->name('create');
+            // Enregistrer un nouveau rendez-vous
+            Route::post('/', [\App\Http\Controllers\AppointmentController::class, 'store'])
+                ->name('store');
             // Démarrer un rendez-vous
             Route::post('/{appointment}/start', [\App\Http\Controllers\AppointmentController::class, 'start'])
                 ->name('start')
@@ -100,5 +108,22 @@ Route::middleware('auth')->group(function () {
     Route::get('specialties/{specialty}/edit', [SpecialtyController::class, 'edit'])->name('specialties.edit');
     Route::put('specialties/{specialty}', [SpecialtyController::class, 'update'])->name('specialties.update');
     Route::delete('specialties/{specialty}', [SpecialtyController::class, 'destroy'])->name('specialties.destroy');
+    
+    // Administration des centres de santé (rôle admin uniquement)
+    Route::prefix('admin')->name('admin.')->middleware('role:admin')->group(function () {
+        Route::get('health-centers', [\App\Http\Controllers\Admin\HealthCenterController::class, 'index'])->name('health-centers.index');
+        Route::get('health-centers/{id}', [\App\Http\Controllers\Admin\HealthCenterController::class, 'show'])->name('health-centers.show');
+        Route::post('health-centers/{id}/toggle-active', [\App\Http\Controllers\Admin\HealthCenterController::class, 'toggleActive'])->name('health-centers.toggle-active');
+        Route::post('health-centers/{id}/update-password', [\App\Http\Controllers\Admin\HealthCenterController::class, 'updatePassword'])->name('health-centers.update-password');
+    });
+
+    // Page de paiement simulé après inscription
+    Route::get('billing/simulate', function () {
+        return view('billing.simulate');
+    })->name('billing.simulate');
+    Route::post('billing/simulate', function () {
+        // Ici on simule un paiement sans appel API puis on redirige vers le tableau de bord
+        return redirect()->route('dashboard')->with('status', 'Paiement simulé avec succès. Votre compte est maintenant actif.');
+    })->name('billing.simulate.submit');
     
 });

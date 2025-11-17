@@ -45,8 +45,11 @@ Route::prefix('v1/auth')->group(function () {
 
 // Routes pour la gestion du profil médecin (accès protégé)
 Route::prefix('v1/doctor')->middleware(['auth:sanctum', 'role:doctor'])->group(function () {
-    // Récupérer le profil complet du médecin
-    Route::get('/profile', [DoctorProfileController::class, 'getProfile']);
+    // Récupérer toutes les affiliations du médecin
+    Route::get('/affiliations', [DoctorProfileController::class, 'getAffiliations']);
+    
+    // Récupérer le profil complet d'une affiliation spécifique
+    Route::get('/profile/{profileId}', [DoctorProfileController::class, 'getProfile']);
     
     // Gestion de la file d'attente
     Route::prefix('{doctor}/queue')->group(function () {
@@ -72,10 +75,10 @@ Route::prefix('v1/doctor')->middleware(['auth:sanctum', 'role:doctor'])->group(f
         Route::post('/urgent', [\App\Http\Controllers\Api\QueueController::class, 'markAsUrgent']);
     });
     
-    // Gestion des retards
+    // Gestion des retards (nécessite doctor_profile_id dans la requête)
     Route::post('/delay', [DoctorProfileController::class, 'setDelay']);
     
-    // Gestion des indisponibilités
+    // Gestion des indisponibilités (nécessite doctor_profile_id dans la requête)
     Route::post('/unavailability', [DoctorProfileController::class, 'addUnavailability']);
     Route::delete('/unavailability/{id}', [DoctorProfileController::class, 'removeUnavailability']);
 });

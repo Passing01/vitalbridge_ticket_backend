@@ -4,12 +4,12 @@
 <div class="w-full px-6 py-6 mx-auto">
     <div class="flex flex-wrap -mx-3">
         <div class="w-full max-w-full px-3 mb-6">
-            <div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
-                <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
+            <div class="relative flex flex-col min-w-0 break-words bg-white dark:bg-slate-800 border-0 shadow-soft-xl rounded-2xl bg-clip-border text-slate-700 dark:text-slate-100">
+                <div class="p-4 pb-0 mb-0 bg-white dark:bg-slate-800 border-b-0 rounded-t-2xl">
                     <div class="flex flex-wrap -mx-3">
                         <div class="flex items-center w-full max-w-full px-3 md:w-8/12">
                             <h6 class="mb-0">Gestion des médecins</h6>
-                            <p class="text-sm text-slate-500 ml-2">Liste des médecins et leurs spécialités</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-300 ml-2">Liste des médecins et leurs spécialités</p>
                         </div>
                         <div class="w-full max-w-full px-3 text-right md:w-4/12">
                             <a href="{{ route('doctors.create') }}" 
@@ -21,55 +21,74 @@
                 </div>
                 <div class="flex-auto p-4">
                     @if (session('success'))
-                        <div class="mb-4 p-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
+                        <div class="mb-4 p-4 text-sm text-green-700 bg-green-100 dark:bg-green-900/40 dark:text-green-300 rounded-lg" role="alert">
                             <span class="font-medium">Succès !</span> {{ session('success') }}
                         </div>
                     @endif
 
                     @if (session('error'))
-                        <div class="mb-4 p-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
+                        <div class="mb-4 p-4 text-sm text-red-700 bg-red-100 dark:bg-red-900/40 dark:text-red-300 rounded-lg" role="alert">
                             <span class="font-medium">Erreur !</span> {{ session('error') }}
                         </div>
                     @endif
 
                     @if($doctors->count() > 0)
                         <div class="relative overflow-x-auto">
-                            <table class="w-full text-sm text-left text-gray-500">
-                                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-slate-300">
+                                <thead class="text-xs text-gray-700 dark:text-slate-200 uppercase bg-gray-50 dark:bg-slate-900">
                                     <tr>
                                         <th scope="col" class="px-6 py-3">Médecin</th>
-                                        <th scope="col" class="px-6 py-3">Spécialité</th>
+                                        <th scope="col" class="px-6 py-3">Affiliations</th>
                                         <th scope="col" class="px-6 py-3">Contact</th>
                                         <th scope="col" class="px-6 py-3">Statut</th>
                                         <th scope="col" class="px-6 py-3 text-right">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="divide-y divide-gray-100 dark:divide-slate-700">
                                     @foreach($doctors as $doctor)
-                                        <tr class="bg-white border-b hover:bg-gray-50">
+                                        @php
+                                            $doctor->load('doctorProfiles.specialty.department');
+                                        @endphp
+                                        <tr class="bg-white dark:bg-slate-800 border-b border-gray-100 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700">
                                             <td class="px-6 py-4">
                                                 <div class="flex items-center">
                                                     <div class="flex-shrink-0 h-10 w-10">
                                                         <img class="h-10 w-10 rounded-full" src="{{ $doctor->profile_photo_url }}" alt="Photo de profil">
                                                     </div>
                                                     <div class="ml-4">
-                                                        <div class="text-sm font-medium text-gray-900">
+                                                        <div class="text-sm font-medium text-gray-900 dark:text-slate-100">
                                                             {{ $doctor->full_name }}
                                                         </div>
-                                                        <div class="text-sm text-gray-500">
+                                                        <div class="text-sm text-gray-500 dark:text-slate-300">
                                                             {{ $doctor->email }}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4">
-                                                {{ $doctor->doctorProfile->specialty->name ?? 'Non spécifié' }}
+                                                @if($doctor->doctorProfiles->count() > 0)
+                                                    <div class="space-y-1">
+                                                        @foreach($doctor->doctorProfiles->take(2) as $profile)
+                                                            <div class="text-sm text-gray-900 dark:text-slate-100">
+                                                                <span class="font-medium">{{ $profile->specialty->name ?? 'Non spécifié' }}</span>
+                                                                <span class="text-gray-500 dark:text-slate-300 text-xs">({{ $profile->specialty->department->name ?? 'Non spécifié' }})</span>
+                                                            </div>
+                                                        @endforeach
+                                                        @if($doctor->doctorProfiles->count() > 2)
+                                                            <div class="text-xs text-gray-500 dark:text-slate-400">
+                                                                + {{ $doctor->doctorProfiles->count() - 2 }} autre(s)
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                @else
+                                                    <span class="text-sm text-gray-400 dark:text-slate-400">Aucune affiliation</span>
+                                                @endif
                                             </td>
                                             <td class="px-6 py-4">
-                                                <div class="text-sm text-gray-900">{{ $doctor->phone }}</div>
+                                                <div class="text-sm text-gray-900 dark:text-slate-100">{{ $doctor->phone }}</div>
                                             </td>
                                             <td class="px-6 py-4">
-                                                <span class="px-2.5 py-0.5 text-xs font-medium rounded-full {{ $doctor->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                                <span class="px-2.5 py-0.5 text-xs font-medium rounded-full {{ $doctor->is_active ? 'bg-green-100 text-green-800 dark:bg-green-900/60 dark:text-green-200' : 'bg-red-100 text-red-800 dark:bg-red-900/60 dark:text-red-200' }}">
                                                     {{ $doctor->is_active ? 'Actif' : 'Inactif' }}
                                                 </span>
                                             </td>
@@ -97,12 +116,12 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="px-6 py-4 border-t border-gray-200">
+                        <div class="px-6 py-4 border-t border-gray-200 dark:border-slate-700">
                             {{ $doctors->links() }}
                         </div>
                     @else
                         <div class="p-6 text-center">
-                            <p class="text-gray-500">Aucun médecin enregistré pour le moment.</p>
+                            <p class="text-gray-500 dark:text-slate-300">Aucun médecin enregistré pour le moment.</p>
                             <a href="{{ route('doctors.create') }}" 
                                class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                 Ajouter votre premier médecin

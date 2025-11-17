@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\DoctorProfile;
 use App\Models\DoctorUnavailability;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -13,11 +14,11 @@ use Illuminate\Support\Carbon;
 class DoctorProfileController extends Controller
 {
     /**
-     * Récupérer le profil complet du médecin
+     * Récupérer toutes les affiliations du médecin
      *
      * @return JsonResponse
      */
-    public function getProfile(): JsonResponse
+    public function getAffiliations(): JsonResponse
     {
         $user = Auth::user();
         
@@ -26,27 +27,107 @@ class DoctorProfileController extends Controller
         }
 
         $user->load([
-            'doctorProfile.specialty.department',
-            'schedules',
-            'unavailabilities' => function($query) {
-                $query->where('end_datetime', '>', now());
+            'doctorProfiles.specialty.department',
+            'doctorProfiles.schedules',
+            'doctorProfiles.unavailabilities' => function($query) {
+                $query->where('unavailable_date', '>=', now()->toDateString())
+                      ->orderBy('unavailable_date')
+                      ->orderBy('start_time');
             },
-            'doctorDelays' => function($query) {
-                $query->orderBy('created_at', 'desc')->first();
+            'doctorProfiles.delays' => function($query) {
+                $query->where('is_active', true)
+                      ->where('delay_start', '>=', now())
+                      ->orderBy('delay_start', 'desc');
             }
         ]);
 
+        $affiliations = $user->doctorProfiles->map(function($profile) {
+            return [
+                'id' => $profile->id,
+                'specialty' => $profile->specialty ? [
+                    'id' => $profile->specialty->id,
+                    'name' => $profile->specialty->name,
+                    'department' => $profile->specialty->department ? [
+                        'id' => $profile->specialty->department->id,
+                        'name' => $profile->specialty->department->name,
+                        'health_center_id' => $profile->specialty->department->reception_id,
+                    ] : null,
+                ] : null,
+                'qualification' => $profile->qualification,
+                'bio' => $profile->bio,
+                'max_patients_per_day' => $profile->max_patients_per_day,
+                'average_consultation_time' => $profile->average_consultation_time,
+                'is_available' => $profile->is_available,
+                'schedules' => $profile->schedules,
+                'current_unavailabilities' => $profile->unavailabilities,
+                'current_delay' => $profile->delays->first(),
+            ];
+        });
+
         return response()->json([
             'user' => $user->only(['id', 'first_name', 'last_name', 'email', 'phone', 'role']),
-            'profile' => $user->doctorProfile,
-            'schedules' => $user->schedules,
-            'current_unavailabilities' => $user->unavailabilities,
-            'current_delay' => $user->doctorDelays->first()
+            'affiliations' => $affiliations,
         ]);
     }
 
     /**
-     * Déclarer un retard
+     * Récupérer le profil complet d'une affiliation spécifique
+     *
+     * @param int $profileId
+     * @return JsonResponse
+     */
+    public function getProfile($profileId): JsonResponse
+    {
+        $user = Auth::user();
+        
+        if ($user->role !== 'doctor') {
+            return response()->json(['message' => 'Accès non autorisé'], 403);
+        }
+
+        $profile = $user->doctorProfiles()
+            ->with([
+                'specialty.department',
+                'schedules',
+                'unavailabilities' => function($query) {
+                    $query->where('unavailable_date', '>=', now()->toDateString())
+                          ->orderBy('unavailable_date')
+                          ->orderBy('start_time');
+                },
+                'delays' => function($query) {
+                    $query->where('is_active', true)
+                          ->where('delay_start', '>=', now())
+                          ->orderBy('delay_start', 'desc');
+                }
+            ])
+            ->findOrFail($profileId);
+
+        return response()->json([
+            'user' => $user->only(['id', 'first_name', 'last_name', 'email', 'phone', 'role']),
+            'profile' => [
+                'id' => $profile->id,
+                'specialty' => $profile->specialty ? [
+                    'id' => $profile->specialty->id,
+                    'name' => $profile->specialty->name,
+                    'department' => $profile->specialty->department ? [
+                        'id' => $profile->specialty->department->id,
+                        'name' => $profile->specialty->department->name,
+                        'health_center_id' => $profile->specialty->department->reception_id,
+                    ] : null,
+                ] : null,
+                'qualification' => $profile->qualification,
+                'bio' => $profile->bio,
+                'max_patients_per_day' => $profile->max_patients_per_day,
+                'average_consultation_time' => $profile->average_consultation_time,
+                'is_available' => $profile->is_available,
+                'schedules' => $profile->schedules,
+                'current_unavailabilities' => $profile->unavailabilities,
+                'current_delay' => $profile->delays->first(),
+            ],
+        ]);
+    }
+
+    /**
+     * Déclarer un retard pour une affiliation spécifique
      *
      * @param Request $request
      * @return JsonResponse
@@ -60,19 +141,24 @@ class DoctorProfileController extends Controller
         }
 
         $validated = $request->validate([
-            'delay_minutes' => 'required|integer|min:1|max:240', // max 4 heures
+            'doctor_profile_id' => 'required|exists:doctor_profiles,id',
+            'delay_duration' => 'required|integer|min:1|max:240', // max 4 heures en minutes
             'reason' => 'nullable|string|max:500'
         ]);
 
-        $delay = $user->doctorDelays()->create([
-            'delay_minutes' => $validated['delay_minutes'],
+        // Vérifier que le profil appartient au médecin
+        $profile = $user->doctorProfiles()->findOrFail($validated['doctor_profile_id']);
+
+        $delay = $profile->delays()->create([
+            'doctor_id' => $user->id,
+            'delay_start' => now(),
+            'delay_duration' => $validated['delay_duration'],
             'reason' => $validated['reason'] ?? null,
-            'started_at' => now(),
             'is_active' => true
         ]);
 
-        // Désactiver les retards précédents
-        $user->doctorDelays()
+        // Désactiver les retards précédents pour ce profil
+        $profile->delays()
             ->where('id', '!=', $delay->id)
             ->where('is_active', true)
             ->update(['is_active' => false]);
@@ -84,7 +170,7 @@ class DoctorProfileController extends Controller
     }
 
     /**
-     * Ajouter une indisponibilité
+     * Ajouter une indisponibilité pour une affiliation spécifique
      *
      * @param Request $request
      * @return JsonResponse
@@ -98,21 +184,22 @@ class DoctorProfileController extends Controller
         }
 
         $validated = $request->validate([
-            'start_datetime' => 'required|date|after:now',
-            'end_datetime' => 'required|date|after:start_datetime',
+            'doctor_profile_id' => 'required|exists:doctor_profiles,id',
+            'unavailable_date' => 'required|date|after_or_equal:today',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after:start_time',
             'reason' => 'required|string|max:500',
-            'is_recurring' => 'boolean',
-            'recurrence_pattern' => 'required_if:is_recurring,true|in:daily,weekly,monthly',
-            'recurrence_end_date' => 'required_if:is_recurring,true|date|after:end_datetime'
         ]);
 
-        $unavailability = $user->unavailabilities()->create([
-            'start_datetime' => $validated['start_datetime'],
-            'end_datetime' => $validated['end_datetime'],
+        // Vérifier que le profil appartient au médecin
+        $profile = $user->doctorProfiles()->findOrFail($validated['doctor_profile_id']);
+
+        $unavailability = $profile->unavailabilities()->create([
+            'doctor_id' => $user->id,
+            'unavailable_date' => $validated['unavailable_date'],
+            'start_time' => $validated['start_time'],
+            'end_time' => $validated['end_time'],
             'reason' => $validated['reason'],
-            'is_recurring' => $validated['is_recurring'] ?? false,
-            'recurrence_pattern' => $validated['is_recurring'] ? $validated['recurrence_pattern'] : null,
-            'recurrence_end_date' => $validated['is_recurring'] ? $validated['recurrence_end_date'] : null
         ]);
 
         return response()->json([
@@ -135,7 +222,11 @@ class DoctorProfileController extends Controller
             return response()->json(['message' => 'Accès non autorisé'], 403);
         }
 
-        $unavailability = $user->unavailabilities()->findOrFail($id);
+        // Vérifier que l'indisponibilité appartient à une affiliation du médecin
+        $unavailability = DoctorUnavailability::whereHas('doctorProfile', function($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->findOrFail($id);
+
         $unavailability->delete();
 
         return response()->json([

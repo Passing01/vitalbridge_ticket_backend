@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API Documentation",
-        "_postman_id": "7b703d97-0546-41a2-839b-6069de17c793",
+        "_postman_id": "92361091-fa19-464a-9929-0a815d08d3cb",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -41,7 +41,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"first_name\":\"vmqeopfuudtdsufvyvddq\",\"last_name\":\"amniihfqcoynlazghdtqt\",\"phone\":\"qxbajwbpilpmufinl\",\"language\":\"dioula\"}"
+                            "raw": "{\"first_name\":\"b\",\"last_name\":\"n\",\"phone\":\"gzmiyvdljnikhway\",\"language\":\"moore\"}"
                         },
                         "description": "",
                         "auth": {
@@ -72,7 +72,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"phone\":\"(562771717728\"}"
+                            "raw": "{\"phone\":\"(+64255931423268\"}"
                         },
                         "description": "",
                         "auth": {
@@ -103,7 +103,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"otp\":\"vmqeop\"}"
+                            "raw": "{\"otp\":\"bngzmi\"}"
                         },
                         "description": "",
                         "auth": {
@@ -189,13 +189,69 @@
                     "response": []
                 },
                 {
-                    "name": "R\u00e9cup\u00e9rer le profil complet du m\u00e9decin",
+                    "name": "R\u00e9cup\u00e9rer toutes les affiliations du m\u00e9decin",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/v1\/doctor\/profile",
+                            "path": "api\/v1\/doctor\/affiliations",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/doctor\/profile"
+                            "raw": "{{baseUrl}}\/api\/v1\/doctor\/affiliations"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "R\u00e9cup\u00e9rer le profil complet d'une affiliation sp\u00e9cifique",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/doctor\/profile\/:profileId",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/doctor\/profile\/:profileId",
+                            "variable": [
+                                {
+                                    "id": "profileId",
+                                    "key": "profileId",
+                                    "value": "architecto",
+                                    "description": ""
+                                }
+                            ]
                         },
                         "method": "GET",
                         "header": [
@@ -248,7 +304,7 @@
                                 {
                                     "id": "doctor_id",
                                     "key": "doctor_id",
-                                    "value": "4643d44f-2544-428e-a791-711e2bc0e30d",
+                                    "value": "005725a0-af91-4440-995a-a98d6ec99326",
                                     "description": "The ID of the doctor."
                                 }
                             ]
@@ -304,7 +360,7 @@
                                 {
                                     "id": "doctor_id",
                                     "key": "doctor_id",
-                                    "value": "4643d44f-2544-428e-a791-711e2bc0e30d",
+                                    "value": "005725a0-af91-4440-995a-a98d6ec99326",
                                     "description": "The ID of the doctor."
                                 }
                             ]
@@ -340,7 +396,7 @@
                                 {
                                     "id": "appointment_id",
                                     "key": "appointment_id",
-                                    "value": "eddf11d6-e886-4682-9989-50b4f3f91702",
+                                    "value": "architecto",
                                     "description": "The ID of the appointment."
                                 }
                             ]
@@ -376,7 +432,7 @@
                                 {
                                     "id": "appointment_id",
                                     "key": "appointment_id",
-                                    "value": "eddf11d6-e886-4682-9989-50b4f3f91702",
+                                    "value": "architecto",
                                     "description": "The ID of the appointment."
                                 }
                             ]
@@ -412,7 +468,7 @@
                                 {
                                     "id": "appointment_id",
                                     "key": "appointment_id",
-                                    "value": "eddf11d6-e886-4682-9989-50b4f3f91702",
+                                    "value": "architecto",
                                     "description": "The ID of the appointment."
                                 }
                             ]
@@ -448,7 +504,7 @@
                                 {
                                     "id": "appointment_id",
                                     "key": "appointment_id",
-                                    "value": "eddf11d6-e886-4682-9989-50b4f3f91702",
+                                    "value": "architecto",
                                     "description": "The ID of the appointment."
                                 }
                             ]
@@ -473,7 +529,7 @@
                     "response": []
                 },
                 {
-                    "name": "D\u00e9clarer un retard",
+                    "name": "D\u00e9clarer un retard pour une affiliation sp\u00e9cifique",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -494,7 +550,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"delay_minutes\":21,\"reason\":\"mqeopfuudtdsufvyvddqa\"}"
+                            "raw": "{\"doctor_profile_id\":\"architecto\",\"delay_duration\":22,\"reason\":\"g\"}"
                         },
                         "description": "",
                         "auth": {
@@ -504,7 +560,7 @@
                     "response": []
                 },
                 {
-                    "name": "Ajouter une indisponibilit\u00e9",
+                    "name": "Ajouter une indisponibilit\u00e9 pour une affiliation sp\u00e9cifique",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -525,7 +581,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"start_datetime\":\"2106-12-08\",\"end_datetime\":\"2106-12-08\",\"reason\":\"mqeopfuudtdsufvyvddqa\",\"is_recurring\":true,\"recurrence_pattern\":\"weekly\",\"recurrence_end_date\":\"2106-12-08\"}"
+                            "raw": "{\"doctor_profile_id\":\"architecto\",\"unavailable_date\":\"2051-12-06\",\"start_time\":\"16:41\",\"end_time\":\"2051-12-06\",\"reason\":\"n\"}"
                         },
                         "description": "",
                         "auth": {
@@ -546,7 +602,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "consequatur",
+                                    "value": "architecto",
                                     "description": "The ID of the unavailability."
                                 }
                             ]
@@ -613,7 +669,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"health_centers\":[{\"id\":\"167f5534-df2f-4377-9b18-2a455c101a68\",\"first_name\":\"CHU de Yalgado\",\"last_name\":\"Ouedraogo\",\"email\":\"contact@chuyo.bf\",\"phone\":\"+22625307060\",\"managed_departments_count\":5},{\"id\":\"412647c7-a273-4117-916d-759205b2f170\",\"first_name\":\"CHU P\\u00e9diatrique\",\"last_name\":\"Charles de Gaulle\",\"email\":\"contact@chupcdg.bf\",\"phone\":\"+22625363600\",\"managed_departments_count\":5},{\"id\":\"e281d28d-495a-4ad7-b1ab-9ce262ff591d\",\"first_name\":\"CMA\",\"last_name\":\"SAGA\",\"email\":\"contact@cmasaga.bf\",\"phone\":\"+22625361206\",\"managed_departments_count\":5},{\"id\":\"4d8d9d0a-ba11-4619-8417-7707f9336b82\",\"first_name\":\"Clinique\",\"last_name\":\"El Fateh Suka\",\"email\":\"contact@fatehsuka.bf\",\"phone\":\"+22625312789\",\"managed_departments_count\":5}]}",
+                            "body": "{\"health_centers\":[{\"id\":\"694ca84f-4bb7-4fbf-8cc7-973239ed51f4\",\"first_name\":\"CHU de Yalgado\",\"last_name\":\"Ouedraogo\",\"email\":\"contact@chuyo.bf\",\"phone\":\"+22625307060\",\"managed_departments_count\":5},{\"id\":\"dea6e0dd-f698-4aab-aa1f-88e2ed2ea83e\",\"first_name\":\"CHU P\\u00e9diatrique\",\"last_name\":\"Charles de Gaulle\",\"email\":\"contact@chupcdg.bf\",\"phone\":\"+22625363600\",\"managed_departments_count\":5},{\"id\":\"eba71d76-46ae-4b12-b1fa-257200384332\",\"first_name\":\"CMA\",\"last_name\":\"SAGA\",\"email\":\"contact@cmasaga.bf\",\"phone\":\"+22625361206\",\"managed_departments_count\":5},{\"id\":\"f2a1b1ce-55f8-4554-ba26-c8e0acc2d65b\",\"first_name\":\"Clinique\",\"last_name\":\"El Fateh Suka\",\"email\":\"contact@fatehsuka.bf\",\"phone\":\"+22625312789\",\"managed_departments_count\":5}]}",
                             "name": ""
                         }
                     ]
@@ -630,7 +686,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "consequatur",
+                                    "value": "architecto",
                                     "description": "The ID of the health center."
                                 }
                             ]
@@ -668,8 +724,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 500,
-                            "body": "{\n    \"message\": \"Server Error\"\n}",
+                            "code": 404,
+                            "body": "{\n    \"message\": \"No query results for model [App\\\\Models\\\\User].\"\n}",
                             "name": ""
                         }
                     ]
@@ -725,7 +781,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"department\":{\"id\":1,\"name\":\"M\\u00e9decine G\\u00e9n\\u00e9rale\",\"description\":\"Service de M\\u00e9decine G\\u00e9n\\u00e9rale du centre \",\"reception_id\":\"167f5534-df2f-4377-9b18-2a455c101a68\",\"created_at\":\"2025-11-08T15:23:14.000000Z\",\"updated_at\":\"2025-11-08T15:23:14.000000Z\",\"specialties\":[{\"id\":1,\"name\":\"M\\u00e9decine de famille\",\"description\":\"Service de M\\u00e9decine de famille - M\\u00e9decine G\\u00e9n\\u00e9rale\",\"department_id\":1,\"doctors_count\":5},{\"id\":2,\"name\":\"M\\u00e9decine interne g\\u00e9n\\u00e9rale\",\"description\":\"Service de M\\u00e9decine interne g\\u00e9n\\u00e9rale - M\\u00e9decine G\\u00e9n\\u00e9rale\",\"department_id\":1,\"doctors_count\":5},{\"id\":3,\"name\":\"M\\u00e9decine d'urgence\",\"description\":\"Service de M\\u00e9decine d'urgence - M\\u00e9decine G\\u00e9n\\u00e9rale\",\"department_id\":1,\"doctors_count\":5},{\"id\":4,\"name\":\"M\\u00e9decine du travail\",\"description\":\"Service de M\\u00e9decine du travail - M\\u00e9decine G\\u00e9n\\u00e9rale\",\"department_id\":1,\"doctors_count\":5},{\"id\":5,\"name\":\"M\\u00e9decine pr\\u00e9ventive\",\"description\":\"Service de M\\u00e9decine pr\\u00e9ventive - M\\u00e9decine G\\u00e9n\\u00e9rale\",\"department_id\":1,\"doctors_count\":5}]},\"_debug\":{\"department_id\":1,\"department_name\":\"M\\u00e9decine G\\u00e9n\\u00e9rale\",\"specialties_count\":5,\"specialties_ids\":[1,2,3,4,5]}}",
+                            "body": "{\"department\":{\"id\":1,\"name\":\"M\\u00e9decine G\\u00e9n\\u00e9rale\",\"description\":\"Service de M\\u00e9decine G\\u00e9n\\u00e9rale du centre \",\"reception_id\":\"694ca84f-4bb7-4fbf-8cc7-973239ed51f4\",\"created_at\":\"2025-11-12T13:57:57.000000Z\",\"updated_at\":\"2025-11-12T13:57:57.000000Z\",\"specialties\":[{\"id\":1,\"name\":\"M\\u00e9decine de famille\",\"description\":\"Service de M\\u00e9decine de famille - M\\u00e9decine G\\u00e9n\\u00e9rale\",\"department_id\":1,\"doctors_count\":5},{\"id\":2,\"name\":\"M\\u00e9decine interne g\\u00e9n\\u00e9rale\",\"description\":\"Service de M\\u00e9decine interne g\\u00e9n\\u00e9rale - M\\u00e9decine G\\u00e9n\\u00e9rale\",\"department_id\":1,\"doctors_count\":5},{\"id\":3,\"name\":\"M\\u00e9decine d'urgence\",\"description\":\"Service de M\\u00e9decine d'urgence - M\\u00e9decine G\\u00e9n\\u00e9rale\",\"department_id\":1,\"doctors_count\":5},{\"id\":4,\"name\":\"M\\u00e9decine du travail\",\"description\":\"Service de M\\u00e9decine du travail - M\\u00e9decine G\\u00e9n\\u00e9rale\",\"department_id\":1,\"doctors_count\":5},{\"id\":5,\"name\":\"M\\u00e9decine pr\\u00e9ventive\",\"description\":\"Service de M\\u00e9decine pr\\u00e9ventive - M\\u00e9decine G\\u00e9n\\u00e9rale\",\"department_id\":1,\"doctors_count\":5}]},\"_debug\":{\"department_id\":1,\"department_name\":\"M\\u00e9decine G\\u00e9n\\u00e9rale\",\"specialties_count\":5,\"specialties_ids\":[1,2,3,4,5]}}",
                             "name": ""
                         }
                     ]
@@ -781,7 +837,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"specialty\":{\"id\":1,\"name\":\"M\\u00e9decine de famille\",\"description\":\"Service de M\\u00e9decine de famille - M\\u00e9decine G\\u00e9n\\u00e9rale\",\"active_doctors_count\":5,\"doctors\":[{\"id\":\"021201e7-d996-4f87-ac6a-1e8ecb6c9a4a\",\"first_name\":\"Dr. Mohamed\",\"last_name\":\"Thomas\",\"email\":\"mthomas1@example.com\",\"phone\":\"+22551331942\",\"qualification\":\"Dr.\",\"bio\":\"M\\u00e9decin sp\\u00e9cialis\\u00e9 en M\\u00e9decine de famille avec une exp\\u00e9rience de 27 ans.\",\"max_patients_per_day\":17,\"average_consultation_time\":52,\"is_available\":false,\"delays\":[],\"unavailabilities\":[],\"schedules\":[{\"id\":5,\"doctor_id\":\"021201e7-d996-4f87-ac6a-1e8ecb6c9a4a\",\"day_of_week\":\"friday\",\"start_time\":\"08:00\",\"end_time\":\"17:00\"},{\"id\":1,\"doctor_id\":\"021201e7-d996-4f87-ac6a-1e8ecb6c9a4a\",\"day_of_week\":\"monday\",\"start_time\":\"08:00\",\"end_time\":\"17:00\"},{\"id\":4,\"doctor_id\":\"021201e7-d996-4f87-ac6a-1e8ecb6c9a4a\",\"day_of_week\":\"thursday\",\"start_time\":\"08:00\",\"end_time\":\"17:00\"},{\"id\":2,\"doctor_id\":\"021201e7-d996-4f87-ac6a-1e8ecb6c9a4a\",\"day_of_week\":\"tuesday\",\"start_time\":\"08:00\",\"end_time\":\"17:00\"},{\"id\":3,\"doctor_id\":\"021201e7-d996-4f87-ac6a-1e8ecb6c9a4a\",\"day_of_week\":\"wednesday\",\"start_time\":\"08:00\",\"end_time\":\"17:00\"}]},{\"id\":\"79447446-a10c-491b-af74-3f68a8bb5b18\",\"first_name\":\"Dr. Fatou\",\"last_name\":\"Michel\",\"email\":\"fmichel2@example.com\",\"phone\":\"+22533707909\",\"qualification\":\"Prof\",\"bio\":\"M\\u00e9decin sp\\u00e9cialis\\u00e9 en M\\u00e9decine de famille avec une exp\\u00e9rience de 13 ans.\",\"max_patients_per_day\":28,\"average_consultation_time\":49,\"is_available\":true,\"delays\":[],\"unavailabilities\":[],\"schedules\":[]},{\"id\":\"0656f389-02fd-4295-b21f-c3fd975d4339\",\"first_name\":\"Dr. David\",\"last_name\":\"Michel\",\"email\":\"dmichel3@example.com\",\"phone\":\"+22574878788\",\"qualification\":\"Dr.\",\"bio\":\"M\\u00e9decin sp\\u00e9cialis\\u00e9 en M\\u00e9decine de famille avec une exp\\u00e9rience de 24 ans.\",\"max_patients_per_day\":15,\"average_consultation_time\":54,\"is_available\":false,\"delays\":[],\"unavailabilities\":[],\"schedules\":[]},{\"id\":\"45a67167-4255-45f4-8857-847def42ea7d\",\"first_name\":\"Dr. Marie\",\"last_name\":\"Bernard\",\"email\":\"mbernard4@example.com\",\"phone\":\"+22528966337\",\"qualification\":\"Dr.\",\"bio\":\"M\\u00e9decin sp\\u00e9cialis\\u00e9 en M\\u00e9decine de famille avec une exp\\u00e9rience de 5 ans.\",\"max_patients_per_day\":27,\"average_consultation_time\":60,\"is_available\":false,\"delays\":[],\"unavailabilities\":[],\"schedules\":[]},{\"id\":\"0b0ac9c4-1667-4183-90b1-b7ca3645f1c4\",\"first_name\":\"Dr. Camille\",\"last_name\":\"Laurent\",\"email\":\"claurent5@example.com\",\"phone\":\"+22521102157\",\"qualification\":\"PhD\",\"bio\":\"M\\u00e9decin sp\\u00e9cialis\\u00e9 en M\\u00e9decine de famille avec une exp\\u00e9rience de 16 ans.\",\"max_patients_per_day\":13,\"average_consultation_time\":46,\"is_available\":false,\"delays\":[],\"unavailabilities\":[],\"schedules\":[]}]}}",
+                            "body": "{\"specialty\":{\"id\":1,\"name\":\"M\\u00e9decine de famille\",\"description\":\"Service de M\\u00e9decine de famille - M\\u00e9decine G\\u00e9n\\u00e9rale\",\"active_doctors_count\":5,\"doctors\":[{\"id\":\"83d5564b-ff92-414b-8c19-bf3d5f4bf320\",\"first_name\":\"Dr. Mohamed\",\"last_name\":\"David\",\"email\":\"mdavid1@example.com\",\"phone\":\"+22599845819\",\"qualification\":\"PhD\",\"bio\":\"M\\u00e9decin sp\\u00e9cialis\\u00e9 en M\\u00e9decine de famille avec une exp\\u00e9rience de 21 ans.\",\"max_patients_per_day\":18,\"average_consultation_time\":26,\"is_available\":true,\"delays\":[],\"unavailabilities\":[],\"schedules\":[]},{\"id\":\"5b041a62-1b33-4ef9-9732-4ea5b9349832\",\"first_name\":\"Dr. Sophie\",\"last_name\":\"Robert\",\"email\":\"srobert2@example.com\",\"phone\":\"+22530830498\",\"qualification\":\"Dr\",\"bio\":\"M\\u00e9decin sp\\u00e9cialis\\u00e9 en M\\u00e9decine de famille avec une exp\\u00e9rience de 27 ans.\",\"max_patients_per_day\":21,\"average_consultation_time\":42,\"is_available\":true,\"delays\":[],\"unavailabilities\":[],\"schedules\":[]},{\"id\":\"21ae9f56-c38e-406b-8c5d-970ebd7cf1da\",\"first_name\":\"Dr. Aminata\",\"last_name\":\"Thomas\",\"email\":\"athomas3@example.com\",\"phone\":\"+22529783244\",\"qualification\":\"Prof\",\"bio\":\"M\\u00e9decin sp\\u00e9cialis\\u00e9 en M\\u00e9decine de famille avec une exp\\u00e9rience de 23 ans.\",\"max_patients_per_day\":19,\"average_consultation_time\":50,\"is_available\":true,\"delays\":[],\"unavailabilities\":[],\"schedules\":[]},{\"id\":\"409a2e13-51e8-4e14-91b4-44758c7f7b08\",\"first_name\":\"Dr. Chlo\\u00e9\",\"last_name\":\"Simon\",\"email\":\"csimon4@example.com\",\"phone\":\"+22553895885\",\"qualification\":\"Dr\",\"bio\":\"M\\u00e9decin sp\\u00e9cialis\\u00e9 en M\\u00e9decine de famille avec une exp\\u00e9rience de 22 ans.\",\"max_patients_per_day\":14,\"average_consultation_time\":51,\"is_available\":true,\"delays\":[],\"unavailabilities\":[],\"schedules\":[]},{\"id\":\"9d2517f0-e4b7-430e-84ed-9a379c2f2d88\",\"first_name\":\"Dr. Jean\",\"last_name\":\"Moreau\",\"email\":\"jmoreau5@example.com\",\"phone\":\"+22572865399\",\"qualification\":\"Pr\",\"bio\":\"M\\u00e9decin sp\\u00e9cialis\\u00e9 en M\\u00e9decine de famille avec une exp\\u00e9rience de 14 ans.\",\"max_patients_per_day\":23,\"average_consultation_time\":54,\"is_available\":false,\"delays\":[],\"unavailabilities\":[],\"schedules\":[]}]}}",
                             "name": ""
                         }
                     ]
@@ -798,7 +854,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "consequatur",
+                                    "value": "architecto",
                                     "description": "The ID of the doctor."
                                 }
                             ]
@@ -836,8 +892,8 @@
                                     "value": "*"
                                 }
                             ],
-                            "code": 500,
-                            "body": "{\n    \"message\": \"Server Error\"\n}",
+                            "code": 404,
+                            "body": "{\n    \"message\": \"No query results for model [App\\\\Models\\\\User] architecto\"\n}",
                             "name": ""
                         }
                     ]
@@ -854,7 +910,7 @@
                                 {
                                     "id": "doctor_id",
                                     "key": "doctor_id",
-                                    "value": "4643d44f-2544-428e-a791-711e2bc0e30d",
+                                    "value": "005725a0-af91-4440-995a-a98d6ec99326",
                                     "description": "The ID of the doctor."
                                 }
                             ]
@@ -920,7 +976,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"doctor_id\":\"consequatur\",\"appointment_date\":\"2106-12-08\"}"
+                            "raw": "{\"doctor_id\":\"architecto\",\"appointment_date\":\"2051-12-05\",\"is_urgent\":false}"
                         },
                         "description": "",
                         "auth": {
@@ -989,7 +1045,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "eddf11d6-e886-4682-9989-50b4f3f91702",
+                                    "value": "architecto",
                                     "description": "The ID of the appointment."
                                 }
                             ]
@@ -1045,7 +1101,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "eddf11d6-e886-4682-9989-50b4f3f91702",
+                                    "value": "architecto",
                                     "description": "The ID of the appointment."
                                 }
                             ]
@@ -1129,7 +1185,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "eddf11d6-e886-4682-9989-50b4f3f91702",
+                                    "value": "architecto",
                                     "description": "The ID of the appointment."
                                 }
                             ]
@@ -1185,7 +1241,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "eddf11d6-e886-4682-9989-50b4f3f91702",
+                                    "value": "architecto",
                                     "description": "The ID of the appointment."
                                 }
                             ]

@@ -8,9 +8,32 @@
     </div>
 
     <div class="bg-white shadow-md rounded-lg p-6">
-        <form action="{{ route('doctors.update', $doctor) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('doctors.update', $doctor) }}" method="POST" enctype="multipart/form-data" id="edit-form">
             @csrf
             @method('PUT')
+            
+            <!-- Sélection de l'affiliation à éditer -->
+            @if($doctor->doctorProfiles->count() > 1)
+            <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <label for="profile_selector" class="block text-sm font-medium text-gray-700 mb-2">Affiliation à éditer :</label>
+                <select name="doctor_profile_id" id="profile_selector" 
+                    class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">Créer une nouvelle affiliation</option>
+                    @foreach($doctor->doctorProfiles as $profile)
+                        <option value="{{ $profile->id }}" {{ $selectedProfile && $selectedProfile->id == $profile->id ? 'selected' : '' }}>
+                            {{ $profile->specialty->name ?? 'Non spécifié' }} - {{ $profile->specialty->department->name ?? 'Non spécifié' }}
+                        </option>
+                    @endforeach
+                </select>
+                <p class="mt-2 text-xs text-gray-600">
+                    Sélectionnez une affiliation existante pour la modifier, ou laissez vide pour créer une nouvelle affiliation.
+                </p>
+            </div>
+            @elseif($selectedProfile)
+                <input type="hidden" name="doctor_profile_id" id="doctor_profile_id" value="{{ $selectedProfile->id }}">
+            @else
+                <input type="hidden" name="doctor_profile_id" id="doctor_profile_id" value="">
+            @endif
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Informations personnelles -->
@@ -98,14 +121,14 @@
                                 <optgroup label="{{ $department->name }}">
                                     @foreach($department->specialties as $specialty)
                                         <option value="{{ $specialty->id }}" 
-                                            {{ old('specialty_id', $doctor->doctorProfile->specialty_id ?? '') == $specialty->id ? 'selected' : '' }}>
+                                            {{ old('specialty_id', $selectedProfile && $selectedProfile->specialty_id ? $selectedProfile->specialty_id : '') == $specialty->id ? 'selected' : '' }}>
                                             {{ $specialty->name }}
                                         </option>
                                     @endforeach
                                 </optgroup>
                             @endforeach
                         </select>
-                        <input type="hidden" name="specialty_id" id="specialty_id" value="{{ old('specialty_id', $doctor->doctorProfile->specialty_id ?? '') }}">
+                        <input type="hidden" name="specialty_id" id="specialty_id" value="{{ old('specialty_id', $selectedProfile && $selectedProfile->specialty_id ? $selectedProfile->specialty_id : '') }}">
                         @error('specialty_id')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -114,7 +137,7 @@
                     <div>
                         <label for="qualification" class="block text-sm font-medium text-gray-700">Diplôme/Qualification *</label>
                         <input type="text" name="qualification" id="qualification" 
-                            value="{{ old('qualification', $doctor->doctorProfile->qualification ?? '') }}" required
+                            value="{{ old('qualification', $selectedProfile && $selectedProfile->qualification ? $selectedProfile->qualification : '') }}" required
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                         @error('qualification')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -125,7 +148,7 @@
                         <div>
                             <label for="max_patients_per_day" class="block text-sm font-medium text-gray-700">Patients/jour</label>
                             <input type="number" name="max_patients_per_day" id="max_patients_per_day" 
-                                value="{{ old('max_patients_per_day', $doctor->doctorProfile->max_patients_per_day ?? 20) }}" 
+                                value="{{ old('max_patients_per_day', $selectedProfile && $selectedProfile->max_patients_per_day ? $selectedProfile->max_patients_per_day : 20) }}" 
                                 min="1"
                                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                             @error('max_patients_per_day')
@@ -136,7 +159,7 @@
                         <div>
                             <label for="average_consultation_time" class="block text-sm font-medium text-gray-700">Durée consultation (min)</label>
                             <input type="number" name="average_consultation_time" id="average_consultation_time" 
-                                value="{{ old('average_consultation_time', $doctor->doctorProfile->average_consultation_time ?? 30) }}" 
+                                value="{{ old('average_consultation_time', $selectedProfile && $selectedProfile->average_consultation_time ? $selectedProfile->average_consultation_time : 30) }}" 
                                 min="5" max="120"
                                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                             @error('average_consultation_time')
@@ -149,7 +172,7 @@
                         <input type="hidden" name="is_available" value="0">
                         <input type="checkbox" name="is_available" id="is_available" 
                             value="1"
-                            {{ old('is_available', $doctor->doctorProfile->is_available ?? true) ? 'checked' : '' }}
+                            {{ old('is_available', $selectedProfile && $selectedProfile->is_available ? $selectedProfile->is_available : true) ? 'checked' : '' }}
                             class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
                         <label for="is_available" class="ml-2 block text-sm text-gray-700">
                             Disponible pour les rendez-vous
@@ -162,7 +185,7 @@
                     <div>
                         <label for="bio" class="block text-sm font-medium text-gray-700">Biographie</label>
                         <textarea name="bio" id="bio" rows="3"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">{{ old('bio', $doctor->doctorProfile->bio ?? '') }}</textarea>
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">{{ old('bio', $selectedProfile && $selectedProfile->bio ? $selectedProfile->bio : '') }}</textarea>
                         @error('bio')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -255,56 +278,60 @@
         }
     });
 
-    // Mise à jour dynamique des spécialités en fonction du département sélectionné
+    // Gestion du sélecteur de profil
     document.addEventListener('DOMContentLoaded', function() {
+        const profileSelector = document.getElementById('profile_selector');
+        const doctorProfileIdInput = document.getElementById('doctor_profile_id');
+        
+        if (profileSelector) {
+            // Si le sélecteur existe, mettre à jour le champ hidden quand il change
+            profileSelector.addEventListener('change', function() {
+                const profileId = this.value;
+                if (doctorProfileIdInput) {
+                    doctorProfileIdInput.value = profileId;
+                }
+                
+                // Recharger la page pour charger les données du profil sélectionné
+                if (profileId) {
+                    window.location.href = '{{ route("doctors.edit", $doctor) }}?profile=' + profileId;
+                } else {
+                    window.location.href = '{{ route("doctors.edit", $doctor) }}';
+                }
+            });
+            
+            // Initialiser le champ hidden avec la valeur du sélecteur
+            if (doctorProfileIdInput) {
+                doctorProfileIdInput.value = profileSelector.value;
+            }
+        } else if (doctorProfileIdInput && '{{ $selectedProfile ? $selectedProfile->id : "" }}') {
+            // Si le sélecteur n'existe pas mais qu'un profil est sélectionné, initialiser le champ hidden
+            doctorProfileIdInput.value = '{{ $selectedProfile ? $selectedProfile->id : "" }}';
+        }
+
+        // Mise à jour dynamique des spécialités en fonction du département sélectionné
         const departmentSelect = document.getElementById('department_id');
         const specialtyInput = document.getElementById('specialty_id');
         
-        // Initialiser avec la spécialité actuelle
         if (departmentSelect && specialtyInput) {
-            updateDepartmentSelection();
-            updateSpecialtyInput();
-            
-            // Mettre à jour quand le département change
-            departmentSelect.addEventListener('change', updateSpecialtyInput);
-        }
-        
-        function updateDepartmentSelection() {
-            // Trouver le département de la spécialité actuelle
-            const currentSpecialtyId = specialtyInput.value;
-            if (!currentSpecialtyId) return;
-            
-            // Parcourir les options pour trouver la spécialité actuelle
-            const options = departmentSelect.querySelectorAll('option');
-            for (const option of options) {
-                if (option.value === currentSpecialtyId) {
-                    // Sélectionner le département parent
-                    const optgroup = option.parentElement;
-                    if (optgroup.tagName === 'OPTGROUP') {
-                        departmentSelect.value = optgroup.getAttribute('label');
+            // Mettre à jour la spécialité lorsque le département change
+            departmentSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                if (selectedOption && selectedOption.parentElement.tagName === 'OPTGROUP') {
+                    // Si une spécialité est déjà sélectionnée et appartient à ce département, on la garde
+                    const currentSpecialtyId = specialtyInput.value;
+                    const currentOption = departmentSelect.querySelector(`option[value="${currentSpecialtyId}"]`);
+                    
+                    if (currentOption && currentOption.parentElement === selectedOption.parentElement) {
+                        return; // La spécialité sélectionnée appartient déjà à ce département
                     }
-                    break;
+                    
+                    // Sinon, sélectionner la première spécialité du département
+                    const firstSpecialty = selectedOption.parentElement.querySelector('option');
+                    if (firstSpecialty) {
+                        specialtyInput.value = firstSpecialty.value;
+                    }
                 }
-            }
-        }
-        
-        function updateSpecialtyInput() {
-            const selectedOption = departmentSelect.options[departmentSelect.selectedIndex];
-            if (selectedOption && selectedOption.parentElement.tagName === 'OPTGROUP') {
-                // Si une spécialité est déjà sélectionnée et appartient à ce département, on la garde
-                const currentSpecialtyId = specialtyInput.value;
-                const currentOption = departmentSelect.querySelector(`option[value="${currentSpecialtyId}"]`);
-                
-                if (currentOption && currentOption.parentElement === selectedOption.parentElement) {
-                    return; // La spécialité sélectionnée appartient déjà à ce département
-                }
-                
-                // Sinon, sélectionner la première spécialité du département
-                const firstSpecialty = selectedOption.parentElement.querySelector('option');
-                if (firstSpecialty) {
-                    specialtyInput.value = firstSpecialty.value;
-                }
-            }
+            });
         }
     });
 </script>

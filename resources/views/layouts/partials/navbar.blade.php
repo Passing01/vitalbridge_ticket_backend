@@ -68,6 +68,16 @@
                 </div>
               </li>
               
+              <!-- Bascule thème clair/sombre -->
+              <li class="flex items-center ml-2">
+                <button
+                  type="button"
+                  onclick="window.toggleTheme && window.toggleTheme()"
+                  class="flex items-center justify-center w-9 h-9 rounded-lg border border-gray-200 bg-white text-slate-500 hover:bg-gray-100 hover:text-slate-700 transition-colors duration-200">
+                  <i class="fas fa-moon text-sm"></i>
+                </button>
+              </li>
+
               <!-- Bouton de déconnexion -->
               <li class="flex items-center ml-2">
                 <form method="POST" action="{{ route('logout') }}">

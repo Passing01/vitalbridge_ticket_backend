@@ -4,8 +4,8 @@
 <div class="w-full px-6 py-6 mx-auto">
     <div class="flex flex-wrap -mx-3">
         <div class="w-full max-w-full px-3 mb-6">
-            <div class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
-                <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
+            <div class="relative flex flex-col min-w-0 break-words bg-white dark:bg-slate-800 border-0 shadow-soft-xl rounded-2xl bg-clip-border text-slate-700 dark:text-slate-100">
+                <div class="p-4 pb-0 mb-0 bg-white dark:bg-slate-800 border-b-0 rounded-t-2xl">
                     <div class="flex flex-wrap -mx-3">
                         <div class="flex items-center w-full max-w-full px-3 md:w-8/12">
                             <h6 class="mb-0">Gestion des départements</h6>
@@ -21,21 +21,21 @@
                 <div class="flex-auto p-4">
 
                     @if (session('success'))
-                        <div class="mb-4 p-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
+                        <div class="mb-4 p-4 text-sm text-green-700 bg-green-100 dark:bg-green-900/40 dark:text-green-300 rounded-lg" role="alert">
                             <span class="font-medium">Succès !</span> {{ session('success') }}
                         </div>
                     @endif
 
                     @if (session('error'))
-                        <div class="mb-4 p-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
+                        <div class="mb-4 p-4 text-sm text-red-700 bg-red-100 dark:bg-red-900/40 dark:text-red-300 rounded-lg" role="alert">
                             <span class="font-medium">Erreur !</span> {{ session('error') }}
                         </div>
                     @endif
 
                     @if($departments->count() > 0)
                         <div class="relative overflow-x-auto">
-                            <table class="w-full text-sm text-left text-gray-500">
-                                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-slate-300">
+                                <thead class="text-xs text-gray-700 dark:text-slate-200 uppercase bg-gray-50 dark:bg-slate-900">
                                     <tr>
                                         <th scope="col" class="px-6 py-3">Nom</th>
                                         <th scope="col" class="px-6 py-3">Description</th>
@@ -43,20 +43,20 @@
                                         <th scope="col" class="px-6 py-3 text-right">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="divide-y divide-gray-100 dark:divide-slate-700">
                                     @foreach($departments as $department)
-                                        <tr class="bg-white border-b hover:bg-gray-50">
-                                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                        <tr class="bg-white dark:bg-slate-800 border-b border-gray-100 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700">
+                                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-slate-100 whitespace-nowrap">
                                                 {{ $department->name }}
                                             </td>
                                             <td class="px-6 py-4">
-                                                <div class="text-sm text-gray-600">
+                                                <div class="text-sm text-gray-600 dark:text-slate-300">
                                                     {{ Str::limit($department->description, 50) }}
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4">
                                                 <div class="flex items-center space-x-3">
-                                                    <span class="px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
+                                                    <span class="px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-200">
                                                         {{ $department->specialties_count }} spécialité(s)
                                                     </span>
                                                     
@@ -88,12 +88,12 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="px-6 py-4 border-t border-gray-200">
+                        <div class="px-6 py-4 border-t border-gray-200 dark:border-slate-700">
                             {{ $departments->links() }}
                         </div>
                     @else
                         <div class="p-6 text-center">
-                            <p class="text-gray-500">Aucun département enregistré pour le moment.</p>
+                            <p class="text-gray-500 dark:text-slate-300">Aucun département enregistré pour le moment.</p>
                             <a href="{{ route('departments.create') }}" 
                                class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                 Ajouter votre premier département

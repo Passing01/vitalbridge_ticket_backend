@@ -24,6 +24,8 @@ return new class extends Migration
             $table->timestamp('otp_verified_at')->nullable();
             $table->enum('role', ['patient', 'doctor', 'admin', 'reception']);
             $table->enum('language', ['fr', 'moore', 'dioula', 'english'])->default('fr');
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
             $table->rememberToken();
             $table->timestamps();
             

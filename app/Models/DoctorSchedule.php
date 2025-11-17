@@ -9,6 +9,7 @@ class DoctorSchedule extends Model
 {
     protected $fillable = [
         'doctor_id',
+        'doctor_profile_id',
         'day_of_week',
         'start_time',
         'end_time',
@@ -24,5 +25,13 @@ class DoctorSchedule extends Model
     public function doctor(): BelongsTo
     {
         return $this->belongsTo(User::class, 'doctor_id');
+    }
+
+    /**
+     * Get the doctor profile for this schedule.
+     */
+    public function doctorProfile(): BelongsTo
+    {
+        return $this->belongsTo(DoctorProfile::class, 'doctor_profile_id');
     }
 }

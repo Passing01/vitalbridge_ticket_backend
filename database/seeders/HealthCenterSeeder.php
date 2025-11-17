@@ -24,6 +24,9 @@ class HealthCenterSeeder extends Seeder
                 'otp_verified_at' => now(),
                 'otp_expires_at' => now()->addHour(),
                 'language' => 'fr',
+                'is_active' => true,
+                'latitude' => 12.3714270,
+                'longitude' => -1.5353080,
             ],
             [
                 'id' => (string) Str::uuid(),
@@ -37,6 +40,9 @@ class HealthCenterSeeder extends Seeder
                 'otp_verified_at' => now(),
                 'otp_expires_at' => now()->addHour(),
                 'language' => 'fr',
+                'is_active' => true,
+                'latitude' => 12.3622470,
+                'longitude' => -1.5125930,
             ],
             [
                 'id' => (string) Str::uuid(),
@@ -50,6 +56,9 @@ class HealthCenterSeeder extends Seeder
                 'otp_verified_at' => now(),
                 'otp_expires_at' => now()->addHour(),
                 'language' => 'fr',
+                'is_active' => true,
+                'latitude' => 12.3248000,
+                'longitude' => -1.4703000,
             ],
             [
                 'id' => (string) Str::uuid(),
@@ -63,6 +72,9 @@ class HealthCenterSeeder extends Seeder
                 'otp_verified_at' => now(),
                 'otp_expires_at' => now()->addHour(),
                 'language' => 'fr',
+                'is_active' => true,
+                'latitude' => 12.3650000,
+                'longitude' => -1.5100000,
             ]
         ];
 

@@ -19,6 +19,14 @@ class DoctorSchedulesSeeder extends Seeder
             return;
         }
 
+        // Récupérer un profil de ce médecin (pour multi-affiliation)
+        $profile = $doctor->doctorProfiles()->first();
+
+        if (!$profile) {
+            $this->command->info("Aucun profil trouvé pour le médecin {$doctor->first_name} {$doctor->last_name}.");
+            return;
+        }
+
         // Jours de la semaine
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
         
@@ -27,6 +35,7 @@ class DoctorSchedulesSeeder extends Seeder
             DoctorSchedule::updateOrCreate(
                 [
                     'doctor_id' => $doctor->id,
+                    'doctor_profile_id' => $profile->id,
                     'day_of_week' => $day
                 ],
                 [
@@ -37,6 +46,6 @@ class DoctorSchedulesSeeder extends Seeder
             );
         }
         
-        $this->command->info("Planning créé pour le Dr. {$doctor->first_name} {$doctor->last_name} (ID: {$doctor->id})");
+        $this->command->info("Planning créé pour le Dr. {$doctor->first_name} {$doctor->last_name} (ID: {$doctor->id}, profil: {$profile->id})");
     }
 }

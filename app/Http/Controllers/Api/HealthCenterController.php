@@ -17,7 +17,7 @@ class HealthCenterController extends Controller
     public function index(): JsonResponse
     {
         $healthCenters = User::where('role', 'reception')
-            ->select(['id', 'first_name', 'last_name', 'email', 'phone'])
+            ->select(['id', 'first_name', 'last_name', 'email', 'phone', 'latitude', 'longitude'])
             ->withCount('managedDepartments')
             ->get();
 

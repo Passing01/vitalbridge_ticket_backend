@@ -84,6 +84,37 @@
                                         autocomplete="tel" />
                                     <x-input-error :messages="$errors->get('phone')" class="mt-2 text-red-500 text-xs" />
                                 </div>
+
+                                <!-- Location (Latitude & Longitude) -->
+                                <div class="mb-4">
+                                    <label class="mb-2 ml-1 font-bold text-xs text-slate-700">{{ __('Location') }}</label>
+                                    <div id="map" class="w-full h-64 mb-3 rounded-lg border border-gray-300"></div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        <div>
+                                            <label for="latitude" class="mb-1 ml-1 text-xs text-slate-700">{{ __('Latitude') }}</label>
+                                            <input
+                                                id="latitude"
+                                                name="latitude"
+                                                type="text"
+                                                class="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-gray-100 bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:outline-none focus:transition-shadow"
+                                                value="{{ old('latitude') }}"
+                                                readonly
+                                            />
+                                        </div>
+                                        <div>
+                                            <label for="longitude" class="mb-1 ml-1 text-xs text-slate-700">{{ __('Longitude') }}</label>
+                                            <input
+                                                id="longitude"
+                                                name="longitude"
+                                                type="text"
+                                                class="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-gray-100 bg-clip-padding px-3 py-2 font-normal text-gray-700 transition-all focus:border-fuchsia-300 focus:outline-none focus:transition-shadow"
+                                                value="{{ old('longitude') }}"
+                                                readonly
+                                            />
+                                        </div>
+                                    </div>
+                                    <p class="mt-1 text-xs text-gray-500">{{ __('Click on the map to set your location (optional).') }}</p>
+                                </div>
                                 
                                 <!-- Email Address -->
                                 <div class="mb-4">
@@ -164,4 +195,63 @@
         </div>
     </section>
 </main>
+@push('styles')
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""
+    />
+@endpush
+
+@push('scripts')
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""
+    ></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var mapElement = document.getElementById('map');
+            if (!mapElement) return;
+
+            var defaultLat = 12.3686; // Exemple: Ouagadougou
+            var defaultLng = -1.5271;
+
+            var map = L.map('map').setView([defaultLat, defaultLng], 13);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            var marker = null;
+
+            function setMarker(lat, lng) {
+                if (marker) {
+                    marker.setLatLng([lat, lng]);
+                } else {
+                    marker = L.marker([lat, lng]).addTo(map);
+                }
+
+                var latInput = document.getElementById('latitude');
+                var lngInput = document.getElementById('longitude');
+                if (latInput) latInput.value = lat.toFixed(7);
+                if (lngInput) lngInput.value = lng.toFixed(7);
+            }
+
+            // Si déjà des valeurs (validation échouée), recentrer sur celles-ci
+            var oldLat = parseFloat("{{ old('latitude') }}");
+            var oldLng = parseFloat("{{ old('longitude') }}");
+            if (!isNaN(oldLat) && !isNaN(oldLng)) {
+                map.setView([oldLat, oldLng], 15);
+                setMarker(oldLat, oldLng);
+            }
+
+            map.on('click', function (e) {
+                setMarker(e.latlng.lat, e.latlng.lng);
+            });
+        });
+    </script>
+@endpush
 @endsection

@@ -35,27 +35,27 @@ class RegisteredUserController extends Controller
             'phone' => ['required', 'string', 'max:20', 'unique:users'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
+            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
         ]);
 
-        // Diviser le nom complet en prénom et nom
-        $nameParts = explode(' ', $request->name, 2);
-        $firstName = $nameParts[0];
-        $lastName = $nameParts[1] ?? '';
-
         $user = User::create([
-            'first_name' => $firstName,
-            'last_name' => $lastName,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'phone' => $request->phone,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'reception', // Rôle par défaut pour les inscriptions web
             'language' => 'fr', // Langue par défaut
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        // Rediriger vers la page de paiement simulé après inscription
+        return redirect()->route('billing.simulate');
     }
 }
