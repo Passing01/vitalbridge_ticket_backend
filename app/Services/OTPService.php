@@ -41,7 +41,7 @@ class OTPService
         return $phoneNumber;
     }
 
-    protected function sendSMS(string $phoneNumber, string $otp): bool
+    protected function sendSMSViaInfobip(string $phoneNumber, string $otp): bool
     {
         $formattedNumber = $this->formatPhoneNumber($phoneNumber);
         
@@ -78,6 +78,40 @@ class OTPService
             return false;
         }
     }
+    
+    protected function sendSMSViaIkoddi(string $phoneNumber, string $otp): bool
+    {
+        try {
+            $groupId = config('ikoddi.group_id');
+            $otpAppId = config('ikoddi.otp_app_id');
+            $type = 'phone';
+            $identity = $this->formatPhoneNumber($phoneNumber);
+
+            $baseUrl = rtrim(config('ikoddi.api_base_url'), '/');
+            $url = $baseUrl . "/api/v1/groups/{$groupId}/otp/{$otpAppId}/{$type}/{$identity}";
+
+            $response = Http::withHeaders([
+                'x-api-key' => config('ikoddi.api_key'),
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ])->post($url, []);
+
+            if ($response->successful()) {
+                Log::info("OTP sent via IKODDI to $phoneNumber");
+                return true;
+            }
+
+            Log::error('Failed to send SMS via IKODDI', [
+                'status' => $response->status(),
+                'response' => $response->json(),
+            ]);
+
+            return false;
+        } catch (\Exception $e) {
+            Log::error('Error sending SMS via IKODDI: ' . $e->getMessage());
+            return false;
+        }
+    }
     /**
      * Generate and send OTP to user
      *
@@ -99,8 +133,10 @@ class OTPService
             'otp_verified_at' => null,
         ]);
 
-        // Send OTP via SMS
-        $this->sendSMS($user->phone, $otp);
+        // Send OTP via SMS: try IKODDI first, then Infobip as fallback
+        if (! $this->sendSMSViaIkoddi($user->phone, $otp)) {
+            $this->sendSMSViaInfobip($user->phone, $otp);
+        }
         
         return $otp;
     }
