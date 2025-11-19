@@ -14,10 +14,58 @@ class AppointmentController extends Controller
     // Récupérer les créneaux disponibles pour un médecin
     public function getAvailableSlots(User $doctor, Request $request)
     {
-        // Récupérer les plannings du médecin
-        $schedules = $doctor->schedules()
-            ->where('is_available', true)
-            ->get();
+        // Supporter la sélection d'un profil de médecin (affiliation)
+        $profileId = $request->query('doctor_profile_id') ?? $request->query('profile');
+        $profile = null;
+
+        if ($profileId) {
+            $profile = $doctor->doctorProfiles()->find($profileId);
+        }
+
+        // Si un profil est fourni, utiliser ses schedules/unavailabilities et sa durée de consultation
+        if ($profile) {
+            $schedules = $profile->schedules()->where('is_available', true)->get();
+            $consultationTimeGetter = fn() => $profile->average_consultation_time ?? 30;
+            $getExistingAppointments = function ($date) use ($doctor, $profile) {
+                return $doctor->doctorAppointments()
+                    ->whereDate('appointment_date', $date->toDateString())
+                    ->where('specialties_id', $profile->specialty_id)
+                    ->whereIn('status', ['scheduled'])
+                    ->pluck('appointment_date')
+                    ->map(fn($dt) => Carbon::parse($dt)->format('H:i'))
+                    ->toArray();
+            };
+            $getUnavailabilities = function ($date) use ($profile) {
+                return $profile->unavailabilities()
+                    ->whereDate('unavailable_date', $date->toDateString())
+                    ->get()
+                    ->map(fn($u) => [
+                        'start' => Carbon::parse($u->start_time)->format('H:i'),
+                        'end' => Carbon::parse($u->end_time)->format('H:i')
+                    ]);
+            };
+        } else {
+            // Fallback: utiliser les schedules liés directement au doctor (compatibilité)
+            $schedules = $doctor->schedules()->where('is_available', true)->get();
+            $consultationTimeGetter = fn() => ($doctor->doctorProfile->average_consultation_time ?? 30);
+            $getExistingAppointments = function ($date) use ($doctor) {
+                return $doctor->doctorAppointments()
+                    ->whereDate('appointment_date', $date->toDateString())
+                    ->whereIn('status', ['scheduled'])
+                    ->pluck('appointment_date')
+                    ->map(fn($dt) => Carbon::parse($dt)->format('H:i'))
+                    ->toArray();
+            };
+            $getUnavailabilities = function ($date) use ($doctor) {
+                return $doctor->unavailabilities()
+                    ->whereDate('unavailable_date', $date->toDateString())
+                    ->get()
+                    ->map(fn($u) => [
+                        'start' => Carbon::parse($u->start_time)->format('H:i'),
+                        'end' => Carbon::parse($u->end_time)->format('H:i')
+                    ]);
+            };
+        }
 
         // Si le médecin n'a pas de planning défini
         if ($schedules->isEmpty()) {
@@ -33,36 +81,20 @@ class AppointmentController extends Controller
         for ($i = 0; $i < 30; $i++) {
             $date = now()->addDays($i);
             $dayOfWeek = strtolower($date->englishDayOfWeek);
-            
+
             // Trouver le planning pour ce jour
             $schedule = $schedules->firstWhere('day_of_week', $dayOfWeek);
-            
             if (!$schedule) continue;
 
             $startTime = Carbon::parse($schedule->start_time);
             $endTime = Carbon::parse($schedule->end_time);
-            $consultationTime = $doctor->doctorProfile->average_consultation_time ?? 30; // en minutes
-            
+            $consultationTime = $consultationTimeGetter();
+
             // Récupérer les rendez-vous existants pour ce jour
-            $existingAppointments = $doctor->doctorAppointments()
-                ->whereDate('appointment_date', $date->toDateString())
-                ->whereIn('status', ['scheduled'])
-                ->pluck('appointment_date')
-                ->map(function ($dt) {
-                    return Carbon::parse($dt)->format('H:i');
-                })
-                ->toArray();
+            $existingAppointments = $getExistingAppointments($date);
 
             // Récupérer les indisponibilités pour ce jour
-            $unavailabilities = $doctor->unavailabilities()
-                ->whereDate('unavailable_date', $date->toDateString())
-                ->get()
-                ->map(function ($unavailability) {
-                    return [
-                        'start' => Carbon::parse($unavailability->start_time)->format('H:i'),
-                        'end' => Carbon::parse($unavailability->end_time)->format('H:i')
-                    ];
-                });
+            $unavailabilities = $getUnavailabilities($date);
 
             $currentTime = $startTime->copy();
             $daySlots = [];
@@ -73,7 +105,7 @@ class AppointmentController extends Controller
                 $slotTime = $slotStart->format('H:i');
 
                 // Vérifier si le créneau est disponible
-                $isAvailable = !in_array($slotTime, $existingAppointments) && 
+                $isAvailable = !in_array($slotTime, $existingAppointments) &&
                               !$this->isInUnavailability($slotStart, $slotEnd, $unavailabilities);
 
                 if ($isAvailable) {
@@ -101,7 +133,8 @@ class AppointmentController extends Controller
             'doctor' => [
                 'id' => $doctor->id,
                 'name' => $doctor->full_name,
-                'specialty' => $doctor->doctorProfile->specialty->name ?? null
+                'specialty' => $profile ? ($profile->specialty->name ?? null) : ($doctor->doctorProfile->specialty->name ?? null),
+                'doctor_profile_id' => $profile? $profile->id : null,
             ]
         ]);
     }
@@ -125,7 +158,8 @@ class AppointmentController extends Controller
         $request->validate([
             'doctor_id' => 'required|exists:users,id',
             'appointment_date' => 'required|date|after:yesterday',
-            'is_urgent' => 'sometimes|boolean'
+            'is_urgent' => 'sometimes|boolean',
+            'doctor_profile_id' => 'nullable|exists:doctor_profiles,id'
         ]);
 
         $patient = Auth::user();
@@ -133,45 +167,72 @@ class AppointmentController extends Controller
 
         $appointmentDate = Carbon::parse($request->appointment_date)->startOfDay();
         $dayOfWeek = strtolower($appointmentDate->englishDayOfWeek);
-        
-        // Vérifier si le médecin consulte ce jour-là
-        $isWorkingDay = $doctor->schedules()
-            ->where('day_of_week', $dayOfWeek)
-            ->where('is_available', true)
-            ->exists();
-            
+
+        // Si un profile est fourni, l'utiliser
+        $profile = null;
+        if ($request->filled('doctor_profile_id')) {
+            $profile = $doctor->doctorProfiles()->find($request->input('doctor_profile_id'));
+        }
+
+        // Vérifier si le médecin consulte ce jour-là (par profil si possible)
+        if ($profile) {
+            $isWorkingDay = $profile->schedules()
+                ->where('day_of_week', $dayOfWeek)
+                ->where('is_available', true)
+                ->exists();
+        } else {
+            $isWorkingDay = $doctor->schedules()
+                ->where('day_of_week', $dayOfWeek)
+                ->where('is_available', true)
+                ->exists();
+        }
+
         if (!$isWorkingDay) {
             return response()->json([
                 'message' => 'Le médecin ne consulte pas ce jour-là.'
             ], 422);
         }
-        
-        // Vérifier si le médecin est en congé ce jour-là
-        $isOnLeave = $doctor->unavailabilities()
-            ->whereDate('unavailable_date', $appointmentDate->toDateString())
-            ->where(function($query) {
-                $query->whereNull('start_time')
-                      ->orWhereNull('end_time');
-            })
-            ->exists();
-            
+
+        // Vérifier si le médecin est en congé ce jour-là (par profil si possible)
+        if ($profile) {
+            $isOnLeave = $profile->unavailabilities()
+                ->whereDate('unavailable_date', $appointmentDate->toDateString())
+                ->where(function($query) {
+                    $query->whereNull('start_time')
+                          ->orWhereNull('end_time');
+                })
+                ->exists();
+        } else {
+            $isOnLeave = $doctor->unavailabilities()
+                ->whereDate('unavailable_date', $appointmentDate->toDateString())
+                ->where(function($query) {
+                    $query->whereNull('start_time')
+                          ->orWhereNull('end_time');
+                })
+                ->exists();
+        }
+
         if ($isOnLeave) {
             return response()->json([
                 'message' => 'Le médecin est en congé ce jour-là.'
             ], 422);
         }
 
-        // Récupérer le profil du médecin avec sa spécialité et le département
-        $doctorProfile = $doctor->doctorProfile()->with('specialty.department')->first();
-        
-        if (!$doctorProfile) {
+        // Récupérer le profil du médecin: si $profile non défini, prendre le premier
+        if (!isset($profile) || !$profile) {
+            $profile = $doctor->doctorProfiles()->with('specialty.department')->first();
+        } else {
+            $profile->load('specialty.department');
+        }
+
+        if (!$profile) {
             return response()->json([
                 'message' => 'Le profil du médecin est introuvable.'
             ], 400);
         }
-        
+
         // Vérifier que la spécialité et le département sont bien définis
-        if (!$doctorProfile->specialty || !$doctorProfile->specialty->department) {
+        if (!$profile->specialty || !$profile->specialty->department) {
             return response()->json([
                 'message' => 'Le profil du médecin est incomplet. Département ou spécialité manquant.'
             ], 400);
@@ -179,8 +240,8 @@ class AppointmentController extends Controller
         
         // Récupérer un réceptionniste du même département
         $receptionist = User::where('role', 'reception')
-            ->whereHas('managedDepartments', function($query) use ($doctorProfile) {
-                $query->where('id', $doctorProfile->specialty->department->id);
+            ->whereHas('managedDepartments', function($query) use ($profile) {
+                $query->where('id', $profile->specialty->department->id);
             })
             ->first();
             
@@ -195,8 +256,8 @@ class AppointmentController extends Controller
             'patient_id' => $patient->id,
             'doctor_id' => $doctor->id,
             'reception_id' => $receptionist->id,
-            'departments_id' => $doctorProfile->specialty->department->id,
-            'specialties_id' => $doctorProfile->specialty_id,
+            'departments_id' => $profile->specialty->department->id,
+            'specialties_id' => $profile->specialty_id,
             'appointment_date' => $request->appointment_date,
             'status' => 'scheduled',
             'is_urgent' => $request->input('is_urgent', false)
