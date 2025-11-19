@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DoctorSchedule;
 use App\Models\Specialty;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -28,8 +29,8 @@ class DoctorSeeder extends Seeder
         ];
         
         foreach ($specialties as $specialty) {
-            // Créer 5 médecins par spécialité
-            for ($i = 1; $i <= 5; $i++) {
+            // Créer 2 médecins par spécialité
+            for ($i = 1; $i <= 2; $i++) {
                 $firstName = $firstNames[array_rand($firstNames)];
                 $lastName = $lastNames[array_rand($lastNames)];
                 $email = strtolower($firstName[0] . $lastName . $i . '@example.com');
@@ -51,7 +52,7 @@ class DoctorSeeder extends Seeder
                 ]);
 
                 // Créer le profil du médecin
-                $user->doctorProfile()->create([
+                $profile = $user->doctorProfile()->create([
                     'specialty_id' => $specialty->id,
                     'qualification' => fake()->randomElement(['MD', 'PhD', 'Prof', 'Dr', 'Pr', 'Dr.']),
                     'bio' => 'Médecin spécialisé en ' . $specialty->name . ' avec une expérience de ' . rand(5, 30) . ' ans.',
@@ -59,6 +60,30 @@ class DoctorSeeder extends Seeder
                     'average_consultation_time' => rand(15, 60),
                     'is_available' => rand(0, 1) === 1, // 50% de chance d'être disponible
                 ]);
+
+                // Créer les créneaux horaires standards (lundi à vendredi)
+                $weeklySchedule = [
+                    'monday' => ['start' => '08:00:00', 'end' => '16:00:00'],
+                    'tuesday' => ['start' => '08:00:00', 'end' => '16:00:00'],
+                    'wednesday' => ['start' => '08:00:00', 'end' => '16:00:00'],
+                    'thursday' => ['start' => '08:00:00', 'end' => '16:00:00'],
+                    'friday' => ['start' => '08:00:00', 'end' => '16:00:00'],
+                ];
+
+                foreach ($weeklySchedule as $day => $hours) {
+                    DoctorSchedule::updateOrCreate(
+                        [
+                            'doctor_id' => $user->id,
+                            'doctor_profile_id' => $profile->id,
+                            'day_of_week' => $day,
+                        ],
+                        [
+                            'start_time' => $hours['start'],
+                            'end_time' => $hours['end'],
+                            'is_available' => true,
+                        ]
+                    );
+                }
             }
         }
     }

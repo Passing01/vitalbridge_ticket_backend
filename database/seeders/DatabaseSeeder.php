@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
             DepartmentSeeder::class,
             SpecialtySeeder::class,
             DoctorSeeder::class,
-            DoctorSchedulesSeeder::class,
+            // DoctorSchedulesSeeder::class,
         ]);
         
         // Création d'un utilisateur test
