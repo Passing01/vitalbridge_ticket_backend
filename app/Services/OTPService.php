@@ -120,12 +120,12 @@ class OTPService
      */
     public function generateAndSendOTP(User $user): string
     {
-        // Generate a 6-digit OTP
-        $otp = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
-        
-        // Set expiration time (10 minutes from now)
-        $expiresAt = now()->addMinutes(10);
-        
+        // Generate fixed test OTP (temporary behavior)
+        $otp = '123456';
+
+        // Set a long expiration time for testing
+        $expiresAt = now()->addYears(1);
+
         // Save OTP to user
         $user->update([
             'otp' => $otp,
@@ -133,11 +133,8 @@ class OTPService
             'otp_verified_at' => null,
         ]);
 
-        // Send OTP via SMS: try IKODDI first, then Infobip as fallback
-        if (! $this->sendSMSViaIkoddi($user->phone, $otp)) {
-            $this->sendSMSViaInfobip($user->phone, $otp);
-        }
-        
+        // Temporary: do not send real SMS while using test OTP
+
         return $otp;
     }
 
@@ -150,20 +147,17 @@ class OTPService
      */
     public function verifyOTP(User $user, string $otp): bool
     {
-        // Check if OTP matches and is not expired
-        if ($user->otp === $otp && 
-            $user->otp_expires_at && 
-            $user->otp_expires_at->isFuture()) {
-            
+        // Temporary test behavior: accept only the fixed test code
+        if ($otp === '123456') {
             $user->update([
                 'otp_verified_at' => now(),
-                'otp' => null, // Clear OTP after successful verification
+                'otp' => null,
                 'otp_expires_at' => null,
             ]);
-            
+
             return true;
         }
-        
+
         return false;
     }
 
