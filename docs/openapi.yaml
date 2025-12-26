@@ -1,0 +1,1193 @@
+openapi: 3.0.3
+info:
+  title: 'Laravel API Documentation'
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+tags:
+  -
+    name: Endpoints
+    description: ''
+paths:
+  /api/v1/auth/register:
+    post:
+      summary: 'Register a new patient and send OTP'
+      operationId: registerANewPatientAndSendOTP
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: b
+                  nullable: false
+                last_name:
+                  type: string
+                  description: 'Must not be greater than 255 characters.'
+                  example: 'n'
+                  nullable: false
+                phone:
+                  type: string
+                  description: 'Must match the regex /^(\+?[0-9]{8,15}. Must not be greater than 20 characters.'
+                  example: gzmiyvdljnikhway
+                  nullable: false
+                language:
+                  type: string
+                  description: ''
+                  example: moore
+                  nullable: false
+                  enum:
+                    - fr
+                    - moore
+                    - dioula
+                    - english
+              required:
+                - first_name
+                - last_name
+                - phone
+      security: []
+  /api/v1/auth/request-otp:
+    post:
+      summary: "Send OTP to user's phone for login"
+      operationId: sendOTPToUsersPhoneForLogin
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  type: string
+                  description: 'Must match the regex /^(\+?[0-9]{8,15}.'
+                  example: (+64255931423268
+                  nullable: false
+              required:
+                - phone
+      security: []
+  /api/v1/auth/verify-otp:
+    post:
+      summary: 'Verify OTP and authenticate user'
+      operationId: verifyOTPAndAuthenticateUser
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                otp:
+                  type: string
+                  description: 'Must be 6 characters.'
+                  example: bngzmi
+                  nullable: false
+              required:
+                - otp
+      security: []
+  /api/v1/auth/me:
+    get:
+      summary: 'Get the authenticated user'
+      operationId: getTheAuthenticatedUser
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  /api/v1/auth/logout:
+    post:
+      summary: 'Logout user (revoke token)'
+      operationId: logoutUserrevokeToken
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/v1/doctor/affiliations:
+    get:
+      summary: 'Récupérer toutes les affiliations du médecin'
+      operationId: rcuprerToutesLesAffiliationsDuMdecin
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  '/api/v1/doctor/profile/{profileId}':
+    get:
+      summary: "Récupérer le profil complet d'une affiliation spécifique"
+      operationId: rcuprerLeProfilCompletDuneAffiliationSpcifique
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: profileId
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/v1/doctor/{doctor_id}/queue':
+    get:
+      summary: "Afficher la file d'attente du jour pour un médecin"
+      operationId: afficherLaFileDattenteDuJourPourUnMdecin
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: doctor_id
+        description: 'The ID of the doctor.'
+        example: 005725a0-af91-4440-995a-a98d6ec99326
+        required: true
+        schema:
+          type: string
+  '/api/v1/doctor/{doctor_id}/queue/next':
+    post:
+      summary: 'Appeler le prochain patient'
+      operationId: appelerLeProchainPatient
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: doctor_id
+        description: 'The ID of the doctor.'
+        example: 005725a0-af91-4440-995a-a98d6ec99326
+        required: true
+        schema:
+          type: string
+  '/api/v1/doctor/appointments/{appointment_id}/serve':
+    post:
+      summary: 'Marquer un patient comme servi'
+      operationId: marquerUnPatientCommeServi
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: appointment_id
+        description: 'The ID of the appointment.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/v1/doctor/appointments/{appointment_id}/absent':
+    post:
+      summary: 'Marquer un patient comme absent'
+      operationId: marquerUnPatientCommeAbsent
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: appointment_id
+        description: 'The ID of the appointment.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/v1/doctor/appointments/{appointment_id}/requeue':
+    post:
+      summary: "Réinsérer un patient absent dans la file d'attente"
+      operationId: rinsrerUnPatientAbsentDansLaFileDattente
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: appointment_id
+        description: 'The ID of the appointment.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/v1/doctor/appointments/{appointment_id}/urgent':
+    post:
+      summary: 'Marquer un rendez-vous comme urgent'
+      operationId: marquerUnRendezVousCommeUrgent
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: appointment_id
+        description: 'The ID of the appointment.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/v1/doctor/delay:
+    post:
+      summary: 'Déclarer un retard pour une affiliation spécifique'
+      operationId: dclarerUnRetardPourUneAffiliationSpcifique
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                doctor_profile_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the doctor_profiles table.'
+                  example: architecto
+                  nullable: false
+                delay_duration:
+                  type: integer
+                  description: 'Must be at least 1. Must not be greater than 240.'
+                  example: 22
+                  nullable: false
+                reason:
+                  type: string
+                  description: 'max 4 heures en minutes. Must not be greater than 500 characters.'
+                  example: g
+                  nullable: true
+              required:
+                - doctor_profile_id
+                - delay_duration
+      security: []
+  /api/v1/doctor/unavailability:
+    post:
+      summary: 'Ajouter une indisponibilité pour une affiliation spécifique'
+      operationId: ajouterUneIndisponibilitPourUneAffiliationSpcifique
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                doctor_profile_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the doctor_profiles table.'
+                  example: architecto
+                  nullable: false
+                unavailable_date:
+                  type: string
+                  description: 'Must be a valid date. Must be a date after or equal to <code>today</code>.'
+                  example: '2051-12-06'
+                  nullable: false
+                start_time:
+                  type: string
+                  description: 'Must be a valid date in the format <code>H:i</code>.'
+                  example: '16:41'
+                  nullable: false
+                end_time:
+                  type: string
+                  description: 'Must be a valid date in the format <code>H:i</code>. Must be a date after <code>start_time</code>.'
+                  example: '2051-12-06'
+                  nullable: false
+                reason:
+                  type: string
+                  description: 'Must not be greater than 500 characters.'
+                  example: 'n'
+                  nullable: false
+              required:
+                - doctor_profile_id
+                - unavailable_date
+                - start_time
+                - end_time
+                - reason
+      security: []
+  '/api/v1/doctor/unavailability/{id}':
+    delete:
+      summary: 'Supprimer une indisponibilité'
+      operationId: supprimerUneIndisponibilit
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the unavailability.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/v1/health-centers:
+    get:
+      summary: "Liste de tous les centres de santé (utilisateurs avec le rôle 'reception')"
+      operationId: listeDeTousLesCentresDeSantutilisateursAvecLeRlereception
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  health_centers:
+                    -
+                      id: 694ca84f-4bb7-4fbf-8cc7-973239ed51f4
+                      first_name: 'CHU de Yalgado'
+                      last_name: Ouedraogo
+                      email: contact@chuyo.bf
+                      phone: '+22625307060'
+                      managed_departments_count: 5
+                    -
+                      id: dea6e0dd-f698-4aab-aa1f-88e2ed2ea83e
+                      first_name: 'CHU Pédiatrique'
+                      last_name: 'Charles de Gaulle'
+                      email: contact@chupcdg.bf
+                      phone: '+22625363600'
+                      managed_departments_count: 5
+                    -
+                      id: eba71d76-46ae-4b12-b1fa-257200384332
+                      first_name: CMA
+                      last_name: SAGA
+                      email: contact@cmasaga.bf
+                      phone: '+22625361206'
+                      managed_departments_count: 5
+                    -
+                      id: f2a1b1ce-55f8-4554-ba26-c8e0acc2d65b
+                      first_name: Clinique
+                      last_name: 'El Fateh Suka'
+                      email: contact@fatehsuka.bf
+                      phone: '+22625312789'
+                      managed_departments_count: 5
+                properties:
+                  health_centers:
+                    type: array
+                    example:
+                      -
+                        id: 694ca84f-4bb7-4fbf-8cc7-973239ed51f4
+                        first_name: 'CHU de Yalgado'
+                        last_name: Ouedraogo
+                        email: contact@chuyo.bf
+                        phone: '+22625307060'
+                        managed_departments_count: 5
+                      -
+                        id: dea6e0dd-f698-4aab-aa1f-88e2ed2ea83e
+                        first_name: 'CHU Pédiatrique'
+                        last_name: 'Charles de Gaulle'
+                        email: contact@chupcdg.bf
+                        phone: '+22625363600'
+                        managed_departments_count: 5
+                      -
+                        id: eba71d76-46ae-4b12-b1fa-257200384332
+                        first_name: CMA
+                        last_name: SAGA
+                        email: contact@cmasaga.bf
+                        phone: '+22625361206'
+                        managed_departments_count: 5
+                      -
+                        id: f2a1b1ce-55f8-4554-ba26-c8e0acc2d65b
+                        first_name: Clinique
+                        last_name: 'El Fateh Suka'
+                        email: contact@fatehsuka.bf
+                        phone: '+22625312789'
+                        managed_departments_count: 5
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 694ca84f-4bb7-4fbf-8cc7-973239ed51f4
+                        first_name:
+                          type: string
+                          example: 'CHU de Yalgado'
+                        last_name:
+                          type: string
+                          example: Ouedraogo
+                        email:
+                          type: string
+                          example: contact@chuyo.bf
+                        phone:
+                          type: string
+                          example: '+22625307060'
+                        managed_departments_count:
+                          type: integer
+                          example: 5
+      tags:
+        - Endpoints
+      security: []
+  '/api/v1/health-centers/{id}':
+    get:
+      summary: "Afficher les détails d'un centre de santé avec ses départements"
+      operationId: afficherLesDtailsDunCentreDeSantAvecSesDpartements
+      description: ''
+      parameters: []
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'No query results for model [App\Models\User].'
+                properties:
+                  message:
+                    type: string
+                    example: 'No query results for model [App\Models\User].'
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the health center.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/v1/departments/{id}':
+    get:
+      summary: "Afficher les détails d'un département avec ses spécialités"
+      operationId: afficherLesDtailsDunDpartementAvecSesSpcialits
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  department:
+                    id: 1
+                    name: 'Médecine Générale'
+                    description: 'Service de Médecine Générale du centre '
+                    reception_id: 694ca84f-4bb7-4fbf-8cc7-973239ed51f4
+                    created_at: '2025-11-12T13:57:57.000000Z'
+                    updated_at: '2025-11-12T13:57:57.000000Z'
+                    specialties:
+                      -
+                        id: 1
+                        name: 'Médecine de famille'
+                        description: 'Service de Médecine de famille - Médecine Générale'
+                        department_id: 1
+                        doctors_count: 5
+                      -
+                        id: 2
+                        name: 'Médecine interne générale'
+                        description: 'Service de Médecine interne générale - Médecine Générale'
+                        department_id: 1
+                        doctors_count: 5
+                      -
+                        id: 3
+                        name: "Médecine d'urgence"
+                        description: "Service de Médecine d'urgence - Médecine Générale"
+                        department_id: 1
+                        doctors_count: 5
+                      -
+                        id: 4
+                        name: 'Médecine du travail'
+                        description: 'Service de Médecine du travail - Médecine Générale'
+                        department_id: 1
+                        doctors_count: 5
+                      -
+                        id: 5
+                        name: 'Médecine préventive'
+                        description: 'Service de Médecine préventive - Médecine Générale'
+                        department_id: 1
+                        doctors_count: 5
+                  _debug:
+                    department_id: 1
+                    department_name: 'Médecine Générale'
+                    specialties_count: 5
+                    specialties_ids:
+                      - 1
+                      - 2
+                      - 3
+                      - 4
+                      - 5
+                properties:
+                  department:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: 'Médecine Générale'
+                      description:
+                        type: string
+                        example: 'Service de Médecine Générale du centre '
+                      reception_id:
+                        type: string
+                        example: 694ca84f-4bb7-4fbf-8cc7-973239ed51f4
+                      created_at:
+                        type: string
+                        example: '2025-11-12T13:57:57.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2025-11-12T13:57:57.000000Z'
+                      specialties:
+                        type: array
+                        example:
+                          -
+                            id: 1
+                            name: 'Médecine de famille'
+                            description: 'Service de Médecine de famille - Médecine Générale'
+                            department_id: 1
+                            doctors_count: 5
+                          -
+                            id: 2
+                            name: 'Médecine interne générale'
+                            description: 'Service de Médecine interne générale - Médecine Générale'
+                            department_id: 1
+                            doctors_count: 5
+                          -
+                            id: 3
+                            name: "Médecine d'urgence"
+                            description: "Service de Médecine d'urgence - Médecine Générale"
+                            department_id: 1
+                            doctors_count: 5
+                          -
+                            id: 4
+                            name: 'Médecine du travail'
+                            description: 'Service de Médecine du travail - Médecine Générale'
+                            department_id: 1
+                            doctors_count: 5
+                          -
+                            id: 5
+                            name: 'Médecine préventive'
+                            description: 'Service de Médecine préventive - Médecine Générale'
+                            department_id: 1
+                            doctors_count: 5
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: 'Médecine de famille'
+                            description:
+                              type: string
+                              example: 'Service de Médecine de famille - Médecine Générale'
+                            department_id:
+                              type: integer
+                              example: 1
+                            doctors_count:
+                              type: integer
+                              example: 5
+                  _debug:
+                    type: object
+                    properties:
+                      department_id:
+                        type: integer
+                        example: 1
+                      department_name:
+                        type: string
+                        example: 'Médecine Générale'
+                      specialties_count:
+                        type: integer
+                        example: 5
+                      specialties_ids:
+                        type: array
+                        example:
+                          - 1
+                          - 2
+                          - 3
+                          - 4
+                          - 5
+                        items:
+                          type: integer
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the department.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  '/api/v1/specialties/{id}':
+    get:
+      summary: "Afficher les détails d'une spécialité avec ses médecins"
+      operationId: afficherLesDtailsDuneSpcialitAvecSesMdecins
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  specialty:
+                    id: 1
+                    name: 'Médecine de famille'
+                    description: 'Service de Médecine de famille - Médecine Générale'
+                    active_doctors_count: 5
+                    doctors:
+                      -
+                        id: 83d5564b-ff92-414b-8c19-bf3d5f4bf320
+                        first_name: 'Dr. Mohamed'
+                        last_name: David
+                        email: mdavid1@example.com
+                        phone: '+22599845819'
+                        qualification: PhD
+                        bio: 'Médecin spécialisé en Médecine de famille avec une expérience de 21 ans.'
+                        max_patients_per_day: 18
+                        average_consultation_time: 26
+                        is_available: true
+                        delays: []
+                        unavailabilities: []
+                        schedules: []
+                      -
+                        id: 5b041a62-1b33-4ef9-9732-4ea5b9349832
+                        first_name: 'Dr. Sophie'
+                        last_name: Robert
+                        email: srobert2@example.com
+                        phone: '+22530830498'
+                        qualification: Dr
+                        bio: 'Médecin spécialisé en Médecine de famille avec une expérience de 27 ans.'
+                        max_patients_per_day: 21
+                        average_consultation_time: 42
+                        is_available: true
+                        delays: []
+                        unavailabilities: []
+                        schedules: []
+                      -
+                        id: 21ae9f56-c38e-406b-8c5d-970ebd7cf1da
+                        first_name: 'Dr. Aminata'
+                        last_name: Thomas
+                        email: athomas3@example.com
+                        phone: '+22529783244'
+                        qualification: Prof
+                        bio: 'Médecin spécialisé en Médecine de famille avec une expérience de 23 ans.'
+                        max_patients_per_day: 19
+                        average_consultation_time: 50
+                        is_available: true
+                        delays: []
+                        unavailabilities: []
+                        schedules: []
+                      -
+                        id: 409a2e13-51e8-4e14-91b4-44758c7f7b08
+                        first_name: 'Dr. Chloé'
+                        last_name: Simon
+                        email: csimon4@example.com
+                        phone: '+22553895885'
+                        qualification: Dr
+                        bio: 'Médecin spécialisé en Médecine de famille avec une expérience de 22 ans.'
+                        max_patients_per_day: 14
+                        average_consultation_time: 51
+                        is_available: true
+                        delays: []
+                        unavailabilities: []
+                        schedules: []
+                      -
+                        id: 9d2517f0-e4b7-430e-84ed-9a379c2f2d88
+                        first_name: 'Dr. Jean'
+                        last_name: Moreau
+                        email: jmoreau5@example.com
+                        phone: '+22572865399'
+                        qualification: Pr
+                        bio: 'Médecin spécialisé en Médecine de famille avec une expérience de 14 ans.'
+                        max_patients_per_day: 23
+                        average_consultation_time: 54
+                        is_available: false
+                        delays: []
+                        unavailabilities: []
+                        schedules: []
+                properties:
+                  specialty:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: 'Médecine de famille'
+                      description:
+                        type: string
+                        example: 'Service de Médecine de famille - Médecine Générale'
+                      active_doctors_count:
+                        type: integer
+                        example: 5
+                      doctors:
+                        type: array
+                        example:
+                          -
+                            id: 83d5564b-ff92-414b-8c19-bf3d5f4bf320
+                            first_name: 'Dr. Mohamed'
+                            last_name: David
+                            email: mdavid1@example.com
+                            phone: '+22599845819'
+                            qualification: PhD
+                            bio: 'Médecin spécialisé en Médecine de famille avec une expérience de 21 ans.'
+                            max_patients_per_day: 18
+                            average_consultation_time: 26
+                            is_available: true
+                            delays: []
+                            unavailabilities: []
+                            schedules: []
+                          -
+                            id: 5b041a62-1b33-4ef9-9732-4ea5b9349832
+                            first_name: 'Dr. Sophie'
+                            last_name: Robert
+                            email: srobert2@example.com
+                            phone: '+22530830498'
+                            qualification: Dr
+                            bio: 'Médecin spécialisé en Médecine de famille avec une expérience de 27 ans.'
+                            max_patients_per_day: 21
+                            average_consultation_time: 42
+                            is_available: true
+                            delays: []
+                            unavailabilities: []
+                            schedules: []
+                          -
+                            id: 21ae9f56-c38e-406b-8c5d-970ebd7cf1da
+                            first_name: 'Dr. Aminata'
+                            last_name: Thomas
+                            email: athomas3@example.com
+                            phone: '+22529783244'
+                            qualification: Prof
+                            bio: 'Médecin spécialisé en Médecine de famille avec une expérience de 23 ans.'
+                            max_patients_per_day: 19
+                            average_consultation_time: 50
+                            is_available: true
+                            delays: []
+                            unavailabilities: []
+                            schedules: []
+                          -
+                            id: 409a2e13-51e8-4e14-91b4-44758c7f7b08
+                            first_name: 'Dr. Chloé'
+                            last_name: Simon
+                            email: csimon4@example.com
+                            phone: '+22553895885'
+                            qualification: Dr
+                            bio: 'Médecin spécialisé en Médecine de famille avec une expérience de 22 ans.'
+                            max_patients_per_day: 14
+                            average_consultation_time: 51
+                            is_available: true
+                            delays: []
+                            unavailabilities: []
+                            schedules: []
+                          -
+                            id: 9d2517f0-e4b7-430e-84ed-9a379c2f2d88
+                            first_name: 'Dr. Jean'
+                            last_name: Moreau
+                            email: jmoreau5@example.com
+                            phone: '+22572865399'
+                            qualification: Pr
+                            bio: 'Médecin spécialisé en Médecine de famille avec une expérience de 14 ans.'
+                            max_patients_per_day: 23
+                            average_consultation_time: 54
+                            is_available: false
+                            delays: []
+                            unavailabilities: []
+                            schedules: []
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: 83d5564b-ff92-414b-8c19-bf3d5f4bf320
+                            first_name:
+                              type: string
+                              example: 'Dr. Mohamed'
+                            last_name:
+                              type: string
+                              example: David
+                            email:
+                              type: string
+                              example: mdavid1@example.com
+                            phone:
+                              type: string
+                              example: '+22599845819'
+                            qualification:
+                              type: string
+                              example: PhD
+                            bio:
+                              type: string
+                              example: 'Médecin spécialisé en Médecine de famille avec une expérience de 21 ans.'
+                            max_patients_per_day:
+                              type: integer
+                              example: 18
+                            average_consultation_time:
+                              type: integer
+                              example: 26
+                            is_available:
+                              type: boolean
+                              example: true
+                            delays:
+                              type: array
+                              example: []
+                            unavailabilities:
+                              type: array
+                              example: []
+                            schedules:
+                              type: array
+                              example: []
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the specialty.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  '/api/v1/doctors/{id}':
+    get:
+      summary: "Afficher les détails complets d'un médecin"
+      operationId: afficherLesDtailsCompletsDunMdecin
+      description: ''
+      parameters: []
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'No query results for model [App\Models\User] architecto'
+                properties:
+                  message:
+                    type: string
+                    example: 'No query results for model [App\Models\User] architecto'
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the doctor.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/v1/doctors/{doctor_id}/available-slots':
+    get:
+      summary: ''
+      operationId: getApiV1DoctorsDoctor_idAvailableSlots
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: doctor_id
+        description: 'The ID of the doctor.'
+        example: 005725a0-af91-4440-995a-a98d6ec99326
+        required: true
+        schema:
+          type: string
+  /api/v1/appointments:
+    post:
+      summary: ''
+      operationId: postApiV1Appointments
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                doctor_id:
+                  type: string
+                  description: 'The <code>id</code> of an existing record in the users table.'
+                  example: architecto
+                  nullable: false
+                appointment_date:
+                  type: string
+                  description: 'Must be a valid date. Must be a date after <code>yesterday</code>.'
+                  example: '2051-12-05'
+                  nullable: false
+                is_urgent:
+                  type: boolean
+                  description: ''
+                  example: false
+                  nullable: false
+              required:
+                - doctor_id
+                - appointment_date
+      security: []
+  /api/v1/patient/appointments:
+    get:
+      summary: ''
+      operationId: getApiV1PatientAppointments
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  '/api/v1/patient/appointments/{id}':
+    get:
+      summary: ''
+      operationId: getApiV1PatientAppointmentsId
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the appointment.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/v1/appointments/{id}/cancel':
+    post:
+      summary: ''
+      operationId: postApiV1AppointmentsIdCancel
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the appointment.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/v1/doctor/appointments:
+    get:
+      summary: ''
+      operationId: getApiV1DoctorAppointments
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  '/api/v1/doctor/appointments/{id}':
+    get:
+      summary: ''
+      operationId: getApiV1DoctorAppointmentsId
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the appointment.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/v1/appointments/{id}/complete':
+    post:
+      summary: ''
+      operationId: postApiV1AppointmentsIdComplete
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the appointment.'
+        example: architecto
+        required: true
+        schema:
+          type: string
