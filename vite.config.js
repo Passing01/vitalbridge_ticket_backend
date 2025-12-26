@@ -8,4 +8,10 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    build: {
+        outDir: 'build',
+        manifest: true,
+    },
+    // Indique à Vite que le dossier public est la racine (et non public/)
+    publicDir: false,
 });

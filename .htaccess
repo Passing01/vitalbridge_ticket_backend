@@ -1,0 +1,21 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # IMPORTANT: Ne jamais faire de redirection HTTP externe (R=301/302)
+    # pour éviter de perdre les méthodes POST
+    
+    # Si la requête cible déjà le dossier public, ne rien faire
+    RewriteCond %{REQUEST_URI} ^/public/
+    RewriteRule ^ - [L]
+    
+    # Si le fichier ou dossier existe à la racine, ne pas toucher
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+    
+    # Pour toutes les autres requêtes, faire un rewrite INTERNE vers public/
+    # [L] = Last rule, [QSA] = Query String Append
+    # PAS de flag R= qui causerait une redirection externe !
+    RewriteRule ^(.*)$ public/$1 [L,QSA]
+</IfModule>
+
