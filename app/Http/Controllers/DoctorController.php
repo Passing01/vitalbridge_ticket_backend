@@ -57,17 +57,13 @@ class DoctorController extends Controller
                 'string',
                 'email',
                 'max:255',
-                Rule::unique('users')->where(function ($query) {
-                    return $query->where('role', 'doctor');
-                })->ignore($request->input('existing_doctor_id'))
+                Rule::unique('users', 'email')->ignore($request->input('existing_doctor_id'))
             ],
             'phone' => [
                 'required',
                 'string',
                 'max:20',
-                Rule::unique('users')->where(function ($query) {
-                    return $query->where('role', 'doctor');
-                })->ignore($request->input('existing_doctor_id'))
+                Rule::unique('users', 'phone')->ignore($request->input('existing_doctor_id'))
             ],
             'specialty_id' => 'required|exists:specialties,id',
             'qualification' => 'required|string|max:255',

@@ -82,9 +82,13 @@ class AuthController extends Controller
             ],
         ]);
 
+        // Prioriser un compte médecin si le même numéro est partagé entre patient et médecin
         $user = User::where('phone', $request->phone)
-            ->whereIn('role', ['patient', 'doctor'])
-            ->first();
+            ->where('role', 'doctor')
+            ->first()
+            ?? User::where('phone', $request->phone)
+                ->where('role', 'patient')
+                ->first();
 
         if (!$user) {
             return response()->json([
