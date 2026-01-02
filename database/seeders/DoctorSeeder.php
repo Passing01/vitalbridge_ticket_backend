@@ -61,14 +61,64 @@ class DoctorSeeder extends Seeder
                     'is_available' => rand(0, 1) === 1, // 50% de chance d'être disponible
                 ]);
 
-                // Créer les créneaux horaires standards (lundi à vendredi)
-                $weeklySchedule = [
-                    'monday' => ['start' => '08:00:00', 'end' => '16:00:00'],
-                    'tuesday' => ['start' => '08:00:00', 'end' => '16:00:00'],
-                    'wednesday' => ['start' => '08:00:00', 'end' => '16:00:00'],
-                    'thursday' => ['start' => '08:00:00', 'end' => '16:00:00'],
-                    'friday' => ['start' => '08:00:00', 'end' => '16:00:00'],
+                // Créer les créneaux horaires avec des modèles variés
+                // Chaque modèle garantit au moins 4 heures par jour
+                $schedulePatterns = [
+                    // Journée complète classique (8h)
+                    [
+                        'monday' => ['start' => '08:00:00', 'end' => '16:00:00'],
+                        'tuesday' => ['start' => '08:00:00', 'end' => '16:00:00'],
+                        'wednesday' => ['start' => '08:00:00', 'end' => '16:00:00'],
+                        'thursday' => ['start' => '08:00:00', 'end' => '16:00:00'],
+                        'friday' => ['start' => '08:00:00', 'end' => '16:00:00'],
+                    ],
+                    // Horaires matinaux étendus (7h)
+                    [
+                        'monday' => ['start' => '07:00:00', 'end' => '14:00:00'],
+                        'tuesday' => ['start' => '07:00:00', 'end' => '14:00:00'],
+                        'wednesday' => ['start' => '07:00:00', 'end' => '14:00:00'],
+                        'thursday' => ['start' => '07:00:00', 'end' => '14:00:00'],
+                        'friday' => ['start' => '07:00:00', 'end' => '14:00:00'],
+                        'saturday' => ['start' => '08:00:00', 'end' => '12:00:00'],
+                    ],
+                    // Après-midi et soirée (6h)
+                    [
+                        'monday' => ['start' => '13:00:00', 'end' => '19:00:00'],
+                        'tuesday' => ['start' => '13:00:00', 'end' => '19:00:00'],
+                        'wednesday' => ['start' => '13:00:00', 'end' => '19:00:00'],
+                        'thursday' => ['start' => '13:00:00', 'end' => '19:00:00'],
+                        'friday' => ['start' => '13:00:00', 'end' => '19:00:00'],
+                    ],
+                    // Journée longue avec samedi (9h en semaine, 5h samedi)
+                    [
+                        'monday' => ['start' => '08:00:00', 'end' => '17:00:00'],
+                        'tuesday' => ['start' => '08:00:00', 'end' => '17:00:00'],
+                        'wednesday' => ['start' => '08:00:00', 'end' => '17:00:00'],
+                        'thursday' => ['start' => '08:00:00', 'end' => '17:00:00'],
+                        'friday' => ['start' => '08:00:00', 'end' => '17:00:00'],
+                        'saturday' => ['start' => '08:00:00', 'end' => '13:00:00'],
+                    ],
+                    // Horaires flexibles (minimum 4h par jour)
+                    [
+                        'monday' => ['start' => '09:00:00', 'end' => '13:00:00'],
+                        'tuesday' => ['start' => '14:00:00', 'end' => '18:00:00'],
+                        'wednesday' => ['start' => '09:00:00', 'end' => '13:00:00'],
+                        'thursday' => ['start' => '14:00:00', 'end' => '18:00:00'],
+                        'friday' => ['start' => '08:00:00', 'end' => '12:00:00'],
+                        'saturday' => ['start' => '09:00:00', 'end' => '13:00:00'],
+                    ],
+                    // Horaires continus (8h30)
+                    [
+                        'monday' => ['start' => '08:30:00', 'end' => '17:00:00'],
+                        'tuesday' => ['start' => '08:30:00', 'end' => '17:00:00'],
+                        'wednesday' => ['start' => '08:30:00', 'end' => '17:00:00'],
+                        'thursday' => ['start' => '08:30:00', 'end' => '17:00:00'],
+                        'friday' => ['start' => '08:30:00', 'end' => '17:00:00'],
+                    ],
                 ];
+
+                // Sélectionner un modèle d'horaire aléatoire pour chaque médecin
+                $weeklySchedule = $schedulePatterns[array_rand($schedulePatterns)];
 
                 foreach ($weeklySchedule as $day => $hours) {
                     DoctorSchedule::updateOrCreate(
