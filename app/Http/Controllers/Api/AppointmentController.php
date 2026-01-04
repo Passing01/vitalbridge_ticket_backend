@@ -35,6 +35,12 @@ class AppointmentController extends Controller
                     ->map(fn($dt) => Carbon::parse($dt)->format('H:i'))
                     ->toArray();
             };
+            $getAppointmentCount = function ($date) use ($doctor, $profile) {
+                return $doctor->doctorAppointments()
+                    ->whereDate('appointment_date', $date->toDateString())
+                    ->where('specialties_id', $profile->specialty_id)
+                    ->count();
+            };
             $getUnavailabilities = function ($date) use ($profile) {
                 return $profile->unavailabilities()
                     ->whereDate('unavailable_date', $date->toDateString())
@@ -55,6 +61,11 @@ class AppointmentController extends Controller
                     ->pluck('appointment_date')
                     ->map(fn($dt) => Carbon::parse($dt)->format('H:i'))
                     ->toArray();
+            };
+            $getAppointmentCount = function ($date) use ($doctor) {
+                return $doctor->doctorAppointments()
+                    ->whereDate('appointment_date', $date->toDateString())
+                    ->count();
             };
             $getUnavailabilities = function ($date) use ($doctor) {
                 return $doctor->unavailabilities()
@@ -95,6 +106,9 @@ class AppointmentController extends Controller
 
             // Récupérer les indisponibilités pour ce jour
             $unavailabilities = $getUnavailabilities($date);
+            
+            // Récupérer le nombre de rendez-vous pour ce jour
+            $appointmentCount = $getAppointmentCount($date);
 
             $currentTime = $startTime->copy();
             $daySlots = [];
@@ -123,6 +137,7 @@ class AppointmentController extends Controller
                 $availableSlots->push([
                     'date' => $date->toDateString(),
                     'day_name' => $date->translatedFormat('l'),
+                    'appointment_requests_count' => $appointmentCount,
                     'slots' => $daySlots
                 ]);
             }
