@@ -22,14 +22,14 @@ class DepartmentSeeder extends Seeder
         ];
 
         foreach ($healthCenters as $center) {
-            // Créer 5 départements par centre de santé
-            foreach ($departments as $index => $departmentName) {
-                Department::create([
-                    'name' => $departmentName,
-                    'description' => "Service de $departmentName du centre " . $center->name,
-                    'reception_id' => $center->id,
-                ]);
-            }
+            // Créer 1 département par centre de santé
+            $departmentName = $departments[array_rand($departments)];
+            
+            Department::create([
+                'name' => $departmentName,
+                'description' => "Service de $departmentName du centre " . $center->name,
+                'reception_id' => $center->id,
+            ]);
         }
     }
 }

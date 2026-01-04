@@ -147,7 +147,7 @@ class SpecialtySeeder extends Seeder
             $baseDepartmentName = trim(explode('-', $departmentName)[0]);
             
             if (isset($specialties[$baseDepartmentName])) {
-                $departmentSpecialties = array_slice($specialties[$baseDepartmentName], 0, 2);
+                $departmentSpecialties = array_slice($specialties[$baseDepartmentName], 0, 1);
                 
                 // Créer chaque spécialité pour ce département
                 foreach ($departmentSpecialties as $specialtyName) {
@@ -159,13 +159,11 @@ class SpecialtySeeder extends Seeder
                 }
             } else {
                 // Fallback si le département n'est pas dans la liste
-                for ($i = 1; $i <= 2; $i++) {
-                    Specialty::create([
-                        'name' => "Spécialité $i - $departmentName",
-                        'description' => "Description de la spécialité $i du département $departmentName",
-                        'department_id' => $department->id,
-                    ]);
-                }
+                Specialty::create([
+                    'name' => "Spécialité - $departmentName",
+                    'description' => "Description de la spécialité du département $departmentName",
+                    'department_id' => $department->id,
+                ]);
             }
         }
     }
