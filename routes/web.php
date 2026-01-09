@@ -11,6 +11,71 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/qmatic', [App\Http\Controllers\QmaticController::class, 'index'])->name('qmatic.index');
+
+// Routes Qmatic - Affichage public (pas d'authentification requise)
+Route::prefix('qmatic/display')->name('qmatic.display.')->group(function () {
+    Route::get('/', [App\Http\Controllers\Qmatic\DisplayController::class, 'index'])->name('index');
+    Route::get('/fullscreen', [App\Http\Controllers\Qmatic\DisplayController::class, 'fullscreen'])->name('fullscreen');
+    Route::get('/updates', [App\Http\Controllers\Qmatic\DisplayController::class, 'updates'])->name('updates');
+});
+
+// Routes Qmatic - Borne de prise de ticket (pas d'authentification requise pour les usagers)
+Route::prefix('qmatic/kiosk')->name('qmatic.kiosk.')->group(function () {
+    Route::get('/', [App\Http\Controllers\Qmatic\KioskController::class, 'index'])->name('index');
+    Route::post('/generate', [App\Http\Controllers\Qmatic\KioskController::class, 'generateTicket'])->name('generate');
+    Route::get('/ticket/{ticket}', [App\Http\Controllers\Qmatic\KioskController::class, 'showTicket'])->name('ticket');
+    Route::get('/ticket/{ticket}/status', [App\Http\Controllers\Qmatic\KioskController::class, 'checkTicketStatus'])->name('ticket.status');
+});
+
+// Routes Qmatic - Authentification
+Route::prefix('qmatic')->name('qmatic.')->group(function () {
+    Route::get('/login', [App\Http\Controllers\Qmatic\AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [App\Http\Controllers\Qmatic\AuthController::class, 'login'])->name('login.submit');
+    Route::post('/logout', [App\Http\Controllers\Qmatic\AuthController::class, 'logout'])->name('logout');
+});
+
+// Routes Qmatic authentifiées (Guard: qmatic)
+Route::middleware('auth:qmatic')->prefix('qmatic')->name('qmatic.')->group(function () {
+    
+    // Interface Agent
+    Route::prefix('agent')->name('agent.')->group(function () {
+        Route::get('/dashboard', [App\Http\Controllers\Qmatic\AgentController::class, 'dashboard'])->name('dashboard');
+        Route::post('/counter/assign', [App\Http\Controllers\Qmatic\AgentController::class, 'assignCounter'])->name('counter.assign');
+        Route::post('/counter/release', [App\Http\Controllers\Qmatic\AgentController::class, 'releaseCounter'])->name('counter.release');
+        Route::post('/call-next', [App\Http\Controllers\Qmatic\AgentController::class, 'callNext'])->name('call-next');
+        Route::post('/recall', [App\Http\Controllers\Qmatic\AgentController::class, 'recall'])->name('recall');
+        Route::post('/start-serving', [App\Http\Controllers\Qmatic\AgentController::class, 'startServing'])->name('start-serving');
+        Route::post('/mark-served', [App\Http\Controllers\Qmatic\AgentController::class, 'markAsServed'])->name('mark-served');
+        Route::post('/mark-absent', [App\Http\Controllers\Qmatic\AgentController::class, 'markAsAbsent'])->name('mark-absent');
+        Route::post('/requeue', [App\Http\Controllers\Qmatic\AgentController::class, 'requeue'])->name('requeue');
+    });
+});
+
+// Routes Qmatic Administration (Guard: web - Utilisateurs principaux VitalBridge)
+Route::middleware('auth')->prefix('qmatic/admin')->name('qmatic.admin.')->group(function () {
+    // Administration des services
+    Route::prefix('services')->name('services.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Qmatic\ServiceController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\Qmatic\ServiceController::class, 'create'])->name('create');
+        Route::post('/', [App\Http\Controllers\Qmatic\ServiceController::class, 'store'])->name('store');
+        Route::get('/{service}/edit', [App\Http\Controllers\Qmatic\ServiceController::class, 'edit'])->name('edit');
+        Route::put('/{service}', [App\Http\Controllers\Qmatic\ServiceController::class, 'update'])->name('update');
+        Route::delete('/{service}', [App\Http\Controllers\Qmatic\ServiceController::class, 'destroy'])->name('destroy');
+        Route::post('/{service}/toggle', [App\Http\Controllers\Qmatic\ServiceController::class, 'toggleStatus'])->name('toggle');
+    });
+
+    // Gestion des Agents
+    Route::resource('users', App\Http\Controllers\Qmatic\Admin\UserController::class);
+
+    // Gestion des Guichets
+    Route::resource('counters', App\Http\Controllers\Qmatic\Admin\CounterController::class);
+
+    // Paramètres globaux
+    Route::get('/settings', [App\Http\Controllers\Qmatic\Admin\SettingController::class, 'index'])->name('settings.index');
+    Route::post('/settings', [App\Http\Controllers\Qmatic\Admin\SettingController::class, 'update'])->name('settings.update');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

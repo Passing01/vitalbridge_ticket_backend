@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Appointment::class => QueuePolicy::class,
+        \App\Models\QmaticService::class => \App\Policies\QmaticServicePolicy::class,
     ];
 
     /**

@@ -269,6 +269,75 @@
           </li>
           @endif
 
+          @if(auth()->user()->role === 'admin' || auth()->user()->role === 'reception')
+          <li class="w-full mt-4">
+            <h6 class="pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60">
+              Qmatic
+            </h6>
+          </li>
+
+          <li class="mt-0.5 w-full">
+            <a
+              class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors {{ request()->routeIs('qmatic.admin.services.*') ? 'bg-white text-slate-700 dark:bg-slate-800 dark:text-slate-100 rounded-lg shadow-soft-xl' : 'text-slate-700 dark:text-slate-200' }}"
+              href="{{ route('qmatic.admin.services.index') }}">
+              <div
+                class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-700">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">
+                Services Qmatic
+              </span>
+            </a>
+          </li>
+
+          <li class="mt-0.5 w-full">
+            <a
+              class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors {{ request()->routeIs('qmatic.admin.users.*') ? 'bg-white text-slate-700 dark:bg-slate-800 dark:text-slate-100 rounded-lg shadow-soft-xl' : 'text-slate-700 dark:text-slate-200' }}"
+              href="{{ route('qmatic.admin.users.index') }}">
+              <div
+                class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+                <i class="fas fa-user-tie text-slate-700"></i>
+              </div>
+              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">
+                Agents Qmatic
+              </span>
+            </a>
+          </li>
+
+          <li class="mt-0.5 w-full">
+            <a
+              class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors {{ request()->routeIs('qmatic.admin.counters.*') ? 'bg-white text-slate-700 dark:bg-slate-800 dark:text-slate-100 rounded-lg shadow-soft-xl' : 'text-slate-700 dark:text-slate-200' }}"
+              href="{{ route('qmatic.admin.counters.index') }}">
+              <div
+                class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+                <i class="fas fa-desktop text-slate-700"></i>
+              </div>
+              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">
+                Guichets Qmatic
+              </span>
+            </a>
+          </li>
+
+          <li class="mt-0.5 w-full">
+            <a
+              class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors {{ request()->routeIs('qmatic.admin.settings.*') ? 'bg-white text-slate-700 dark:bg-slate-800 dark:text-slate-100 rounded-lg shadow-soft-xl' : 'text-slate-700 dark:text-slate-200' }}"
+              href="{{ route('qmatic.admin.settings.index') }}">
+              <div
+                class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+                <i class="fas fa-cog text-slate-700"></i>
+              </div>
+              <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">
+                Paramètres Qmatic
+              </span>
+            </a>
+          </li>
+          @endif
+
           <!-- <li class="w-full mt-4">
             <h6
               class="pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60">
