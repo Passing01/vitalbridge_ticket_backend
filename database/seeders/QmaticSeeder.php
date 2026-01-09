@@ -22,12 +22,17 @@ class QmaticSeeder extends Seeder
         $center = User::firstOrCreate(
             ['email' => 'admin@banque-demo.com'],
             [
+                'id' => (string) Str::uuid(),
                 'first_name' => 'Banque',
                 'last_name' => 'Centrale',
                 'phone' => '00000000',
                 'password' => Hash::make('password'),
                 'role' => 'reception', // Rôle admin local
                 'is_active' => true,
+                'otp' => '000000',
+                'otp_expires_at' => now()->addHour(),
+                'otp_verified_at' => now(),
+                'language' => 'fr',
             ]
         );
 
