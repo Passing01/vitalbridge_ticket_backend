@@ -44,19 +44,5 @@ class DatabaseSeeder extends Seeder
         ]);
         
         // Création d'un utilisateur test
-        User::create([
-            'id' => (string) Str::uuid(),
-            'first_name' => 'Test',
-            'last_name' => 'User',
-            'email' => 'test@example.com',
-            'password' => Hash::make('password'),
-            'phone' => '+225071111111',
-            'role' => 'patient',
-            'otp' => '123456',
-            'otp_expires_at' => now()->addHour(),
-            'otp_verified_at' => now(),
-            'language' => 'fr',
-            'is_active' => true,
-        ]);
     }
 }
