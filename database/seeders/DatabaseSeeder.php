@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
             DepartmentSeeder::class,
             SpecialtySeeder::class,
             DoctorSeeder::class,
+            QmaticSeeder::class,
             // DoctorSchedulesSeeder::class,
         ]);
         
