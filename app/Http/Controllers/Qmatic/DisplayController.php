@@ -52,6 +52,23 @@ class DisplayController extends Controller
                                           ->count(),
         ];
 
+        // Obtenir les statistiques par service
+        $services = \App\Models\QmaticService::where('health_center_id', $healthCenterId)
+                                             ->where('is_active', true)
+                                             ->get();
+        
+        $serviceStats = [];
+        foreach ($services as $service) {
+            $serviceStats[$service->id] = [
+                'name' => $service->name,
+                'color' => $service->color,
+                'waiting' => QmaticTicket::where('health_center_id', $healthCenterId)
+                                        ->where('service_id', $service->id)
+                                        ->where('status', 'waiting')
+                                        ->count(),
+            ];
+        }
+
         $settings = [
             'name' => \App\Models\QmaticSetting::get($healthCenterId, 'structure_name', 'VitalBridge Qmatic'),
             'logo' => \App\Models\QmaticSetting::get($healthCenterId, 'structure_logo'),
@@ -69,7 +86,7 @@ class DisplayController extends Controller
             'template_dioula' => \App\Models\QmaticSetting::get($healthCenterId, 'template_dioula', 'Ticket {ticket}, ka taga guichet {counter} la'),
         ];
 
-        return view('qmatic.display.index', compact('recentCalls', 'stats', 'healthCenterId', 'settings'));
+        return view('qmatic.display.index', compact('recentCalls', 'stats', 'healthCenterId', 'settings', 'serviceStats'));
     }
 
     /**
@@ -98,6 +115,23 @@ class DisplayController extends Controller
                             ->take(10)
                             ->get();
 
+        // Calculer les stats par service
+        $services = \App\Models\QmaticService::where('health_center_id', $healthCenterId)
+                                             ->where('is_active', true)
+                                             ->get();
+        
+        $serviceStats = [];
+        foreach ($services as $service) {
+            $serviceStats[$service->id] = [
+                'name' => $service->name,
+                'color' => $service->color,
+                'waiting' => QmaticTicket::where('health_center_id', $healthCenterId)
+                                        ->where('service_id', $service->id)
+                                        ->where('status', 'waiting')
+                                        ->count(),
+            ];
+        }
+
         return response()->json([
             'calls' => $recentCalls,
             'timestamp' => now()->toIso8601String(),
@@ -109,6 +143,7 @@ class DisplayController extends Controller
                                          ->whereIn('status', ['called', 'serving'])
                                          ->count(),
             ],
+            'serviceStats' => $serviceStats,
         ]);
     }
 
